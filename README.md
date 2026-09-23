@@ -6,7 +6,54 @@ NodeRel is a small software library that helps applications keep track of things
 
 You provide the items and their connections. NodeRel stores them in a local database file and gives your application ways to follow those connections and ask questions. It can also describe the data to an AI application.
 
-[Start here](#new-to-graphs-start-here) · [Visual guide](docs/visual-guide.md) · [Quick start](#quick-start) · [Query examples](#query-examples) · [Neo4j comparison](#noderel-and-neo4j) · [Benchmarks](#measured-performance) · [AI integration](#a-schema-for-ai-generated-queries) · [Ontology](#noderel-ontology-v1)
+[Concept](#noderel-at-a-glance) · [Start here](#new-to-graphs-start-here) · [Visual guide](docs/visual-guide.md) · [Quick start](#quick-start) · [Query examples](#query-examples) · [Neo4j comparison](#noderel-and-neo4j) · [Benchmarks](#measured-performance) · [AI integration](#a-schema-for-ai-generated-queries) · [Ontology](#noderel-ontology-v1)
+
+## NodeRel at a glance
+
+**Keep your source data. Make its connections queryable. Give an AI application enough context to ask about them.**
+
+```mermaid
+flowchart TB
+    accTitle: NodeRel at a glance
+    accDescr: An application prepares graph snapshots from existing data. NodeRel stores a rebuildable SQLite graph, queries connections, and exports the observed schema and available operations. An optional application supplies the AI model and request checks, with authored ontology definitions as additional context.
+    source["Your existing data<br/>Files, APIs, databases"]
+    snapshot["Prepared graph snapshot<br/>Items + named relationships"]
+    source -->|Your application prepares| snapshot
+
+    subgraph core["NodeRel — implemented library"]
+        db[("Local SQLite graph<br/>Rebuildable from snapshots")]
+        query["Query connections<br/>Neighbors and traversal"]
+        describe["Describe the graph<br/>Observed schema + operations"]
+        db --> query
+        db --> describe
+    end
+
+    snapshot -->|rebuild| core
+    query --> results["Connected results<br/>For your application"]
+
+    ontology["Optional ontology definitions<br/>Concepts, relations, constraints"]
+    ai["Your application + AI<br/>Prepare and check query requests"]
+    describe -.->|Data and query context| ai
+    ontology -.->|Authored meaning| ai
+
+    classDef sourceStyle fill:#f1f5f9,stroke:#475569,color:#0f172a
+    classDef coreStyle fill:#e0f2fe,stroke:#0369a1,color:#0c4a6e
+    classDef resultStyle fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef ontologyStyle fill:#f3e8ff,stroke:#7e22ce,color:#581c87
+    classDef appStyle fill:#fff7ed,stroke:#c2410c,color:#7c2d12
+    class source,snapshot sourceStyle
+    class db,query,describe coreStyle
+    class results resultStyle
+    class ontology ontologyStyle
+    class ai appStyle
+    style core fill:#f0f9ff,stroke:#0369a1,stroke-width:2px,color:#0c4a6e
+```
+
+The blue group is the implemented NodeRel library, running inside your application without a separate database server. Your application prepares the snapshot; `rebuild()` creates or replaces the derived graph. Queries return related data, while the schema exporter describes the stored data and supported operations.
+
+**Dashed arrows show an optional application integration.** The developer supplies the AI model, name-to-ID resolution, request checks, and execution limits. Ontology files can be supplied as additional context; NodeRel does not automatically load them or enforce their constraints.
+
+For example, “Which films feature Keanu Reeves?” becomes a request to start at his node and follow outgoing `ACTED_IN` relationships. The application can prepare that request directly or use an AI model to propose it. See the [query examples](#query-examples) and [AI integration flow](#a-schema-for-ai-generated-queries).
 
 ## New to graphs? Start here
 
@@ -306,6 +353,39 @@ Observed relationship shapes are descriptions of the snapshot, not enforced doma
 | `concepts` | Define the kinds of things and an optional single-parent hierarchy | `Movie` is a kind of `CreativeWork`. |
 | `relations` | Explain connections, expected endpoints, and relationship properties | `ACTED_IN` connects a `Person` to a `Movie`. |
 | `constraints` | Specify optional data checks separately from meanings | `roles` must be a present array of strings. |
+
+The distinction between a fact and its vocabulary is visible in one movie example:
+
+```mermaid
+flowchart TB
+    accTitle: Stored facts and ontology definitions
+    accDescr: Keanu Reeves acted in The Matrix with the role Neo. These stored nodes have Person and Movie kinds. The ontology defines ACTED_IN from Person to Movie and declares Movie to have parent CreativeWork. Dotted arrows map node kinds to concepts and do not represent additional stored edges.
+    subgraph facts["Stored graph — individual facts"]
+        keanu["Keanu Reeves<br/>kind: Person"]
+        matrix["The Matrix<br/>kind: Movie"]
+        keanu -->|"ACTED_IN · roles: Neo"| matrix
+    end
+
+    subgraph vocabulary["Ontology definition — shared meaning"]
+        person["Person<br/>A human individual"]
+        movie["Movie<br/>A motion picture"]
+        work["CreativeWork<br/>A broader concept"]
+        person -->|ACTED_IN connects these kinds| movie
+        movie -->|parent: is a kind of| work
+    end
+
+    keanu -.->|kind refers to| person
+    matrix -.->|kind refers to| movie
+
+    classDef factStyle fill:#e0f2fe,stroke:#0369a1,color:#0c4a6e
+    classDef meaningStyle fill:#f3e8ff,stroke:#7e22ce,color:#581c87
+    class keanu,matrix factStyle
+    class person,movie,work meaningStyle
+    style facts fill:#f0f9ff,stroke:#0369a1,color:#0c4a6e
+    style vocabulary fill:#faf5ff,stroke:#7e22ce,color:#581c87
+```
+
+The **Stored graph** group contains actual nodes and an edge; its role label abbreviates the stored `roles: ["Neo"]` property. The **Ontology definition** group defines what their kinds and relationship mean. Dashed arrows map each node's `kind` to its concept; they are not extra stored edges. `parent` classifies `Movie` under `CreativeWork` in the definition, without changing stored kinds or automatically expanding queries. The optional `constraints` section separately describes checks such as requiring `roles` to be an array of strings.
 
 For example, the [complete Movies definition](ontologies/movies.json) includes these concept and relation definitions:
 

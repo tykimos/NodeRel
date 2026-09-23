@@ -1,6 +1,17 @@
 # Visual guide
 
-English is the default language for explanations, labels, and captions. The README embeds high-resolution PNG images so that charts and diagrams display without a diagram renderer. Matching SVG files retain scalable shapes and selectable text.
+English is the default language for explanations, labels, and captions. The README includes editable Mermaid concept diagrams and high-resolution PNG images. The PNG diagrams and charts display without a diagram renderer; matching SVG files retain scalable shapes and selectable text.
+
+## Mermaid concept diagrams
+
+The Mermaid source lives directly in the README and renders on GitHub:
+
+| Diagram | What it explains |
+|---|---|
+| [NodeRel at a glance](../README.md#noderel-at-a-glance) | How source data becomes a rebuildable SQLite graph, with query results and an observed schema; dashed arrows mark optional AI application integration. |
+| [Facts and ontology](../README.md#noderel-ontology-v1) | How individual nodes and a stored relationship connect to authored concept definitions; dashed arrows map node kinds to concepts, without adding stored edges. |
+
+The two diagrams use separate legends in their surrounding text. Edit their `mermaid` blocks in the README directly. The Python renderers below generate the static assets, not these Mermaid blocks.
 
 ## Diagrams
 
