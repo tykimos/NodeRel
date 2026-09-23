@@ -41,6 +41,10 @@ From the repository root, use `npm run demo:build`, `npm run demo -- test`, or `
 
 ## Mapping the graph
 
+![Example Movies cast relationships and the Northwind customer-order-product pattern.](../../docs/assets/example-graphs.png)
+
+[View SVG](../../docs/assets/example-graphs.svg)
+
 | Neo4j concept | NodeRel representation |
 |---|---|
 | Node label such as `Person` or `Movie` | `items.kind` |

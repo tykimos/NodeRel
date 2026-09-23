@@ -2,6 +2,10 @@
 
 ## A derived index over authoritative source data
 
+![Source snapshots, a rebuildable SQLite index, a schema exporter, and application integration.](assets/architecture.png)
+
+[View SVG](assets/architecture.svg)
+
 NodeRel's input is an array of snapshots, each containing `nodes` and `edges`. An adapter can create these from files, application records, or another database. NodeRel does not currently supply general-purpose adapters or monitor the sources for changes.
 
 The source remains authoritative. The SQLite file is a derived view that can be rebuilt. This makes a local relationship layer useful even when an application does not need a separate graph server.
@@ -11,6 +15,10 @@ The source remains authoritative. The SQLite file is a derived view that can be 
 `sync_meta` stores the SHA-256 of `JSON.stringify(snapshots)`, the rebuild timestamp, and rejected edges. The signature identifies the serialized input, including its array ordering; it is not a canonical graph hash. There is no incremental merge or background synchronization.
 
 ## Storage contract
+
+![Logical references between the items and links tables, with rebuild metadata in sync_meta.](assets/storage-model.png)
+
+[View SVG](assets/storage-model.svg)
 
 | Concept | Representation |
 |---|---|
@@ -30,6 +38,10 @@ SQLite indexes support lookup by node ID, kind/scope, and incoming/outgoing endp
 The importer enforces endpoint and scope checks; the schema does not define SQL foreign keys or triggers that enforce all of those invariants. Applications that write directly through `.db` can bypass importer validation.
 
 ## Direction, depth, and duplicate handling
+
+![Incoming traversal reverses stored arrows and returns tasks at their minimum depth.](assets/inbound-traversal.png)
+
+[View SVG](assets/inbound-traversal.svg)
 
 `out` follows `from_id → to_id`; `in` reverses that direction; `both` permits either. Direction describes the stored arrow, not a universal business notion of cause or impact.
 

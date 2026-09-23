@@ -15,6 +15,10 @@ These findings apply to this graph, query set, environment, and measurement proc
 
 ## Implementations
 
+![In-process SQLite and a separate Neo4j server queried over Bolt.](../../docs/assets/execution-models.png)
+
+[View SVG](../../docs/assets/execution-models.svg)
+
 | Label | Implementation | Relationship to the public API |
 |---|---|---|
 | `sqlite-cte` | Recursive `UNION` over `(id, depth)`, followed by minimum-depth aggregation | Same general approach as `trace()`, adapted to benchmark outputs; not a direct timing of the public method |
@@ -27,7 +31,9 @@ The custom implementation reads adjacency through SQLite indexes in batches of u
 
 ## Single-request latency
 
-![Recorded median query latency](../../docs/assets/query-latency.svg)
+![Recorded median query latency](../../docs/assets/query-latency.png)
+
+[View SVG](../../docs/assets/query-latency.svg)
 
 Median milliseconds, including receiving and handling results. Lower is better. A dash means no separate measurement.
 
@@ -50,7 +56,9 @@ The no-op row measures total fixed call overhead, including transaction/driver h
 
 ## Concurrent reachability
 
-![Recorded six-hop reachability throughput](../../docs/assets/concurrent-throughput.svg)
+![Recorded six-hop reachability throughput](../../docs/assets/concurrent-throughput.png)
+
+[View SVG](../../docs/assets/concurrent-throughput.svg)
 
 Each SQLite client has a separate worker thread and read connection. Neo4j uses the same number of Bolt sessions. Each client submits its next request after the previous one completes: this is a closed-loop workload. Each condition runs for about six seconds after preparation, and its elapsed time includes completion of the final requests.
 

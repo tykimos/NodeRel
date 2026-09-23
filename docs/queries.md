@@ -143,6 +143,10 @@ The API also returns IDs. “Orphan” is relative to the specified type and dir
 
 ## 5. Follow multiple hops
 
+![Relationship directions in the Movies and Northwind examples.](assets/example-graphs.png)
+
+[View SVG](assets/example-graphs.svg)
+
 Question: what is reachable from customer ALFKI within three outgoing steps?
 
 ```text

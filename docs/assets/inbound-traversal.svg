@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="388.8pt" viewBox="0 0 864 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>NodeRel diagram renderer</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 388.8 
+L 864 388.8 
+L 864 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 47.16 181.08 
+L 226.44 181.08 
+Q 235.08 181.08 235.08 172.44 
+L 235.08 111.96 
+Q 235.08 103.32 226.44 103.32 
+L 47.16 103.32 
+Q 38.52 103.32 38.52 111.96 
+L 38.52 172.44 
+Q 38.52 181.08 47.16 181.08 
+z
+" clip-path="url(#pd02a52f2a7)" style="fill: #fff3e8; stroke: #a55419; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 342.36 181.08 
+L 521.64 181.08 
+Q 530.28 181.08 530.28 172.44 
+L 530.28 111.96 
+Q 530.28 103.32 521.64 103.32 
+L 342.36 103.32 
+Q 333.72 103.32 333.72 111.96 
+L 333.72 172.44 
+Q 333.72 181.08 342.36 181.08 
+z
+" clip-path="url(#pd02a52f2a7)" style="fill: #eaf6f3; stroke: #147d78; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 637.56 181.08 
+L 816.84 181.08 
+Q 825.48 181.08 825.48 172.44 
+L 825.48 111.96 
+Q 825.48 103.32 816.84 103.32 
+L 637.56 103.32 
+Q 628.92 103.32 628.92 111.96 
+L 628.92 172.44 
+Q 628.92 181.08 637.56 181.08 
+z
+" clip-path="url(#pd02a52f2a7)" style="fill: #eef2fc; stroke: #4369cd; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 47.16 339.48 
+L 816.84 339.48 
+Q 825.48 339.48 825.48 330.84 
+L 825.48 284.04 
+Q 825.48 275.4 816.84 275.4 
+L 47.16 275.4 
+Q 38.52 275.4 38.52 284.04 
+L 38.52 330.84 
+Q 38.52 339.48 47.16 339.48 
+z
+" clip-path="url(#pd02a52f2a7)" style="fill: #f5f7fa; stroke: #cad5e1; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 331.2 141.84 
+L 239.388854 141.84 
+" clip-path="url(#pd02a52f2a7)" style="fill: none; stroke: #53667b; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 244.588854 144.44 
+L 239.388854 141.84 
+L 244.588854 139.24 
+z
+" clip-path="url(#pd02a52f2a7)" style="fill: #53667b; stroke: #53667b; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 626.4 141.84 
+L 534.588854 141.84 
+" clip-path="url(#pd02a52f2a7)" style="fill: none; stroke: #53667b; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 539.788854 144.44 
+L 534.588854 141.84 
+L 539.788854 139.24 
+z
+" clip-path="url(#pd02a52f2a7)" style="fill: #53667b; stroke: #53667b; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 136.8 183.6 
+L 136.8 234 
+L 432 234 
+L 432 185.388854 
+" clip-path="url(#pd02a52f2a7)" style="fill: none; stroke-dasharray: 8,4.8; stroke-dashoffset: 0; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 429.4 190.588854 
+L 432 185.388854 
+L 434.6 190.588854 
+z
+" clip-path="url(#pd02a52f2a7)" style="fill: #147d78; stroke-dasharray: 8,4.8; stroke-dashoffset: 0; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 432 235.44 
+L 727.2 235.44 
+L 727.2 185.388854 
+" clip-path="url(#pd02a52f2a7)" style="fill: none; stroke-dasharray: 8,4.8; stroke-dashoffset: 0; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 724.6 190.588854 
+L 727.2 185.388854 
+L 729.8 190.588854 
+z
+" clip-path="url(#pd02a52f2a7)" style="fill: #147d78; stroke-dasharray: 8,4.8; stroke-dashoffset: 0; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 23px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #15263b" x="36" y="45.946562" transform="rotate(-0 36 45.946562)">Follow dependencies toward the affected work</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="36" y="76.613281" transform="rotate(-0 36 76.613281)">An inbound trace walks against the stored arrows, starting from the requirement.</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #a55419" x="136.8" y="135.016391" transform="rotate(-0 136.8 135.016391)">User login</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="136.8" y="161.812125" transform="rotate(-0 136.8 161.812125)">Requirement · start</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="432" y="135.016391" transform="rotate(-0 432 135.016391)">Build login API</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="432" y="161.812125" transform="rotate(-0 432 161.812125)">Task · depth 1</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #4369cd" x="727.2" y="135.016391" transform="rotate(-0 727.2 135.016391)">Build login screen</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="727.2" y="161.812125" transform="rotate(-0 727.2 161.812125)">Task · depth 2</text>
+   </g>
+   <g id="text_9">
+    <g id="patch_10">
+     <path d="M 252.208594 122.339063 
+L 316.591406 122.339063 
+Q 318.891406 122.339063 318.891406 120.039063 
+L 318.891406 110.360938 
+Q 318.891406 108.060938 316.591406 108.060938 
+L 252.208594 108.060938 
+Q 249.908594 108.060938 249.908594 110.360938 
+L 249.908594 120.039063 
+Q 249.908594 122.339063 252.208594 122.339063 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="284.4" y="117.959375" transform="rotate(-0 284.4 117.959375)">IMPLEMENTS</text>
+   </g>
+   <g id="text_10">
+    <g id="patch_11">
+     <path d="M 545.475 122.389844 
+L 613.725 122.389844 
+Q 616.025 122.389844 616.025 120.089844 
+L 616.025 110.310156 
+Q 616.025 108.010156 613.725 108.010156 
+L 545.475 108.010156 
+Q 543.175 108.010156 543.175 110.310156 
+L 543.175 120.089844 
+Q 543.175 122.389844 545.475 122.389844 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="579.6" y="117.732031" transform="rotate(-0 579.6 117.732031)">DEPENDS_ON</text>
+   </g>
+   <g id="text_11">
+    <g id="patch_12">
+     <path d="M 245.047969 241.496016 
+L 323.752031 241.496016 
+Q 326.167031 241.496016 326.167031 239.081016 
+L 326.167031 228.918984 
+Q 326.167031 226.503984 323.752031 226.503984 
+L 245.047969 226.503984 
+Q 242.632969 226.503984 242.632969 228.918984 
+L 242.632969 239.081016 
+Q 242.632969 241.496016 245.047969 241.496016 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="284.4" y="236.897344" transform="rotate(-0 284.4 236.897344)">inbound step 1</text>
+   </g>
+   <g id="text_12">
+    <g id="patch_13">
+     <path d="M 540.247969 241.496016 
+L 618.952031 241.496016 
+Q 621.367031 241.496016 621.367031 239.081016 
+L 621.367031 228.918984 
+Q 621.367031 226.503984 618.952031 226.503984 
+L 540.247969 226.503984 
+Q 537.832969 226.503984 537.832969 228.918984 
+L 537.832969 239.081016 
+Q 537.832969 241.496016 540.247969 241.496016 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="579.6" y="236.897344" transform="rotate(-0 579.6 236.897344)">inbound step 2</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #15263b" x="61.2" y="303.842344" transform="rotate(-0 61.2 303.842344)">Trace options: direction = in · maxDepth = 2 · types = IMPLEMENTS, DEPENDS_ON</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="61.2" y="326.260125" transform="rotate(-0 61.2 326.260125)">Returns the two tasks with minimum depths 1 and 2. The starting requirement is excluded.</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 10.4px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="39.6" y="371.50975" transform="rotate(-0 39.6 371.50975)">Solid arrows = stored relationships. Dashed arrows = traversal direction. Scope: app.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pd02a52f2a7">
+   <rect x="0" y="0" width="864" height="388.8"/>
+  </clipPath>
+ </defs>
+</svg>

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="475.2pt" viewBox="0 0 864 475.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>NodeRel diagram renderer</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 475.2 
+L 864 475.2 
+L 864 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 43.56 188.28 
+L 230.04 188.28 
+Q 238.68 188.28 238.68 179.64 
+L 238.68 111.96 
+Q 238.68 103.32 230.04 103.32 
+L 43.56 103.32 
+Q 34.92 103.32 34.92 111.96 
+L 34.92 179.64 
+Q 34.92 188.28 43.56 188.28 
+z
+" clip-path="url(#pa1304dd248)" style="fill: #f5f7fa; stroke-dasharray: 6,4.8; stroke-dashoffset: 0; stroke: #cad5e1; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 324.36 188.28 
+L 539.64 188.28 
+Q 548.28 188.28 548.28 179.64 
+L 548.28 111.96 
+Q 548.28 103.32 539.64 103.32 
+L 324.36 103.32 
+Q 315.72 103.32 315.72 111.96 
+L 315.72 179.64 
+Q 315.72 188.28 324.36 188.28 
+z
+" clip-path="url(#pa1304dd248)" style="fill: #eaf6f3; stroke: #147d78; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 633.96 188.28 
+L 820.44 188.28 
+Q 829.08 188.28 829.08 179.64 
+L 829.08 111.96 
+Q 829.08 103.32 820.44 103.32 
+L 633.96 103.32 
+Q 625.32 103.32 625.32 111.96 
+L 625.32 179.64 
+Q 625.32 188.28 633.96 188.28 
+z
+" clip-path="url(#pa1304dd248)" style="fill: #eaf6f3; stroke: #147d78; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 633.96 346.68 
+L 820.44 346.68 
+Q 829.08 346.68 829.08 338.04 
+L 829.08 270.36 
+Q 829.08 261.72 820.44 261.72 
+L 633.96 261.72 
+Q 625.32 261.72 625.32 270.36 
+L 625.32 338.04 
+Q 625.32 346.68 633.96 346.68 
+z
+" clip-path="url(#pa1304dd248)" style="fill: #eaf6f3; stroke: #147d78; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 324.36 346.68 
+L 539.64 346.68 
+Q 548.28 346.68 548.28 338.04 
+L 548.28 270.36 
+Q 548.28 261.72 539.64 261.72 
+L 324.36 261.72 
+Q 315.72 261.72 315.72 270.36 
+L 315.72 338.04 
+Q 315.72 346.68 324.36 346.68 
+z
+" clip-path="url(#pa1304dd248)" style="fill: #eaf6f3; stroke: #147d78; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 43.56 346.68 
+L 230.04 346.68 
+Q 238.68 346.68 238.68 338.04 
+L 238.68 270.36 
+Q 238.68 261.72 230.04 261.72 
+L 43.56 261.72 
+Q 34.92 261.72 34.92 270.36 
+L 34.92 338.04 
+Q 34.92 346.68 43.56 346.68 
+z
+" clip-path="url(#pa1304dd248)" style="fill: #f5f7fa; stroke-dasharray: 6,4.8; stroke-dashoffset: 0; stroke: #cad5e1; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 239.04 147.6 
+L 312.131146 147.6 
+" clip-path="url(#pa1304dd248)" style="fill: none; stroke: #53667b; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 306.931146 145 
+L 312.131146 147.6 
+L 306.931146 150.2 
+z
+" clip-path="url(#pa1304dd248)" style="fill: #53667b; stroke: #53667b; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 549.36 147.6 
+L 621.731146 147.6 
+" clip-path="url(#pa1304dd248)" style="fill: none; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 616.531146 145 
+L 621.731146 147.6 
+L 616.531146 150.2 
+z
+" clip-path="url(#pa1304dd248)" style="fill: #147d78; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 727.2 191.868854 
+L 727.2 257.411146 
+" clip-path="url(#pa1304dd248)" style="fill: none; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 724.6 197.068854 
+L 727.2 191.868854 
+L 729.8 197.068854 
+" clip-path="url(#pa1304dd248)" style="fill: none; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 729.8 252.211146 
+L 727.2 257.411146 
+L 724.6 252.211146 
+" clip-path="url(#pa1304dd248)" style="fill: none; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 624.96 178.56 
+L 574.56 230.4 
+L 432 230.4 
+L 432 257.411146 
+" clip-path="url(#pa1304dd248)" style="fill: none; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 434.6 252.211146 
+L 432 257.411146 
+L 429.4 252.211146 
+z
+" clip-path="url(#pa1304dd248)" style="fill: #147d78; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 313.92 304.56 
+L 242.988854 304.56 
+" clip-path="url(#pa1304dd248)" style="fill: none; stroke-dasharray: 8,4.8; stroke-dashoffset: 0; stroke: #53667b; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 248.188854 307.16 
+L 242.988854 304.56 
+L 248.188854 301.96 
+z
+" clip-path="url(#pa1304dd248)" style="fill: #53667b; stroke-dasharray: 8,4.8; stroke-dashoffset: 0; stroke: #53667b; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 136.8 348.48 
+L 136.8 399.6 
+L 727.2 399.6 
+L 727.2 350.268854 
+" clip-path="url(#pa1304dd248)" style="fill: none; stroke-dasharray: 8,4.8; stroke-dashoffset: 0; stroke: #53667b; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 724.6 355.468854 
+L 727.2 350.268854 
+L 729.8 355.468854 
+z
+" clip-path="url(#pa1304dd248)" style="fill: #53667b; stroke-dasharray: 8,4.8; stroke-dashoffset: 0; stroke: #53667b; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 23px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #15263b" x="36" y="45.856719" transform="rotate(-0 36 45.856719)">A rebuildable graph over your data</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="36" y="76.613281" transform="rotate(-0 36 76.613281)">Keep the source authoritative. Derive the graph. Describe it for your application.</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #15263b" x="136.8" y="137.96175" transform="rotate(-0 136.8 137.96175)">Source systems</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="136.8" y="166.996125" transform="rotate(-0 136.8 166.996125)">Files, records, exports</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="432" y="138.071125" transform="rotate(-0 432 138.071125)">JSON snapshots</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="432" y="166.996125" transform="rotate(-0 432 166.996125)">nodes[] + edges[]</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="727.2" y="138.071125" transform="rotate(-0 727.2 138.071125)">SQLite index</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="727.2" y="166.845937" transform="rotate(-0 727.2 166.845937)">items · links · sync_meta</text>
+   </g>
+   <g id="text_9">
+    <g id="patch_14">
+     <path d="M 247.997156 134.150719 
+L 307.842844 134.150719 
+Q 310.004844 134.150719 310.004844 131.988719 
+L 310.004844 122.891281 
+Q 310.004844 120.729281 307.842844 120.729281 
+L 247.997156 120.729281 
+Q 245.835156 120.729281 245.835156 122.891281 
+L 245.835156 131.988719 
+Q 245.835156 134.150719 247.997156 134.150719 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 9.4px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="277.92" y="130.033813" transform="rotate(-0 277.92 130.033813)">Your adapter</text>
+   </g>
+   <g id="text_10">
+    <g id="patch_15">
+     <path d="M 564.522773 134.936016 
+L 609.077227 134.936016 
+Q 611.492227 134.936016 611.492227 132.521016 
+L 611.492227 122.358984 
+Q 611.492227 119.943984 609.077227 119.943984 
+L 564.522773 119.943984 
+Q 562.107773 119.943984 562.107773 122.358984 
+L 562.107773 132.521016 
+Q 562.107773 134.936016 564.522773 134.936016 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="586.8" y="130.337344" transform="rotate(-0 586.8 130.337344)">rebuild()</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="727.2" y="296.36175" transform="rotate(-0 727.2 296.36175)">Query API</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="727.2" y="325.396125" transform="rotate(-0 727.2 325.396125)">trace · neighbors · SQL</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="432" y="296.471125" transform="rotate(-0 432 296.471125)">Schema description</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="432" y="325.396125" transform="rotate(-0 432 325.396125)">Kinds · directions · operations</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #15263b" x="136.8" y="296.471125" transform="rotate(-0 136.8 296.471125)">Your AI application</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="136.8" y="325.396125" transform="rotate(-0 136.8 325.396125)">Model + entity resolution</text>
+   </g>
+   <g id="text_17">
+    <g id="patch_16">
+     <path d="M 693.857578 232.136016 
+L 760.542422 232.136016 
+Q 762.957422 232.136016 762.957422 229.721016 
+L 762.957422 219.558984 
+Q 762.957422 217.143984 760.542422 217.143984 
+L 693.857578 217.143984 
+Q 691.442578 217.143984 691.442578 219.558984 
+L 691.442578 229.721016 
+Q 691.442578 232.136016 693.857578 232.136016 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="727.2" y="227.537344" transform="rotate(-0 727.2 227.537344)">Query / rows</text>
+   </g>
+   <g id="text_18">
+    <g id="patch_17">
+     <path d="M 419.734453 234.296016 
+L 516.265547 234.296016 
+Q 518.680547 234.296016 518.680547 231.881016 
+L 518.680547 221.718984 
+Q 518.680547 219.303984 516.265547 219.303984 
+L 419.734453 219.303984 
+Q 417.319453 219.303984 417.319453 221.718984 
+L 417.319453 231.881016 
+Q 417.319453 234.296016 419.734453 234.296016 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="468" y="229.697344" transform="rotate(-0 468 229.697344)">describeNodeRel()</text>
+   </g>
+   <g id="text_19">
+    <g id="patch_18">
+     <path d="M 258.331719 290.819063 
+L 297.508281 290.819063 
+Q 299.808281 290.819063 299.808281 288.519063 
+L 299.808281 278.840937 
+Q 299.808281 276.540938 297.508281 276.540938 
+L 258.331719 276.540938 
+Q 256.031719 276.540938 256.031719 278.840937 
+L 256.031719 288.519063 
+Q 256.031719 290.819063 258.331719 290.819063 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="277.92" y="286.439375" transform="rotate(-0 277.92 286.439375)">Context</text>
+   </g>
+   <g id="text_20">
+    <g id="patch_19">
+     <path d="M 272.888086 406.376016 
+L 591.111914 406.376016 
+Q 593.526914 406.376016 593.526914 403.961016 
+L 593.526914 393.798984 
+Q 593.526914 391.383984 591.111914 391.383984 
+L 272.888086 391.383984 
+Q 270.473086 391.383984 270.473086 393.798984 
+L 270.473086 403.961016 
+Q 270.473086 406.376016 272.888086 406.376016 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="432" y="401.777344" transform="rotate(-0 432 401.777344)">Application validates a structured request, then calls the API</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 10.4px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="36" y="449.26975" transform="rotate(-0 36 449.26975)">Solid: NodeRel data and APIs. Dashed: application integration. Source synchronization is manual.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pa1304dd248">
+   <rect x="0" y="0" width="864" height="475.2"/>
+  </clipPath>
+ </defs>
+</svg>

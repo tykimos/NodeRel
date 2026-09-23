@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="482.4pt" viewBox="0 0 864 482.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>NodeRel diagram renderer</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 482.4 
+L 864 482.4 
+L 864 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 43.56 407.88 
+L 406.44 407.88 
+Q 415.08 407.88 415.08 399.24 
+L 415.08 101.16 
+Q 415.08 92.52 406.44 92.52 
+L 43.56 92.52 
+Q 34.92 92.52 34.92 101.16 
+L 34.92 399.24 
+Q 34.92 407.88 43.56 407.88 
+z
+" clip-path="url(#pe791e8a21a)" style="fill: #eaf6f3; stroke: #147d78; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 457.56 407.88 
+L 820.44 407.88 
+Q 829.08 407.88 829.08 399.24 
+L 829.08 101.16 
+Q 829.08 92.52 820.44 92.52 
+L 457.56 92.52 
+Q 448.92 92.52 448.92 101.16 
+L 448.92 399.24 
+Q 448.92 407.88 457.56 407.88 
+z
+" clip-path="url(#pe791e8a21a)" style="fill: #eef2fc; stroke: #4369cd; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 68.76 362.52 
+L 381.24 362.52 
+Q 389.88 362.52 389.88 353.88 
+L 389.88 160.2 
+Q 389.88 151.56 381.24 151.56 
+L 68.76 151.56 
+Q 60.12 151.56 60.12 160.2 
+L 60.12 353.88 
+Q 60.12 362.52 68.76 362.52 
+z
+" clip-path="url(#pe791e8a21a)" style="fill: #ffffff; stroke-dasharray: 6,4.8; stroke-dashoffset: 0; stroke: #147d78; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 104.76 256.68 
+L 345.24 256.68 
+Q 353.88 256.68 353.88 248.04 
+L 353.88 209.16 
+Q 353.88 200.52 345.24 200.52 
+L 104.76 200.52 
+Q 96.12 200.52 96.12 209.16 
+L 96.12 248.04 
+Q 96.12 256.68 104.76 256.68 
+z
+" clip-path="url(#pe791e8a21a)" style="fill: #eaf6f3; stroke: #147d78; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 104.76 340.92 
+L 345.24 340.92 
+Q 353.88 340.92 353.88 332.28 
+L 353.88 297 
+Q 353.88 288.36 345.24 288.36 
+L 104.76 288.36 
+Q 96.12 288.36 96.12 297 
+L 96.12 332.28 
+Q 96.12 340.92 104.76 340.92 
+z
+" clip-path="url(#pe791e8a21a)" style="fill: #eaf6f3; stroke: #147d78; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 507.96 212.76 
+L 770.04 212.76 
+Q 778.68 212.76 778.68 204.12 
+L 778.68 165.24 
+Q 778.68 156.6 770.04 156.6 
+L 507.96 156.6 
+Q 499.32 156.6 499.32 165.24 
+L 499.32 204.12 
+Q 499.32 212.76 507.96 212.76 
+z
+" clip-path="url(#pe791e8a21a)" style="fill: #eef2fc; stroke: #4369cd; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 507.96 349.56 
+L 770.04 349.56 
+Q 778.68 349.56 778.68 340.92 
+L 778.68 286.92 
+Q 778.68 278.28 770.04 278.28 
+L 507.96 278.28 
+Q 499.32 278.28 499.32 286.92 
+L 499.32 340.92 
+Q 499.32 349.56 507.96 349.56 
+z
+" clip-path="url(#pe791e8a21a)" style="fill: #eef2fc; stroke: #4369cd; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 224.64 260.268854 
+L 224.64 284.771146 
+" clip-path="url(#pe791e8a21a)" style="fill: none; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 222.04 265.468854 
+L 224.64 260.268854 
+L 227.24 265.468854 
+" clip-path="url(#pe791e8a21a)" style="fill: none; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 227.24 279.571146 
+L 224.64 284.771146 
+L 222.04 279.571146 
+" clip-path="url(#pe791e8a21a)" style="fill: none; stroke: #147d78; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 639.36 216.348854 
+L 639.36 273.971146 
+" clip-path="url(#pe791e8a21a)" style="fill: none; stroke: #4369cd; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 636.76 221.548854 
+L 639.36 216.348854 
+L 641.96 221.548854 
+" clip-path="url(#pe791e8a21a)" style="fill: none; stroke: #4369cd; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 641.96 268.771146 
+L 639.36 273.971146 
+L 636.76 268.771146 
+" clip-path="url(#pe791e8a21a)" style="fill: none; stroke: #4369cd; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 23px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #15263b" x="36" y="45.946563" transform="rotate(-0 36 45.946563)">Embedded queries and server queries</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="36" y="76.613281" transform="rotate(-0 36 76.613281)">The measured architectures have different call boundaries and execution responsibilities.</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #147d78" x="61.2" y="125.267188" transform="rotate(-0 61.2 125.267188)">NODEREL / SQLITE</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #4369cd" x="475.2" y="125.267188" transform="rotate(-0 475.2 125.267188)">NEO4J / BOLT</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="77.76" y="177.275312" transform="rotate(-0 77.76 177.275312)">One Node.js process</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="225" y="224.489219" transform="rotate(-0 225 224.489219)">JavaScript application</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="225" y="243.460125" transform="rotate(-0 225 243.460125)">NodeRel functions or SQL</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="225" y="311.033219" transform="rotate(-0 225 311.033219)">Built-in SQLite</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="225" y="328.708125" transform="rotate(-0 225 328.708125)">Local graph file</text>
+   </g>
+   <g id="text_10">
+    <g id="patch_11">
+     <path d="M 265.877695 279.662109 
+L 338.922305 279.662109 
+Q 341.107305 279.662109 341.107305 277.477109 
+L 341.107305 268.282891 
+Q 341.107305 266.097891 338.922305 266.097891 
+L 265.877695 266.097891 
+Q 263.692695 266.097891 263.692695 268.282891 
+L 263.692695 277.477109 
+Q 263.692695 279.662109 265.877695 279.662109 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="302.4" y="275.501406" transform="rotate(-0 302.4 275.501406)">In-process calls</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #4369cd" x="639" y="180.569219" transform="rotate(-0 639 180.569219)">JavaScript application</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="639" y="199.540125" transform="rotate(-0 639 199.540125)">Neo4j driver + Cypher</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #4369cd" x="639" y="307.643591" transform="rotate(-0 639 307.643591)">Neo4j database server</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="639" y="332.106525" transform="rotate(-0 639 332.106525)">Planner + graph execution</text>
+   </g>
+   <g id="text_15">
+    <g id="patch_12">
+     <path d="M 587.826328 252.296016 
+L 690.893672 252.296016 
+Q 693.308672 252.296016 693.308672 249.881016 
+L 693.308672 239.718984 
+Q 693.308672 237.303984 690.893672 237.303984 
+L 587.826328 237.303984 
+Q 585.411328 237.303984 585.411328 239.718984 
+L 585.411328 249.881016 
+Q 585.411328 252.296016 587.826328 252.296016 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #4369cd" x="639.36" y="247.697344" transform="rotate(-0 639.36 247.697344)">Local Bolt transport</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 10.7px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="639.36" y="378.792531" transform="rotate(-0 639.36 378.792531)">Separate server process</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 10.6px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="36" y="441.404938" transform="rotate(-0 36 441.404938)">Timings include client-observed work. SQLite avoids a server round trip; Neo4j executes graph operators.</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 10.6px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="36" y="465.884938" transform="rotate(-0 36 465.884938)">Public trace() uses recursive SQL. Specialized SQLite BFS appears only in the benchmark.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pe791e8a21a">
+   <rect x="0" y="0" width="864" height="482.4"/>
+  </clipPath>
+ </defs>
+</svg>

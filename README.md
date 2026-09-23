@@ -6,7 +6,7 @@ NodeRel stores nodes and relationships in a local SQLite file, follows connectio
 
 The core uses Node's built-in SQLite module, requires no database server, and has no external npm dependencies. It includes working Movies and Northwind examples, stored Neo4j reference results, and reproducible performance experiments.
 
-[Quick start](#quick-start) · [Query examples](#query-examples) · [Neo4j comparison](#noderel-and-neo4j) · [Benchmarks](#measured-performance) · [AI integration](#a-schema-for-ai-generated-queries)
+[Visual guide](docs/visual-guide.md) · [Quick start](#quick-start) · [Query examples](#query-examples) · [Neo4j comparison](#noderel-and-neo4j) · [Benchmarks](#measured-performance) · [AI integration](#a-schema-for-ai-generated-queries)
 
 ## Why NodeRel?
 
@@ -23,16 +23,9 @@ The AI idea is simple: a user should be able to ask a question without learning 
 
 AI can also generate Cypher for Neo4j. NodeRel's distinction is its embedded storage and explicit, compact operation contract; AI does not remove differences in query expressiveness or execution performance.
 
-```mermaid
-flowchart LR
-    S[Source files or systems] -->|Snapshot adapter| J[Nodes and edges]
-    J -->|rebuild| D[(SQLite file)]
-    D -->|describeNodeRel| C[Schema and operation descriptions]
-    C -.-> A[Your AI application]
-    A -.->|Structured request| Q[NodeRel API or parameterized SQL]
-    Q --> D
-    D --> R[Query results]
-```
+![Architecture: source snapshots rebuild a SQLite graph; its schema and query API support an application-supplied AI layer.](docs/assets/architecture.png)
+
+[View SVG](docs/assets/architecture.svg)
 
 The snapshot importer, SQLite queries, and schema exporter are implemented. Source adapters and the AI application are integration points; there is no automatic source watcher or natural-language service.
 
@@ -60,6 +53,10 @@ npm run schema
 These commands do not require Neo4j or an npm dependency installation. Node 24.13.1 may print an experimental warning for `node:sqlite`.
 
 ## Your first graph
+
+![Inbound traversal: the login requirement reaches its implementing API task at depth one and the dependent UI task at depth two.](docs/assets/inbound-traversal.png)
+
+[View SVG](docs/assets/inbound-traversal.svg)
 
 Run this JavaScript from the repository root, for example with `node --input-type=module`:
 
@@ -98,6 +95,12 @@ try {
 `in` follows incoming relationships, so the query starts at the requirement and reaches the tasks pointing toward it. The `types` list allows either relationship type at every step; it does not enforce a different type at each depth.
 
 ## Query examples
+
+![Movies connects people to films through ACTED_IN with role properties. Northwind connects customers, orders, products, categories, and suppliers.](docs/assets/example-graphs.png)
+
+[View SVG](docs/assets/example-graphs.svg)
+
+The Movies panel shows two actual cast relationships. The Northwind panel shows a type-level pattern used by the query examples below.
 
 ### Which movies feature Keanu Reeves?
 
@@ -167,6 +170,12 @@ See the [query guide](docs/queries.md) for relationship properties, missing rela
 
 ## A schema for AI-generated queries
 
+![Proposed sequence: the application gets a schema, resolves IDs, asks a model for a request, validates it, queries NodeRel, and supplies the result for an answer.](docs/assets/ai-query-sequence.png)
+
+[View SVG](docs/assets/ai-query-sequence.svg)
+
+This sequence shows how an application can integrate NodeRel. The model, resolver, and validation layer are application responsibilities; the schema exporter and graph operations are implemented here.
+
 ```js
 import { describeNodeRel } from './src/describe.mjs';
 
@@ -204,6 +213,10 @@ Observed relationship shapes are descriptions of the snapshot, not enforced doma
 
 ## NodeRel and Neo4j
 
+![Execution models: NodeRel calls built-in SQLite inside Node.js, while a Neo4j driver sends Cypher over Bolt to a separate database server.](docs/assets/execution-models.png)
+
+[View SVG](docs/assets/execution-models.svg)
+
 | Dimension | NodeRel today | Neo4j in this comparison |
 |---|---|---|
 | Deployment | SQLite inside a Node.js process; local file | A separate Community database server, queried over Bolt |
@@ -229,7 +242,9 @@ These charts use the **recorded September 23, 2026 experiment**, not new measure
 
 ### Query latency
 
-![Median query latency on a logarithmic scale. Custom SQLite BFS is faster for small traversals; Neo4j is faster for broad six-hop reachability.](docs/assets/query-latency.svg)
+![Median query latency on a logarithmic scale. Custom SQLite BFS is faster for small traversals; Neo4j is faster for broad six-hop reachability.](docs/assets/query-latency.png)
+
+[View SVG](docs/assets/query-latency.svg)
 
 Median milliseconds; lower is better. A dash means that separate implementation was not measured.
 
@@ -247,7 +262,9 @@ Neo4j was about **1.9× faster than custom SQLite BFS** on six-hop reachability,
 
 ### Concurrent traversal
 
-![Six-hop traversal throughput with 1, 4, and 8 concurrent clients, plus an eight-client repeat with reversed measurement order.](docs/assets/concurrent-throughput.svg)
+![Six-hop traversal throughput with 1, 4, and 8 concurrent clients, plus an eight-client repeat with reversed measurement order.](docs/assets/concurrent-throughput.png)
+
+[View SVG](docs/assets/concurrent-throughput.svg)
 
 Completed requests per second; higher is better. Each client sends its next request after the previous one finishes.
 
@@ -290,6 +307,12 @@ The [full benchmark report](benchmarks/neo4j-strengths/REPORT.md) includes p95 l
 
 ## Storage and current boundaries
 
+![Storage model: links.from_id and links.to_id refer to items.id; sync_meta records the snapshot signature, rebuild time, and rejected edges.](docs/assets/storage-model.png)
+
+[View SVG](docs/assets/storage-model.svg)
+
+The connectors show logical references checked during import. They are not SQL foreign-key constraints.
+
 | Table | Contents |
 |---|---|
 | `items` | `id`, `kind`, `scope`, `no`, `title`, `status`, `updated_at` |
@@ -321,19 +344,22 @@ src/                         Core graph API and schema exporter
 examples/neo4j/               Snapshots, runnable queries, stored reference results
 examples/ai/                  AI-readable schema and verified request example
 benchmarks/neo4j-strengths/   Synthetic dataset benchmark and recorded measurements
-docs/                        Query guide, design notes, and chart assets
-scripts/                     Tests and benchmark chart renderer
+docs/                        Query guide, design notes, charts, and diagrams
+scripts/                     Tests and reproducible visual renderers
 ```
 
-To regenerate the SVG and PNG charts from the recorded measurements, install the optional Python plotting dependency in a virtual environment:
+All chart and diagram labels use English. PNG images are embedded directly in the documentation, with matching SVG files for scaling and editing. The [visual guide](docs/visual-guide.md) lists every asset and explains the diagram conventions.
+
+To regenerate the charts from recorded measurements and rebuild the diagrams, install the optional Python plotting dependency in a virtual environment:
 
 ```sh
 python3 -m venv /tmp/noderel-charts
 /tmp/noderel-charts/bin/python -m pip install -r scripts/requirements-charts.txt
 /tmp/noderel-charts/bin/python scripts/render-benchmarks.py
+/tmp/noderel-charts/bin/python scripts/render-diagrams.py
 ```
 
-This redraws the charts; it does not rerun the databases. Python and Matplotlib are not required to use NodeRel itself.
+These commands redraw the visuals; they do not rerun the database benchmarks. Python and Matplotlib are not required to use NodeRel itself.
 
 ## License and attribution
 

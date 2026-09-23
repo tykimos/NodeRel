@@ -39,6 +39,10 @@ For example, the Movies description contains 172 `ACTED_IN` edges from `Person` 
 
 ## From a question to a request
 
+![Proposed application sequence for schema inspection, validated requests, query execution, and answers.](../../docs/assets/ai-query-sequence.png)
+
+[View SVG](../../docs/assets/ai-query-sequence.svg)
+
 The committed example asks in Korean which films feature Keanu Reeves. Its mapping from `키아누 리브스` to `Keanu Reeves` was **explicitly supplied for this demonstration**. There is no general Korean-name or alias resolver.
 
 Once the entity is resolved, the example request is:
