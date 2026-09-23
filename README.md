@@ -6,7 +6,7 @@ NodeRel is a small software library that helps applications keep track of things
 
 You provide the items and their connections. NodeRel stores them in a local database file and gives your application ways to follow those connections and ask questions. It can also describe the data to an AI application.
 
-[Start here](#new-to-graphs-start-here) · [Visual guide](docs/visual-guide.md) · [Quick start](#quick-start) · [Query examples](#query-examples) · [Neo4j comparison](#noderel-and-neo4j) · [Benchmarks](#measured-performance) · [AI integration](#a-schema-for-ai-generated-queries)
+[Start here](#new-to-graphs-start-here) · [Visual guide](docs/visual-guide.md) · [Quick start](#quick-start) · [Query examples](#query-examples) · [Neo4j comparison](#noderel-and-neo4j) · [Benchmarks](#measured-performance) · [AI integration](#a-schema-for-ai-generated-queries) · [Ontology](#noderel-ontology-v1)
 
 ## New to graphs? Start here
 
@@ -56,6 +56,12 @@ These terms describe different parts of the idea:
 A knowledge graph describes **what the information means**; a database provides **a way to store and query it**. The meaning comes from identifying the things and defining what their connections represent. See [Neo4j's explanation of knowledge graphs and graph databases](https://neo4j.com/blog/knowledge-graph/knowledge-graph-vs-graph-database/).
 
 NodeRel can represent a small knowledge graph when you supply those things and meaningful relationships. For example, you can connect documents to the topics they mention or products to their categories. You define those connections; NodeRel does not automatically read arbitrary documents, discover facts, or decide what is true.
+
+### An ontology gives the vocabulary a shared meaning
+
+An **ontology** records the concepts your application uses and how they relate. The fact “Keanu Reeves acted in The Matrix” is data; the definitions “a movie is a kind of creative work” and “acting connects a person to a movie” are vocabulary knowledge.
+
+**NodeRel Ontology v1** is this project's simplified JSON format for writing that vocabulary. It separates concept definitions, relationship meanings, and optional data checks. It is a custom format, with examples and a specification; the current query engine does not load or enforce it automatically. See the [ontology section](#noderel-ontology-v1) for its status and scope.
 
 ### What you can use NodeRel for
 
@@ -291,6 +297,47 @@ The application validates the operation, scope, arguments, and execution budget,
 
 Observed relationship shapes are descriptions of the snapshot, not enforced domain rules. Business meanings in the sample schema are curated. Generic name/alias resolution, complete request validation, time budgets, and an MCP/HTTP service are not implemented. See the [AI integration guide](examples/ai/README.md).
 
+## NodeRel Ontology v1
+
+**A small, authored vocabulary for the graph.** The draft format has three parts:
+
+| Part | Purpose | Example |
+|---|---|---|
+| `concepts` | Define the kinds of things and an optional single-parent hierarchy | `Movie` is a kind of `CreativeWork`. |
+| `relations` | Explain connections, expected endpoints, and relationship properties | `ACTED_IN` connects a `Person` to a `Movie`. |
+| `constraints` | Specify optional data checks separately from meanings | `roles` must be a present array of strings. |
+
+For example, the [complete Movies definition](ontologies/movies.json) includes these concept and relation definitions:
+
+```json
+{
+  "concepts": {
+    "Movie": {
+      "description": "A motion picture represented in the dataset.",
+      "parent": "CreativeWork"
+    }
+  },
+  "relations": {
+    "ACTED_IN": {
+      "description": "A person performed in a movie.",
+      "from": "Person",
+      "to": "Movie",
+      "reverseLabel": "has cast member"
+    }
+  }
+}
+```
+
+This is an excerpt, not a complete ontology file. Complete files also declare the referenced concepts, scope, format identifier, profile ID, and version. `reverseLabel` is readable wording for the same relationship viewed backward; it does not create another edge type.
+
+The ontology states **declared meaning**. The existing schema exporter reports **observed data**. Keeping them separate lets an application identify discrepancies and give an AI model both business context and actual storage facts.
+
+**Current status:** the specification, JSON Schema, and Movies/Northwind examples are available. Loading these definitions into `describeNodeRel()`, enforcing them during import, and expanding queries through parent concepts are not implemented. Existing query behavior is unchanged.
+
+The vocabulary is **NodeRel-specific** and makes no OWL, SHACL, or JSON-LD conformance claim. Its document structure is described by **JSON Schema Draft 2020-12**; that does not provide graph validation or reasoning by itself.
+
+[Full specification](docs/ontology.md) · [Example files and structural validation](ontologies/README.md) · [Northwind definition](ontologies/northwind.json)
+
 ## NodeRel and Neo4j
 
 ![Execution models: NodeRel calls built-in SQLite inside Node.js, while a Neo4j driver sends Cypher over Bolt to a separate database server.](docs/assets/execution-models.png)
@@ -423,6 +470,7 @@ Fifteen queries cover one-hop lookups, co-actors, relationship properties, joins
 src/                         Core graph API and schema exporter
 examples/neo4j/               Snapshots, runnable queries, stored reference results
 examples/ai/                  AI-readable schema and verified request example
+ontologies/                   Custom ontology specification schema and examples
 benchmarks/neo4j-strengths/   Synthetic dataset benchmark and recorded measurements
 docs/                        Query guide, design notes, charts, and diagrams
 scripts/                     Tests and reproducible visual renderers

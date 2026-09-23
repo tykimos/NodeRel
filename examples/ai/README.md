@@ -75,3 +75,7 @@ Choose the authorized scope and relevant schema portion, resolve names without i
 The current `trace` returns unique reached nodes and their minimum hop counts, not complete paths. Its maximum depth of ten is an input constraint rather than a cost guarantee. For richer queries, an application can expose vetted parameterized SQL; NodeRel does not compile arbitrary patterns or Cypher.
 
 See [design and semantics](../../docs/design.md) and the [query guide](../../docs/queries.md).
+
+## Optional ontology context
+
+The repository also defines [NodeRel Ontology v1](../../docs/ontology.md), a custom JSON vocabulary with [Movies and Northwind profiles](../../ontologies/README.md). It separates authored meanings from observed database facts. These files are not loaded by the current exporter. An application may supply the definitions as additional context, while keeping their constraints and parent hierarchy distinct from the actually executable operations.

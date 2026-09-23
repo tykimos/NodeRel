@@ -1,0 +1,121 @@
+{
+  "$schema": "./schema.json",
+  "format": "noderel-ontology/1",
+  "id": "movies",
+  "version": "0.1.0",
+  "scope": "movies",
+  "description": "A curated vocabulary for the committed Movies snapshot. All stored relationship types are covered; CreativeWork is a broader concept used for classification.",
+  "concepts": {
+    "Person": {
+      "description": "A human individual represented in the movie dataset. Having this kind alone does not mean the person acted in a film.",
+      "label": "Person",
+      "aliases": [
+        "person",
+        "people"
+      ],
+      "titleMeaning": "The display name of the person."
+    },
+    "CreativeWork": {
+      "description": "A created work, such as a film. This example declares the concept without storing any node directly under this kind.",
+      "label": "Creative work"
+    },
+    "Movie": {
+      "description": "A motion picture represented in the dataset.",
+      "label": "Movie",
+      "aliases": [
+        "film",
+        "motion picture"
+      ],
+      "parent": "CreativeWork",
+      "titleMeaning": "The title of the movie."
+    }
+  },
+  "relations": {
+    "ACTED_IN": {
+      "description": "A person performed in a movie. The roles belong to this particular person-to-movie relationship.",
+      "label": "acted in",
+      "aliases": [
+        "performed in"
+      ],
+      "from": "Person",
+      "to": "Movie",
+      "reverseLabel": "has cast member",
+      "properties": {
+        "roles": {
+          "description": "Names of the characters played by this person in this movie."
+        }
+      }
+    },
+    "DIRECTED": {
+      "description": "A person directed a movie.",
+      "label": "directed",
+      "from": "Person",
+      "to": "Movie",
+      "reverseLabel": "was directed by"
+    },
+    "PRODUCED": {
+      "description": "A person produced a movie.",
+      "label": "produced",
+      "from": "Person",
+      "to": "Movie",
+      "reverseLabel": "was produced by"
+    },
+    "WROTE": {
+      "description": "A person wrote a screenplay for a movie.",
+      "label": "wrote",
+      "from": "Person",
+      "to": "Movie",
+      "reverseLabel": "was written by"
+    },
+    "REVIEWED": {
+      "description": "A person reviewed a movie, with the review stored on the relationship.",
+      "label": "reviewed",
+      "from": "Person",
+      "to": "Movie",
+      "reverseLabel": "was reviewed by",
+      "properties": {
+        "summary": {
+          "description": "The text of this review."
+        },
+        "rating": {
+          "description": "The numeric rating recorded by the source dataset; this profile does not impose a rating scale."
+        }
+      }
+    },
+    "FOLLOWS": {
+      "description": "A person follows another person. A reverse reading does not imply that the other person follows them back.",
+      "label": "follows",
+      "from": "Person",
+      "to": "Person",
+      "reverseLabel": "is followed by"
+    }
+  },
+  "constraints": {
+    "requiredNodeFields": {
+      "Person": [
+        "title"
+      ],
+      "Movie": [
+        "title"
+      ]
+    },
+    "edgeProperties": {
+      "ACTED_IN": {
+        "roles": {
+          "type": "string[]",
+          "required": true
+        }
+      },
+      "REVIEWED": {
+        "summary": {
+          "type": "string",
+          "required": true
+        },
+        "rating": {
+          "type": "integer",
+          "required": true
+        }
+      }
+    }
+  }
+}

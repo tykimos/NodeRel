@@ -1,0 +1,125 @@
+{
+  "$schema": "./schema.json",
+  "format": "noderel-ontology/1",
+  "id": "northwind",
+  "version": "0.1.0",
+  "scope": "northwind",
+  "description": "A curated vocabulary for the committed Northwind snapshot. Property types describe the values actually retained in the source export.",
+  "concepts": {
+    "Customer": {
+      "description": "A customer account, represented by a company in this dataset.",
+      "label": "Customer",
+      "titleMeaning": "The customer company name."
+    },
+    "Order": {
+      "description": "A purchase order placed by a customer.",
+      "label": "Order",
+      "titleMeaning": "The order identifier used as a display title."
+    },
+    "Product": {
+      "description": "An item that can occur in an order and be supplied by a supplier.",
+      "label": "Product",
+      "titleMeaning": "The product name."
+    },
+    "Supplier": {
+      "description": "A company that supplies products.",
+      "label": "Supplier",
+      "titleMeaning": "The supplier company name."
+    },
+    "Category": {
+      "description": "A classification used to group products.",
+      "label": "Category",
+      "titleMeaning": "The product category name."
+    }
+  },
+  "relations": {
+    "PURCHASED": {
+      "description": "A customer placed an order. This relationship connects a customer to an order, not directly to a product.",
+      "label": "placed order",
+      "from": "Customer",
+      "to": "Order",
+      "reverseLabel": "was placed by"
+    },
+    "ORDERS": {
+      "description": "An order includes a product. Line-item values are properties of this relationship.",
+      "label": "includes product",
+      "from": "Order",
+      "to": "Product",
+      "reverseLabel": "appears in order",
+      "properties": {
+        "quantity": {
+          "description": "The ordered quantity recorded on this order-product relationship."
+        },
+        "unitPrice": {
+          "description": "The line-item unit price as a decimal string in the source export."
+        },
+        "discount": {
+          "description": "The discount as a decimal string in the source export."
+        },
+        "productID": {
+          "description": "The original product identifier repeated on the source order line."
+        },
+        "orderID": {
+          "description": "The original order identifier repeated on the source order line."
+        }
+      }
+    },
+    "PART_OF": {
+      "description": "A product belongs to a product category. This relation is not declared transitive.",
+      "label": "belongs to category",
+      "from": "Product",
+      "to": "Category",
+      "reverseLabel": "contains product"
+    },
+    "SUPPLIES": {
+      "description": "A supplier supplies a product.",
+      "label": "supplies",
+      "from": "Supplier",
+      "to": "Product",
+      "reverseLabel": "is supplied by"
+    }
+  },
+  "constraints": {
+    "requiredNodeFields": {
+      "Customer": [
+        "title"
+      ],
+      "Order": [
+        "title"
+      ],
+      "Product": [
+        "title"
+      ],
+      "Supplier": [
+        "title"
+      ],
+      "Category": [
+        "title"
+      ]
+    },
+    "edgeProperties": {
+      "ORDERS": {
+        "quantity": {
+          "type": "integer",
+          "required": true
+        },
+        "unitPrice": {
+          "type": "string",
+          "required": true
+        },
+        "discount": {
+          "type": "string",
+          "required": true
+        },
+        "productID": {
+          "type": "string",
+          "required": true
+        },
+        "orderID": {
+          "type": "string",
+          "required": true
+        }
+      }
+    }
+  }
+}

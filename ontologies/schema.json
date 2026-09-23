@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/tykimos/NodeRel/main/ontologies/schema.json",
+  "title": "NodeRel Ontology v1 document",
+  "description": "Checks document structure only. Reference integrity, acyclic parents, and graph conformance are specified in docs/ontology.md. This is not OWL, SHACL, or JSON-LD.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "format": {
+      "const": "noderel-ontology/1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_]*(?![\\s\\S])"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?![\\s\\S])"
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "concepts": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_]*(?![\\s\\S])"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/concept"
+      }
+    },
+    "relations": {
+      "type": "object",
+      "minProperties": 0,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_]*(?![\\s\\S])"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/relation"
+      }
+    },
+    "constraints": {
+      "$ref": "#/$defs/constraints"
+    }
+  },
+  "required": [
+    "format",
+    "id",
+    "version",
+    "scope",
+    "concepts",
+    "relations"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "concept": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "parent": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*(?![\\s\\S])"
+        },
+        "titleMeaning": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "property": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "relation": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "from": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*(?![\\s\\S])"
+        },
+        "to": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*(?![\\s\\S])"
+        },
+        "reverseLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "properties": {
+          "type": "object",
+          "minProperties": 0,
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]*(?![\\s\\S])"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/property"
+          }
+        }
+      },
+      "required": [
+        "description",
+        "from",
+        "to"
+      ],
+      "additionalProperties": false
+    },
+    "nodeFields": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "title",
+          "no",
+          "status",
+          "updated_at"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "propertyRule": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "string",
+            "number",
+            "integer",
+            "boolean",
+            "object",
+            "array",
+            "string[]",
+            "number[]",
+            "integer[]",
+            "boolean[]"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "requiredNodeFields": {
+          "type": "object",
+          "minProperties": 0,
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]*(?![\\s\\S])"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/nodeFields"
+          }
+        },
+        "edgeProperties": {
+          "type": "object",
+          "minProperties": 0,
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]*(?![\\s\\S])"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "minProperties": 1,
+            "propertyNames": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_]*(?![\\s\\S])"
+            },
+            "additionalProperties": {
+              "$ref": "#/$defs/propertyRule"
+            }
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  }
+}

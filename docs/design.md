@@ -83,6 +83,12 @@ Table fields, counts, observed relationship shapes, and JSON property types can 
 
 The schema lists proposed operations separately from existing ones. In particular, `find_nodes`, `shortest_path`, `match_pattern`, and `explain` are proposals, not callable methods. Describing an operation is not the same as implementing it.
 
+## Authored ontology definitions
+
+[NodeRel Ontology v1](ontology.md) adds a documented, project-specific format for concepts, relations, and optional data checks. It remains separate from the schema observed by `describeNodeRel()`. The [example definitions](../ontologies/README.md) can describe broader concepts, labels, and relation meanings even when some concepts have no current instances.
+
+The format is defined, but no ontology loader, graph validator, parent-aware query expander, or AI-description merger is integrated into the runtime. Core import and traversal semantics above remain unchanged. The JSON Schema checks file structure; it is not an OWL/SHACL compatibility layer or an ontology reasoning engine.
+
 ## Execution and service boundaries
 
 `DatabaseSync` is synchronous. A long query or rebuild blocks its calling JavaScript thread. An integrating service can use worker threads or separate processes; the benchmark uses independent worker/read connections for concurrent SQLite requests.
