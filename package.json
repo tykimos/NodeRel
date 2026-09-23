@@ -1,0 +1,25 @@
+{
+  "name": "@tykimos/graphindex",
+  "version": "0.1.0",
+  "description": "SQLite-based derived graph index with AI-readable schema descriptions and reproducible Neo4j comparisons",
+  "type": "module",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=24.13.1"
+  },
+  "exports": {
+    ".": "./src/graphindex.mjs",
+    "./describe": "./src/describe.mjs"
+  },
+  "scripts": {
+    "test": "node scripts/test.mjs",
+    "demo:build": "node examples/neo4j/demo.mjs rebuild",
+    "demo": "node examples/neo4j/demo.mjs",
+    "schema": "node src/describe.mjs examples/neo4j/graphindex.sqlite examples/ai/schema.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tykimos/graphindex.git"
+  }
+}

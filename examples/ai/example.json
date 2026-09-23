@@ -1,0 +1,70 @@
+{
+  "question": "키아누 리브스가 출연한 영화를 알려줘",
+  "nameResolution": {
+    "input": "키아누 리브스",
+    "canonicalName": "Keanu Reeves",
+    "note": "Canonical English name supplied for this demonstration; a general Korean-name resolver is not implemented.",
+    "matches": [
+      {
+        "id": "movies:Person:Keanu%20Reeves",
+        "title": "Keanu Reeves"
+      }
+    ]
+  },
+  "tool": "trace",
+  "arguments": {
+    "id": "movies:Person:Keanu%20Reeves",
+    "scope": "movies",
+    "direction": "out",
+    "maxDepth": 1,
+    "types": [
+      "ACTED_IN"
+    ]
+  },
+  "result": [
+    {
+      "id": "movies:Movie:Johnny%20Mnemonic",
+      "title": "Johnny Mnemonic",
+      "kind": "Movie",
+      "depth": 1
+    },
+    {
+      "id": "movies:Movie:Something's%20Gotta%20Give",
+      "title": "Something's Gotta Give",
+      "kind": "Movie",
+      "depth": 1
+    },
+    {
+      "id": "movies:Movie:The%20Devil's%20Advocate",
+      "title": "The Devil's Advocate",
+      "kind": "Movie",
+      "depth": 1
+    },
+    {
+      "id": "movies:Movie:The%20Matrix",
+      "title": "The Matrix",
+      "kind": "Movie",
+      "depth": 1
+    },
+    {
+      "id": "movies:Movie:The%20Matrix%20Reloaded",
+      "title": "The Matrix Reloaded",
+      "kind": "Movie",
+      "depth": 1
+    },
+    {
+      "id": "movies:Movie:The%20Matrix%20Revolutions",
+      "title": "The Matrix Revolutions",
+      "kind": "Movie",
+      "depth": 1
+    },
+    {
+      "id": "movies:Movie:The%20Replacements",
+      "title": "The Replacements",
+      "kind": "Movie",
+      "depth": 1
+    }
+  ],
+  "verifiedAgainst": "Stored Neo4j sample baseline",
+  "notes": "This is a concrete tool-call example, not a benchmark of an automated natural-language translator."
+}

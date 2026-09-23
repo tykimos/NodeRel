@@ -1,0 +1,5625 @@
+{
+  "scope": "movies",
+  "sourceRepository": "https://github.com/neo4j-graph-examples/movies",
+  "retrievedAt": "2026-09-23T04:04:34.051Z",
+  "nodes": [
+    {
+      "id": "movies:Movie:A%20Few%20Good%20Men",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "A Few Good Men",
+      "title": "A Few Good Men",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "In the heart of the nation's capital, in a courthouse of the U.S. government, one man will stop at nothing to keep his honor, and one will stop at nothing to find the truth.",
+          "title": "A Few Good Men",
+          "released": 1992
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:A%20League%20of%20Their%20Own",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "A League of Their Own",
+      "title": "A League of Their Own",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Once in a lifetime you get a chance to do something different.",
+          "title": "A League of Their Own",
+          "released": 1992
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Apollo%2013",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Apollo 13",
+      "title": "Apollo 13",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Houston, we have a problem.",
+          "title": "Apollo 13",
+          "released": 1995
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:As%20Good%20as%20It%20Gets",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "As Good as It Gets",
+      "title": "As Good as It Gets",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "A comedy from the heart that goes for the throat.",
+          "title": "As Good as It Gets",
+          "released": 1997
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Bicentennial%20Man",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Bicentennial Man",
+      "title": "Bicentennial Man",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "One robot's 200 year journey to become an ordinary man.",
+          "title": "Bicentennial Man",
+          "released": 1999
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Cast%20Away",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Cast Away",
+      "title": "Cast Away",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "At the edge of the world, his journey begins.",
+          "title": "Cast Away",
+          "released": 2000
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Charlie%20Wilson's%20War",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Charlie Wilson's War",
+      "title": "Charlie Wilson's War",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "A stiff drink. A little mascara. A lot of nerve. Who said they couldn't bring down the Soviet empire.",
+          "title": "Charlie Wilson's War",
+          "released": 2007
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Cloud%20Atlas",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Cloud Atlas",
+      "title": "Cloud Atlas",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Everything is connected",
+          "title": "Cloud Atlas",
+          "released": 2012
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Frost%2FNixon",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Frost/Nixon",
+      "title": "Frost/Nixon",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "400 million people were waiting for the truth.",
+          "title": "Frost/Nixon",
+          "released": 2008
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Hoffa",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Hoffa",
+      "title": "Hoffa",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "He didn't want law. He wanted justice.",
+          "title": "Hoffa",
+          "released": 1992
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Jerry%20Maguire",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Jerry Maguire",
+      "title": "Jerry Maguire",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "The rest of his life begins now.",
+          "title": "Jerry Maguire",
+          "released": 2000
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Joe%20Versus%20the%20Volcano",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Joe Versus the Volcano",
+      "title": "Joe Versus the Volcano",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "A story of love, lava and burning desire.",
+          "title": "Joe Versus the Volcano",
+          "released": 1990
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Johnny%20Mnemonic",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Johnny Mnemonic",
+      "title": "Johnny Mnemonic",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "The hottest data on earth. In the coolest head in town",
+          "title": "Johnny Mnemonic",
+          "released": 1995
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Ninja%20Assassin",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Ninja Assassin",
+      "title": "Ninja Assassin",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Prepare to enter a secret world of assassins",
+          "title": "Ninja Assassin",
+          "released": 2009
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:One%20Flew%20Over%20the%20Cuckoo's%20Nest",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "One Flew Over the Cuckoo's Nest",
+      "title": "One Flew Over the Cuckoo's Nest",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "If he's crazy, what does that make you?",
+          "title": "One Flew Over the Cuckoo's Nest",
+          "released": 1975
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:RescueDawn",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "RescueDawn",
+      "title": "RescueDawn",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Based on the extraordinary true story of one man's fight for freedom",
+          "title": "RescueDawn",
+          "released": 2006
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Sleepless%20in%20Seattle",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Sleepless in Seattle",
+      "title": "Sleepless in Seattle",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "What if someone you never met, someone you never saw, someone you never knew was the only someone for you?",
+          "title": "Sleepless in Seattle",
+          "released": 1993
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Snow%20Falling%20on%20Cedars",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Snow Falling on Cedars",
+      "title": "Snow Falling on Cedars",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "First loves last. Forever.",
+          "title": "Snow Falling on Cedars",
+          "released": 1999
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Something's%20Gotta%20Give",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Something's Gotta Give",
+      "title": "Something's Gotta Give",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "title": "Something's Gotta Give",
+          "released": 2003
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Speed%20Racer",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Speed Racer",
+      "title": "Speed Racer",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Speed has no limits",
+          "title": "Speed Racer",
+          "released": 2008
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Stand%20By%20Me",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Stand By Me",
+      "title": "Stand By Me",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "For some, it's the last real taste of innocence, and the first real taste of life. But for everyone, it's the time that memories are made of.",
+          "title": "Stand By Me",
+          "released": 1986
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:That%20Thing%20You%20Do",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "That Thing You Do",
+      "title": "That Thing You Do",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "In every life there comes a time when that thing you dream becomes that thing you do",
+          "title": "That Thing You Do",
+          "released": 1996
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:The%20Birdcage",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "The Birdcage",
+      "title": "The Birdcage",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Come as you are",
+          "title": "The Birdcage",
+          "released": 1996
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:The%20Da%20Vinci%20Code",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "The Da Vinci Code",
+      "title": "The Da Vinci Code",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Break The Codes",
+          "title": "The Da Vinci Code",
+          "released": 2006
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:The%20Devil's%20Advocate",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "The Devil's Advocate",
+      "title": "The Devil's Advocate",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Evil has its winning ways",
+          "title": "The Devil's Advocate",
+          "released": 1997
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:The%20Green%20Mile",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "The Green Mile",
+      "title": "The Green Mile",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Walk a mile you'll never forget.",
+          "title": "The Green Mile",
+          "released": 1999
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:The%20Matrix",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "The Matrix",
+      "title": "The Matrix",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Welcome to the Real World",
+          "title": "The Matrix",
+          "released": 1999
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:The%20Matrix%20Reloaded",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "The Matrix Reloaded",
+      "title": "The Matrix Reloaded",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Free your mind",
+          "title": "The Matrix Reloaded",
+          "released": 2003
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:The%20Matrix%20Revolutions",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "The Matrix Revolutions",
+      "title": "The Matrix Revolutions",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Everything that has a beginning has an end",
+          "title": "The Matrix Revolutions",
+          "released": 2003
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:The%20Polar%20Express",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "The Polar Express",
+      "title": "The Polar Express",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "This Holiday Season... Believe",
+          "title": "The Polar Express",
+          "released": 2004
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:The%20Replacements",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "The Replacements",
+      "title": "The Replacements",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Pain heals, Chicks dig scars... Glory lasts forever",
+          "title": "The Replacements",
+          "released": 2000
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Top%20Gun",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Top Gun",
+      "title": "Top Gun",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "I feel the need, the need for speed.",
+          "title": "Top Gun",
+          "released": 1986
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Twister",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Twister",
+      "title": "Twister",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Don't Breathe. Don't Look Back.",
+          "title": "Twister",
+          "released": 1996
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:Unforgiven",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "Unforgiven",
+      "title": "Unforgiven",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "It's a hell of a thing, killing a man",
+          "title": "Unforgiven",
+          "released": 1992
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:V%20for%20Vendetta",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "V for Vendetta",
+      "title": "V for Vendetta",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Freedom! Forever!",
+          "title": "V for Vendetta",
+          "released": 2006
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:What%20Dreams%20May%20Come",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "What Dreams May Come",
+      "title": "What Dreams May Come",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "After life there is more. The end is just the beginning.",
+          "title": "What Dreams May Come",
+          "released": 1998
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:When%20Harry%20Met%20Sally",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "When Harry Met Sally",
+      "title": "When Harry Met Sally",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "Can two friends sleep together and still love each other in the morning?",
+          "title": "When Harry Met Sally",
+          "released": 1998
+        }
+      }
+    },
+    {
+      "id": "movies:Movie:You've%20Got%20Mail",
+      "scope": "movies",
+      "kind": "Movie",
+      "no": "You've Got Mail",
+      "title": "You've Got Mail",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "tagline": "At odds in life... in love on-line.",
+          "title": "You've Got Mail",
+          "released": 1998
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Aaron%20Sorkin",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Aaron Sorkin",
+      "title": "Aaron Sorkin",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1961,
+          "name": "Aaron Sorkin"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Al%20Pacino",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Al Pacino",
+      "title": "Al Pacino",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1940,
+          "name": "Al Pacino"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Angela%20Scope",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Angela Scope",
+      "title": "Angela Scope",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Angela Scope"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Annabella%20Sciorra",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Annabella Sciorra",
+      "title": "Annabella Sciorra",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1960,
+          "name": "Annabella Sciorra"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Anthony%20Edwards",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Anthony Edwards",
+      "title": "Anthony Edwards",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1962,
+          "name": "Anthony Edwards"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Audrey%20Tautou",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Audrey Tautou",
+      "title": "Audrey Tautou",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1976,
+          "name": "Audrey Tautou"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Ben%20Miles",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Ben Miles",
+      "title": "Ben Miles",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1967,
+          "name": "Ben Miles"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Bill%20Paxton",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Bill Paxton",
+      "title": "Bill Paxton",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1955,
+          "name": "Bill Paxton"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Bill%20Pullman",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Bill Pullman",
+      "title": "Bill Pullman",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1953,
+          "name": "Bill Pullman"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Billy%20Crystal",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Billy Crystal",
+      "title": "Billy Crystal",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1948,
+          "name": "Billy Crystal"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Bonnie%20Hunt",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Bonnie Hunt",
+      "title": "Bonnie Hunt",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1961,
+          "name": "Bonnie Hunt"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Brooke%20Langton",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Brooke Langton",
+      "title": "Brooke Langton",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1970,
+          "name": "Brooke Langton"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Bruno%20Kirby",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Bruno Kirby",
+      "title": "Bruno Kirby",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1949,
+          "name": "Bruno Kirby"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Cameron%20Crowe",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Cameron Crowe",
+      "title": "Cameron Crowe",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1957,
+          "name": "Cameron Crowe"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Carrie-Anne%20Moss",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Carrie-Anne Moss",
+      "title": "Carrie-Anne Moss",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1967,
+          "name": "Carrie-Anne Moss"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Carrie%20Fisher",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Carrie Fisher",
+      "title": "Carrie Fisher",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1956,
+          "name": "Carrie Fisher"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Charlize%20Theron",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Charlize Theron",
+      "title": "Charlize Theron",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1975,
+          "name": "Charlize Theron"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Chris%20Columbus",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Chris Columbus",
+      "title": "Chris Columbus",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1958,
+          "name": "Chris Columbus"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Christian%20Bale",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Christian Bale",
+      "title": "Christian Bale",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1974,
+          "name": "Christian Bale"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Christina%20Ricci",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Christina Ricci",
+      "title": "Christina Ricci",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1980,
+          "name": "Christina Ricci"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Christopher%20Guest",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Christopher Guest",
+      "title": "Christopher Guest",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1948,
+          "name": "Christopher Guest"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Clint%20Eastwood",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Clint Eastwood",
+      "title": "Clint Eastwood",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1930,
+          "name": "Clint Eastwood"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Corey%20Feldman",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Corey Feldman",
+      "title": "Corey Feldman",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1971,
+          "name": "Corey Feldman"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Cuba%20Gooding%20Jr.",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Cuba Gooding Jr.",
+      "title": "Cuba Gooding Jr.",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1968,
+          "name": "Cuba Gooding Jr."
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Danny%20DeVito",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Danny DeVito",
+      "title": "Danny DeVito",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1944,
+          "name": "Danny DeVito"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Dave%20Chappelle",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Dave Chappelle",
+      "title": "Dave Chappelle",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1973,
+          "name": "Dave Chappelle"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:David%20Mitchell",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "David Mitchell",
+      "title": "David Mitchell",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1969,
+          "name": "David Mitchell"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:David%20Morse",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "David Morse",
+      "title": "David Morse",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1953,
+          "name": "David Morse"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Demi%20Moore",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Demi Moore",
+      "title": "Demi Moore",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1962,
+          "name": "Demi Moore"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Diane%20Keaton",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Diane Keaton",
+      "title": "Diane Keaton",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1946,
+          "name": "Diane Keaton"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Dina%20Meyer",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Dina Meyer",
+      "title": "Dina Meyer",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1968,
+          "name": "Dina Meyer"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Ed%20Harris",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Ed Harris",
+      "title": "Ed Harris",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1950,
+          "name": "Ed Harris"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Emil%20Eifrem",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Emil Eifrem",
+      "title": "Emil Eifrem",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1978,
+          "name": "Emil Eifrem"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Emile%20Hirsch",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Emile Hirsch",
+      "title": "Emile Hirsch",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1985,
+          "name": "Emile Hirsch"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Ethan%20Hawke",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Ethan Hawke",
+      "title": "Ethan Hawke",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1970,
+          "name": "Ethan Hawke"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Frank%20Darabont",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Frank Darabont",
+      "title": "Frank Darabont",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1959,
+          "name": "Frank Darabont"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Frank%20Langella",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Frank Langella",
+      "title": "Frank Langella",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1938,
+          "name": "Frank Langella"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Gary%20Sinise",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Gary Sinise",
+      "title": "Gary Sinise",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1955,
+          "name": "Gary Sinise"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Geena%20Davis",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Geena Davis",
+      "title": "Geena Davis",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1956,
+          "name": "Geena Davis"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Gene%20Hackman",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Gene Hackman",
+      "title": "Gene Hackman",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1930,
+          "name": "Gene Hackman"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Greg%20Kinnear",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Greg Kinnear",
+      "title": "Greg Kinnear",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1963,
+          "name": "Greg Kinnear"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Halle%20Berry",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Halle Berry",
+      "title": "Halle Berry",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1966,
+          "name": "Halle Berry"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Helen%20Hunt",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Helen Hunt",
+      "title": "Helen Hunt",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1963,
+          "name": "Helen Hunt"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Howard%20Deutch",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Howard Deutch",
+      "title": "Howard Deutch",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1950,
+          "name": "Howard Deutch"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Hugo%20Weaving",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Hugo Weaving",
+      "title": "Hugo Weaving",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1960,
+          "name": "Hugo Weaving"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Ian%20McKellen",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Ian McKellen",
+      "title": "Ian McKellen",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1939,
+          "name": "Ian McKellen"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Ice-T",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Ice-T",
+      "title": "Ice-T",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1958,
+          "name": "Ice-T"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:J.T.%20Walsh",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "J.T. Walsh",
+      "title": "J.T. Walsh",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1943,
+          "name": "J.T. Walsh"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Jack%20Nicholson",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Jack Nicholson",
+      "title": "Jack Nicholson",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1937,
+          "name": "Jack Nicholson"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:James%20Cromwell",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "James Cromwell",
+      "title": "James Cromwell",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1940,
+          "name": "James Cromwell"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:James%20L.%20Brooks",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "James L. Brooks",
+      "title": "James L. Brooks",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1940,
+          "name": "James L. Brooks"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:James%20Marshall",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "James Marshall",
+      "title": "James Marshall",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1967,
+          "name": "James Marshall"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:James%20Thompson",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "James Thompson",
+      "title": "James Thompson",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "James Thompson"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Jan%20de%20Bont",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Jan de Bont",
+      "title": "Jan de Bont",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1943,
+          "name": "Jan de Bont"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Jay%20Mohr",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Jay Mohr",
+      "title": "Jay Mohr",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1970,
+          "name": "Jay Mohr"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Jerry%20O'Connell",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Jerry O'Connell",
+      "title": "Jerry O'Connell",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1974,
+          "name": "Jerry O'Connell"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Jessica%20Thompson",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Jessica Thompson",
+      "title": "Jessica Thompson",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Jessica Thompson"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Jim%20Broadbent",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Jim Broadbent",
+      "title": "Jim Broadbent",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1949,
+          "name": "Jim Broadbent"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Jim%20Cash",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Jim Cash",
+      "title": "Jim Cash",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1941,
+          "name": "Jim Cash"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Joel%20Silver",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Joel Silver",
+      "title": "Joel Silver",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1952,
+          "name": "Joel Silver"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:John%20C.%20Reilly",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "John C. Reilly",
+      "title": "John C. Reilly",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1965,
+          "name": "John C. Reilly"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:John%20Cusack",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "John Cusack",
+      "title": "John Cusack",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1966,
+          "name": "John Cusack"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:John%20Goodman",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "John Goodman",
+      "title": "John Goodman",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1960,
+          "name": "John Goodman"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:John%20Hurt",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "John Hurt",
+      "title": "John Hurt",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1940,
+          "name": "John Hurt"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:John%20Patrick%20Stanley",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "John Patrick Stanley",
+      "title": "John Patrick Stanley",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1950,
+          "name": "John Patrick Stanley"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Jonathan%20Lipnicki",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Jonathan Lipnicki",
+      "title": "Jonathan Lipnicki",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1996,
+          "name": "Jonathan Lipnicki"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Julia%20Roberts",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Julia Roberts",
+      "title": "Julia Roberts",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1967,
+          "name": "Julia Roberts"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Keanu%20Reeves",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Keanu Reeves",
+      "title": "Keanu Reeves",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1964,
+          "name": "Keanu Reeves"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Kelly%20McGillis",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Kelly McGillis",
+      "title": "Kelly McGillis",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1957,
+          "name": "Kelly McGillis"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Kelly%20Preston",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Kelly Preston",
+      "title": "Kelly Preston",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1962,
+          "name": "Kelly Preston"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Kevin%20Bacon",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Kevin Bacon",
+      "title": "Kevin Bacon",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1958,
+          "name": "Kevin Bacon"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Kevin%20Pollak",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Kevin Pollak",
+      "title": "Kevin Pollak",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1957,
+          "name": "Kevin Pollak"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Kiefer%20Sutherland",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Kiefer Sutherland",
+      "title": "Kiefer Sutherland",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1966,
+          "name": "Kiefer Sutherland"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Lana%20Wachowski",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Lana Wachowski",
+      "title": "Lana Wachowski",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1965,
+          "name": "Lana Wachowski"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Laurence%20Fishburne",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Laurence Fishburne",
+      "title": "Laurence Fishburne",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1961,
+          "name": "Laurence Fishburne"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Lilly%20Wachowski",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Lilly Wachowski",
+      "title": "Lilly Wachowski",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1967,
+          "name": "Lilly Wachowski"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Liv%20Tyler",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Liv Tyler",
+      "title": "Liv Tyler",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1977,
+          "name": "Liv Tyler"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Lori%20Petty",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Lori Petty",
+      "title": "Lori Petty",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1963,
+          "name": "Lori Petty"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Madonna",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Madonna",
+      "title": "Madonna",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1954,
+          "name": "Madonna"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Marshall%20Bell",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Marshall Bell",
+      "title": "Marshall Bell",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1942,
+          "name": "Marshall Bell"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Matthew%20Fox",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Matthew Fox",
+      "title": "Matthew Fox",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1966,
+          "name": "Matthew Fox"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Max%20von%20Sydow",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Max von Sydow",
+      "title": "Max von Sydow",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1929,
+          "name": "Max von Sydow"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Meg%20Ryan",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Meg Ryan",
+      "title": "Meg Ryan",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1961,
+          "name": "Meg Ryan"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Michael%20Clarke%20Duncan",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Michael Clarke Duncan",
+      "title": "Michael Clarke Duncan",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1957,
+          "name": "Michael Clarke Duncan"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Michael%20Sheen",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Michael Sheen",
+      "title": "Michael Sheen",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1969,
+          "name": "Michael Sheen"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Mike%20Nichols",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Mike Nichols",
+      "title": "Mike Nichols",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1931,
+          "name": "Mike Nichols"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Milos%20Forman",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Milos Forman",
+      "title": "Milos Forman",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1932,
+          "name": "Milos Forman"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Nancy%20Meyers",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Nancy Meyers",
+      "title": "Nancy Meyers",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1949,
+          "name": "Nancy Meyers"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Naomie%20Harris",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Naomie Harris",
+      "title": "Naomie Harris",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Naomie Harris"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Natalie%20Portman",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Natalie Portman",
+      "title": "Natalie Portman",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1981,
+          "name": "Natalie Portman"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Nathan%20Lane",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Nathan Lane",
+      "title": "Nathan Lane",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1956,
+          "name": "Nathan Lane"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Noah%20Wyle",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Noah Wyle",
+      "title": "Noah Wyle",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1971,
+          "name": "Noah Wyle"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Nora%20Ephron",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Nora Ephron",
+      "title": "Nora Ephron",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1941,
+          "name": "Nora Ephron"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Oliver%20Platt",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Oliver Platt",
+      "title": "Oliver Platt",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1960,
+          "name": "Oliver Platt"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Orlando%20Jones",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Orlando Jones",
+      "title": "Orlando Jones",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1968,
+          "name": "Orlando Jones"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Parker%20Posey",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Parker Posey",
+      "title": "Parker Posey",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1968,
+          "name": "Parker Posey"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Patricia%20Clarkson",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Patricia Clarkson",
+      "title": "Patricia Clarkson",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1959,
+          "name": "Patricia Clarkson"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Paul%20Bettany",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Paul Bettany",
+      "title": "Paul Bettany",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1971,
+          "name": "Paul Bettany"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Paul%20Blythe",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Paul Blythe",
+      "title": "Paul Blythe",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Paul Blythe"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Penny%20Marshall",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Penny Marshall",
+      "title": "Penny Marshall",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1943,
+          "name": "Penny Marshall"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Philip%20Seymour%20Hoffman",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Philip Seymour Hoffman",
+      "title": "Philip Seymour Hoffman",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1967,
+          "name": "Philip Seymour Hoffman"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Rain",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Rain",
+      "title": "Rain",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1982,
+          "name": "Rain"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Regina%20King",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Regina King",
+      "title": "Regina King",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1971,
+          "name": "Regina King"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Renee%20Zellweger",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Renee Zellweger",
+      "title": "Renee Zellweger",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1969,
+          "name": "Renee Zellweger"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Richard%20Harris",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Richard Harris",
+      "title": "Richard Harris",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1930,
+          "name": "Richard Harris"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Rick%20Yune",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Rick Yune",
+      "title": "Rick Yune",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1971,
+          "name": "Rick Yune"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Rita%20Wilson",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Rita Wilson",
+      "title": "Rita Wilson",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1956,
+          "name": "Rita Wilson"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:River%20Phoenix",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "River Phoenix",
+      "title": "River Phoenix",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1970,
+          "name": "River Phoenix"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Rob%20Reiner",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Rob Reiner",
+      "title": "Rob Reiner",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1947,
+          "name": "Rob Reiner"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Robert%20Longo",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Robert Longo",
+      "title": "Robert Longo",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1953,
+          "name": "Robert Longo"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Robert%20Zemeckis",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Robert Zemeckis",
+      "title": "Robert Zemeckis",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1951,
+          "name": "Robert Zemeckis"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Robin%20Williams",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Robin Williams",
+      "title": "Robin Williams",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1951,
+          "name": "Robin Williams"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Ron%20Howard",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Ron Howard",
+      "title": "Ron Howard",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1954,
+          "name": "Ron Howard"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Rosie%20O'Donnell",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Rosie O'Donnell",
+      "title": "Rosie O'Donnell",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1962,
+          "name": "Rosie O'Donnell"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Sam%20Rockwell",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Sam Rockwell",
+      "title": "Sam Rockwell",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1968,
+          "name": "Sam Rockwell"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Scott%20Hicks",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Scott Hicks",
+      "title": "Scott Hicks",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1953,
+          "name": "Scott Hicks"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Stefan%20Arndt",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Stefan Arndt",
+      "title": "Stefan Arndt",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1961,
+          "name": "Stefan Arndt"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Stephen%20Rea",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Stephen Rea",
+      "title": "Stephen Rea",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1946,
+          "name": "Stephen Rea"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Steve%20Zahn",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Steve Zahn",
+      "title": "Steve Zahn",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1967,
+          "name": "Steve Zahn"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Susan%20Sarandon",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Susan Sarandon",
+      "title": "Susan Sarandon",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1946,
+          "name": "Susan Sarandon"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Takeshi%20Kitano",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Takeshi Kitano",
+      "title": "Takeshi Kitano",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1947,
+          "name": "Takeshi Kitano"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Taylor%20Hackford",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Taylor Hackford",
+      "title": "Taylor Hackford",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1944,
+          "name": "Taylor Hackford"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Tom%20Cruise",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Tom Cruise",
+      "title": "Tom Cruise",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1962,
+          "name": "Tom Cruise"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Tom%20Hanks",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Tom Hanks",
+      "title": "Tom Hanks",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1956,
+          "name": "Tom Hanks"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Tom%20Skerritt",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Tom Skerritt",
+      "title": "Tom Skerritt",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1933,
+          "name": "Tom Skerritt"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Tom%20Tykwer",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Tom Tykwer",
+      "title": "Tom Tykwer",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1965,
+          "name": "Tom Tykwer"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Tony%20Scott",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Tony Scott",
+      "title": "Tony Scott",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1944,
+          "name": "Tony Scott"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Val%20Kilmer",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Val Kilmer",
+      "title": "Val Kilmer",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1959,
+          "name": "Val Kilmer"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Victor%20Garber",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Victor Garber",
+      "title": "Victor Garber",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1949,
+          "name": "Victor Garber"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Vincent%20Ward",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Vincent Ward",
+      "title": "Vincent Ward",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1956,
+          "name": "Vincent Ward"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Werner%20Herzog",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Werner Herzog",
+      "title": "Werner Herzog",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1942,
+          "name": "Werner Herzog"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Wil%20Wheaton",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Wil Wheaton",
+      "title": "Wil Wheaton",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1972,
+          "name": "Wil Wheaton"
+        }
+      }
+    },
+    {
+      "id": "movies:Person:Zach%20Grenier",
+      "scope": "movies",
+      "kind": "Person",
+      "no": "Zach Grenier",
+      "title": "Zach Grenier",
+      "status": "",
+      "updated_at": "",
+      "source": {
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "born": 1954,
+          "name": "Zach Grenier"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "movies:Person:Keanu%20Reeves",
+      "to": "movies:Movie:The%20Matrix",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Neo"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Carrie-Anne%20Moss",
+      "to": "movies:Movie:The%20Matrix",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Trinity"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Laurence%20Fishburne",
+      "to": "movies:Movie:The%20Matrix",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Morpheus"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Hugo%20Weaving",
+      "to": "movies:Movie:The%20Matrix",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Agent Smith"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Lilly%20Wachowski",
+      "to": "movies:Movie:The%20Matrix",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lana%20Wachowski",
+      "to": "movies:Movie:The%20Matrix",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Joel%20Silver",
+      "to": "movies:Movie:The%20Matrix",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Emil%20Eifrem",
+      "to": "movies:Movie:The%20Matrix",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Emil"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Keanu%20Reeves",
+      "to": "movies:Movie:The%20Matrix%20Reloaded",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Neo"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Carrie-Anne%20Moss",
+      "to": "movies:Movie:The%20Matrix%20Reloaded",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Trinity"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Laurence%20Fishburne",
+      "to": "movies:Movie:The%20Matrix%20Reloaded",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Morpheus"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Hugo%20Weaving",
+      "to": "movies:Movie:The%20Matrix%20Reloaded",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Agent Smith"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Lilly%20Wachowski",
+      "to": "movies:Movie:The%20Matrix%20Reloaded",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lana%20Wachowski",
+      "to": "movies:Movie:The%20Matrix%20Reloaded",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Joel%20Silver",
+      "to": "movies:Movie:The%20Matrix%20Reloaded",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Keanu%20Reeves",
+      "to": "movies:Movie:The%20Matrix%20Revolutions",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Neo"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Carrie-Anne%20Moss",
+      "to": "movies:Movie:The%20Matrix%20Revolutions",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Trinity"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Laurence%20Fishburne",
+      "to": "movies:Movie:The%20Matrix%20Revolutions",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Morpheus"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Hugo%20Weaving",
+      "to": "movies:Movie:The%20Matrix%20Revolutions",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Agent Smith"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Lilly%20Wachowski",
+      "to": "movies:Movie:The%20Matrix%20Revolutions",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lana%20Wachowski",
+      "to": "movies:Movie:The%20Matrix%20Revolutions",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Joel%20Silver",
+      "to": "movies:Movie:The%20Matrix%20Revolutions",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Keanu%20Reeves",
+      "to": "movies:Movie:The%20Devil's%20Advocate",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Kevin Lomax"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Charlize%20Theron",
+      "to": "movies:Movie:The%20Devil's%20Advocate",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Mary Ann Lomax"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Al%20Pacino",
+      "to": "movies:Movie:The%20Devil's%20Advocate",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "John Milton"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Taylor%20Hackford",
+      "to": "movies:Movie:The%20Devil's%20Advocate",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Cruise",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Lt. Daniel Kaffee"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Jack%20Nicholson",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Col. Nathan R. Jessup"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Demi%20Moore",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Lt. Cdr. JoAnne Galloway"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Kevin%20Bacon",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Capt. Jack Ross"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Kiefer%20Sutherland",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Lt. Jonathan Kendrick"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Noah%20Wyle",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Cpl. Jeffrey Barnes"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Cuba%20Gooding%20Jr.",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Cpl. Carl Hammaker"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Kevin%20Pollak",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Lt. Sam Weinberg"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:J.T.%20Walsh",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Lt. Col. Matthew Andrew Markinson"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:James%20Marshall",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Pfc. Louden Downey"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Christopher%20Guest",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Dr. Stone"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Aaron%20Sorkin",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Man in Bar"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Rob%20Reiner",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Aaron%20Sorkin",
+      "to": "movies:Movie:A%20Few%20Good%20Men",
+      "type": "WROTE",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Cruise",
+      "to": "movies:Movie:Top%20Gun",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Maverick"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Kelly%20McGillis",
+      "to": "movies:Movie:Top%20Gun",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Charlie"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Val%20Kilmer",
+      "to": "movies:Movie:Top%20Gun",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Iceman"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Anthony%20Edwards",
+      "to": "movies:Movie:Top%20Gun",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Goose"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Tom%20Skerritt",
+      "to": "movies:Movie:Top%20Gun",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Viper"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Meg%20Ryan",
+      "to": "movies:Movie:Top%20Gun",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Carole"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Tony%20Scott",
+      "to": "movies:Movie:Top%20Gun",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Jim%20Cash",
+      "to": "movies:Movie:Top%20Gun",
+      "type": "WROTE",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Cruise",
+      "to": "movies:Movie:Jerry%20Maguire",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Jerry Maguire"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Cuba%20Gooding%20Jr.",
+      "to": "movies:Movie:Jerry%20Maguire",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Rod Tidwell"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Renee%20Zellweger",
+      "to": "movies:Movie:Jerry%20Maguire",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Dorothy Boyd"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Kelly%20Preston",
+      "to": "movies:Movie:Jerry%20Maguire",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Avery Bishop"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Jerry%20O'Connell",
+      "to": "movies:Movie:Jerry%20Maguire",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Frank Cushman"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Jay%20Mohr",
+      "to": "movies:Movie:Jerry%20Maguire",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Bob Sugar"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Bonnie%20Hunt",
+      "to": "movies:Movie:Jerry%20Maguire",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Laurel Boyd"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Regina%20King",
+      "to": "movies:Movie:Jerry%20Maguire",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Marcee Tidwell"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Jonathan%20Lipnicki",
+      "to": "movies:Movie:Jerry%20Maguire",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Ray Boyd"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Cameron%20Crowe",
+      "to": "movies:Movie:Jerry%20Maguire",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Cameron%20Crowe",
+      "to": "movies:Movie:Jerry%20Maguire",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Cameron%20Crowe",
+      "to": "movies:Movie:Jerry%20Maguire",
+      "type": "WROTE",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Wil%20Wheaton",
+      "to": "movies:Movie:Stand%20By%20Me",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Gordie Lachance"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:River%20Phoenix",
+      "to": "movies:Movie:Stand%20By%20Me",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Chris Chambers"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Jerry%20O'Connell",
+      "to": "movies:Movie:Stand%20By%20Me",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Vern Tessio"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Corey%20Feldman",
+      "to": "movies:Movie:Stand%20By%20Me",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Teddy Duchamp"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:John%20Cusack",
+      "to": "movies:Movie:Stand%20By%20Me",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Denny Lachance"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Kiefer%20Sutherland",
+      "to": "movies:Movie:Stand%20By%20Me",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Ace Merrill"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Marshall%20Bell",
+      "to": "movies:Movie:Stand%20By%20Me",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Mr. Lachance"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Rob%20Reiner",
+      "to": "movies:Movie:Stand%20By%20Me",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Jack%20Nicholson",
+      "to": "movies:Movie:As%20Good%20as%20It%20Gets",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Melvin Udall"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Helen%20Hunt",
+      "to": "movies:Movie:As%20Good%20as%20It%20Gets",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Carol Connelly"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Greg%20Kinnear",
+      "to": "movies:Movie:As%20Good%20as%20It%20Gets",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Simon Bishop"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Cuba%20Gooding%20Jr.",
+      "to": "movies:Movie:As%20Good%20as%20It%20Gets",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Frank Sachs"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:James%20L.%20Brooks",
+      "to": "movies:Movie:As%20Good%20as%20It%20Gets",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Robin%20Williams",
+      "to": "movies:Movie:What%20Dreams%20May%20Come",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Chris Nielsen"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Cuba%20Gooding%20Jr.",
+      "to": "movies:Movie:What%20Dreams%20May%20Come",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Albert Lewis"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Annabella%20Sciorra",
+      "to": "movies:Movie:What%20Dreams%20May%20Come",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Annie Collins-Nielsen"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Max%20von%20Sydow",
+      "to": "movies:Movie:What%20Dreams%20May%20Come",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "The Tracker"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Werner%20Herzog",
+      "to": "movies:Movie:What%20Dreams%20May%20Come",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "The Face"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Vincent%20Ward",
+      "to": "movies:Movie:What%20Dreams%20May%20Come",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Ethan%20Hawke",
+      "to": "movies:Movie:Snow%20Falling%20on%20Cedars",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Ishmael Chambers"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Rick%20Yune",
+      "to": "movies:Movie:Snow%20Falling%20on%20Cedars",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Kazuo Miyamoto"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Max%20von%20Sydow",
+      "to": "movies:Movie:Snow%20Falling%20on%20Cedars",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Nels Gudmundsson"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:James%20Cromwell",
+      "to": "movies:Movie:Snow%20Falling%20on%20Cedars",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Judge Fielding"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Scott%20Hicks",
+      "to": "movies:Movie:Snow%20Falling%20on%20Cedars",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Hanks",
+      "to": "movies:Movie:You've%20Got%20Mail",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Joe Fox"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Meg%20Ryan",
+      "to": "movies:Movie:You've%20Got%20Mail",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Kathleen Kelly"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Greg%20Kinnear",
+      "to": "movies:Movie:You've%20Got%20Mail",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Frank Navasky"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Parker%20Posey",
+      "to": "movies:Movie:You've%20Got%20Mail",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Patricia Eden"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Dave%20Chappelle",
+      "to": "movies:Movie:You've%20Got%20Mail",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Kevin Jackson"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Steve%20Zahn",
+      "to": "movies:Movie:You've%20Got%20Mail",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "George Pappas"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Nora%20Ephron",
+      "to": "movies:Movie:You've%20Got%20Mail",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Hanks",
+      "to": "movies:Movie:Sleepless%20in%20Seattle",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Sam Baldwin"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Meg%20Ryan",
+      "to": "movies:Movie:Sleepless%20in%20Seattle",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Annie Reed"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Rita%20Wilson",
+      "to": "movies:Movie:Sleepless%20in%20Seattle",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Suzy"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Bill%20Pullman",
+      "to": "movies:Movie:Sleepless%20in%20Seattle",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Walter"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Victor%20Garber",
+      "to": "movies:Movie:Sleepless%20in%20Seattle",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Greg"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Rosie%20O'Donnell",
+      "to": "movies:Movie:Sleepless%20in%20Seattle",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Becky"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Nora%20Ephron",
+      "to": "movies:Movie:Sleepless%20in%20Seattle",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Hanks",
+      "to": "movies:Movie:Joe%20Versus%20the%20Volcano",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Joe Banks"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Meg%20Ryan",
+      "to": "movies:Movie:Joe%20Versus%20the%20Volcano",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "DeDe",
+          "Angelica Graynamore",
+          "Patricia Graynamore"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Nathan%20Lane",
+      "to": "movies:Movie:Joe%20Versus%20the%20Volcano",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Baw"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:John%20Patrick%20Stanley",
+      "to": "movies:Movie:Joe%20Versus%20the%20Volcano",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Billy%20Crystal",
+      "to": "movies:Movie:When%20Harry%20Met%20Sally",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Harry Burns"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Meg%20Ryan",
+      "to": "movies:Movie:When%20Harry%20Met%20Sally",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Sally Albright"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Carrie%20Fisher",
+      "to": "movies:Movie:When%20Harry%20Met%20Sally",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Marie"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Bruno%20Kirby",
+      "to": "movies:Movie:When%20Harry%20Met%20Sally",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Jess"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Rob%20Reiner",
+      "to": "movies:Movie:When%20Harry%20Met%20Sally",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Rob%20Reiner",
+      "to": "movies:Movie:When%20Harry%20Met%20Sally",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Nora%20Ephron",
+      "to": "movies:Movie:When%20Harry%20Met%20Sally",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Nora%20Ephron",
+      "to": "movies:Movie:When%20Harry%20Met%20Sally",
+      "type": "WROTE",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Hanks",
+      "to": "movies:Movie:That%20Thing%20You%20Do",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Mr. White"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Liv%20Tyler",
+      "to": "movies:Movie:That%20Thing%20You%20Do",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Faye Dolan"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Charlize%20Theron",
+      "to": "movies:Movie:That%20Thing%20You%20Do",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Tina"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Tom%20Hanks",
+      "to": "movies:Movie:That%20Thing%20You%20Do",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Keanu%20Reeves",
+      "to": "movies:Movie:The%20Replacements",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Shane Falco"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Brooke%20Langton",
+      "to": "movies:Movie:The%20Replacements",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Annabelle Farrell"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Gene%20Hackman",
+      "to": "movies:Movie:The%20Replacements",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Jimmy McGinty"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Orlando%20Jones",
+      "to": "movies:Movie:The%20Replacements",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Clifford Franklin"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Howard%20Deutch",
+      "to": "movies:Movie:The%20Replacements",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Marshall%20Bell",
+      "to": "movies:Movie:RescueDawn",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Admiral"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Christian%20Bale",
+      "to": "movies:Movie:RescueDawn",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Dieter Dengler"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Zach%20Grenier",
+      "to": "movies:Movie:RescueDawn",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Squad Leader"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Steve%20Zahn",
+      "to": "movies:Movie:RescueDawn",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Duane"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Werner%20Herzog",
+      "to": "movies:Movie:RescueDawn",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Robin%20Williams",
+      "to": "movies:Movie:The%20Birdcage",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Armand Goldman"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Nathan%20Lane",
+      "to": "movies:Movie:The%20Birdcage",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Albert Goldman"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Gene%20Hackman",
+      "to": "movies:Movie:The%20Birdcage",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Sen. Kevin Keeley"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Mike%20Nichols",
+      "to": "movies:Movie:The%20Birdcage",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Richard%20Harris",
+      "to": "movies:Movie:Unforgiven",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "English Bob"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Clint%20Eastwood",
+      "to": "movies:Movie:Unforgiven",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Bill Munny"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Gene%20Hackman",
+      "to": "movies:Movie:Unforgiven",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Little Bill Daggett"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Clint%20Eastwood",
+      "to": "movies:Movie:Unforgiven",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Keanu%20Reeves",
+      "to": "movies:Movie:Johnny%20Mnemonic",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Johnny Mnemonic"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Takeshi%20Kitano",
+      "to": "movies:Movie:Johnny%20Mnemonic",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Takahashi"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Dina%20Meyer",
+      "to": "movies:Movie:Johnny%20Mnemonic",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Jane"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Ice-T",
+      "to": "movies:Movie:Johnny%20Mnemonic",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "J-Bone"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Robert%20Longo",
+      "to": "movies:Movie:Johnny%20Mnemonic",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Hanks",
+      "to": "movies:Movie:Cloud%20Atlas",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Zachry",
+          "Dr. Henry Goose",
+          "Isaac Sachs",
+          "Dermot Hoggins"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Hugo%20Weaving",
+      "to": "movies:Movie:Cloud%20Atlas",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Bill Smoke",
+          "Haskell Moore",
+          "Tadeusz Kesselring",
+          "Nurse Noakes",
+          "Boardman Mephi",
+          "Old Georgie"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Halle%20Berry",
+      "to": "movies:Movie:Cloud%20Atlas",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Luisa Rey",
+          "Jocasta Ayrs",
+          "Ovid",
+          "Meronym"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Jim%20Broadbent",
+      "to": "movies:Movie:Cloud%20Atlas",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Vyvyan Ayrs",
+          "Captain Molyneux",
+          "Timothy Cavendish"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Tom%20Tykwer",
+      "to": "movies:Movie:Cloud%20Atlas",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lilly%20Wachowski",
+      "to": "movies:Movie:Cloud%20Atlas",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lana%20Wachowski",
+      "to": "movies:Movie:Cloud%20Atlas",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:David%20Mitchell",
+      "to": "movies:Movie:Cloud%20Atlas",
+      "type": "WROTE",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Stefan%20Arndt",
+      "to": "movies:Movie:Cloud%20Atlas",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Hanks",
+      "to": "movies:Movie:The%20Da%20Vinci%20Code",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Dr. Robert Langdon"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Ian%20McKellen",
+      "to": "movies:Movie:The%20Da%20Vinci%20Code",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Sir Leight Teabing"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Audrey%20Tautou",
+      "to": "movies:Movie:The%20Da%20Vinci%20Code",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Sophie Neveu"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Paul%20Bettany",
+      "to": "movies:Movie:The%20Da%20Vinci%20Code",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Silas"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Ron%20Howard",
+      "to": "movies:Movie:The%20Da%20Vinci%20Code",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Hugo%20Weaving",
+      "to": "movies:Movie:V%20for%20Vendetta",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "V"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Natalie%20Portman",
+      "to": "movies:Movie:V%20for%20Vendetta",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Evey Hammond"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Stephen%20Rea",
+      "to": "movies:Movie:V%20for%20Vendetta",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Eric Finch"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:John%20Hurt",
+      "to": "movies:Movie:V%20for%20Vendetta",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "High Chancellor Adam Sutler"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Ben%20Miles",
+      "to": "movies:Movie:V%20for%20Vendetta",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Dascomb"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:James%20Marshall",
+      "to": "movies:Movie:V%20for%20Vendetta",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lilly%20Wachowski",
+      "to": "movies:Movie:V%20for%20Vendetta",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lana%20Wachowski",
+      "to": "movies:Movie:V%20for%20Vendetta",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Joel%20Silver",
+      "to": "movies:Movie:V%20for%20Vendetta",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lilly%20Wachowski",
+      "to": "movies:Movie:V%20for%20Vendetta",
+      "type": "WROTE",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lana%20Wachowski",
+      "to": "movies:Movie:V%20for%20Vendetta",
+      "type": "WROTE",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Emile%20Hirsch",
+      "to": "movies:Movie:Speed%20Racer",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Speed Racer"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:John%20Goodman",
+      "to": "movies:Movie:Speed%20Racer",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Pops"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Susan%20Sarandon",
+      "to": "movies:Movie:Speed%20Racer",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Mom"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Matthew%20Fox",
+      "to": "movies:Movie:Speed%20Racer",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Racer X"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Christina%20Ricci",
+      "to": "movies:Movie:Speed%20Racer",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Trixie"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Rain",
+      "to": "movies:Movie:Speed%20Racer",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Taejo Togokahn"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Ben%20Miles",
+      "to": "movies:Movie:Speed%20Racer",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Cass Jones"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Lilly%20Wachowski",
+      "to": "movies:Movie:Speed%20Racer",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lana%20Wachowski",
+      "to": "movies:Movie:Speed%20Racer",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lilly%20Wachowski",
+      "to": "movies:Movie:Speed%20Racer",
+      "type": "WROTE",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lana%20Wachowski",
+      "to": "movies:Movie:Speed%20Racer",
+      "type": "WROTE",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Joel%20Silver",
+      "to": "movies:Movie:Speed%20Racer",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Rain",
+      "to": "movies:Movie:Ninja%20Assassin",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Raizo"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Naomie%20Harris",
+      "to": "movies:Movie:Ninja%20Assassin",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Mika Coretti"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Rick%20Yune",
+      "to": "movies:Movie:Ninja%20Assassin",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Takeshi"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Ben%20Miles",
+      "to": "movies:Movie:Ninja%20Assassin",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Ryan Maslow"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:James%20Marshall",
+      "to": "movies:Movie:Ninja%20Assassin",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lilly%20Wachowski",
+      "to": "movies:Movie:Ninja%20Assassin",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Lana%20Wachowski",
+      "to": "movies:Movie:Ninja%20Assassin",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Joel%20Silver",
+      "to": "movies:Movie:Ninja%20Assassin",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Hanks",
+      "to": "movies:Movie:The%20Green%20Mile",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Paul Edgecomb"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Michael%20Clarke%20Duncan",
+      "to": "movies:Movie:The%20Green%20Mile",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "John Coffey"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:David%20Morse",
+      "to": "movies:Movie:The%20Green%20Mile",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Brutus \"Brutal\" Howell"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Bonnie%20Hunt",
+      "to": "movies:Movie:The%20Green%20Mile",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Jan Edgecomb"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:James%20Cromwell",
+      "to": "movies:Movie:The%20Green%20Mile",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Warden Hal Moores"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Sam%20Rockwell",
+      "to": "movies:Movie:The%20Green%20Mile",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "\"Wild Bill\" Wharton"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Gary%20Sinise",
+      "to": "movies:Movie:The%20Green%20Mile",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Burt Hammersmith"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Patricia%20Clarkson",
+      "to": "movies:Movie:The%20Green%20Mile",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Melinda Moores"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Frank%20Darabont",
+      "to": "movies:Movie:The%20Green%20Mile",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Frank%20Langella",
+      "to": "movies:Movie:Frost%2FNixon",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Richard Nixon"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Michael%20Sheen",
+      "to": "movies:Movie:Frost%2FNixon",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "David Frost"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Kevin%20Bacon",
+      "to": "movies:Movie:Frost%2FNixon",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Jack Brennan"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Oliver%20Platt",
+      "to": "movies:Movie:Frost%2FNixon",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Bob Zelnick"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Sam%20Rockwell",
+      "to": "movies:Movie:Frost%2FNixon",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "James Reston, Jr."
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Ron%20Howard",
+      "to": "movies:Movie:Frost%2FNixon",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Jack%20Nicholson",
+      "to": "movies:Movie:Hoffa",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Hoffa"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Danny%20DeVito",
+      "to": "movies:Movie:Hoffa",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Robert \"Bobby\" Ciaro"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:J.T.%20Walsh",
+      "to": "movies:Movie:Hoffa",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Frank Fitzsimmons"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:John%20C.%20Reilly",
+      "to": "movies:Movie:Hoffa",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Peter \"Pete\" Connelly"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Danny%20DeVito",
+      "to": "movies:Movie:Hoffa",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Hanks",
+      "to": "movies:Movie:Apollo%2013",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Jim Lovell"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Kevin%20Bacon",
+      "to": "movies:Movie:Apollo%2013",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Jack Swigert"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Ed%20Harris",
+      "to": "movies:Movie:Apollo%2013",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Gene Kranz"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Bill%20Paxton",
+      "to": "movies:Movie:Apollo%2013",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Fred Haise"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Gary%20Sinise",
+      "to": "movies:Movie:Apollo%2013",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Ken Mattingly"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Ron%20Howard",
+      "to": "movies:Movie:Apollo%2013",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Bill%20Paxton",
+      "to": "movies:Movie:Twister",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Bill Harding"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Helen%20Hunt",
+      "to": "movies:Movie:Twister",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Dr. Jo Harding"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Zach%20Grenier",
+      "to": "movies:Movie:Twister",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Eddie"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Philip%20Seymour%20Hoffman",
+      "to": "movies:Movie:Twister",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Dustin \"Dusty\" Davis"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Jan%20de%20Bont",
+      "to": "movies:Movie:Twister",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Hanks",
+      "to": "movies:Movie:Cast%20Away",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Chuck Noland"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Helen%20Hunt",
+      "to": "movies:Movie:Cast%20Away",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Kelly Frears"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Robert%20Zemeckis",
+      "to": "movies:Movie:Cast%20Away",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Jack%20Nicholson",
+      "to": "movies:Movie:One%20Flew%20Over%20the%20Cuckoo's%20Nest",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Randle McMurphy"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Danny%20DeVito",
+      "to": "movies:Movie:One%20Flew%20Over%20the%20Cuckoo's%20Nest",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Martini"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Milos%20Forman",
+      "to": "movies:Movie:One%20Flew%20Over%20the%20Cuckoo's%20Nest",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Jack%20Nicholson",
+      "to": "movies:Movie:Something's%20Gotta%20Give",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Harry Sanborn"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Diane%20Keaton",
+      "to": "movies:Movie:Something's%20Gotta%20Give",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Erica Barry"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Keanu%20Reeves",
+      "to": "movies:Movie:Something's%20Gotta%20Give",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Julian Mercer"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Nancy%20Meyers",
+      "to": "movies:Movie:Something's%20Gotta%20Give",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Nancy%20Meyers",
+      "to": "movies:Movie:Something's%20Gotta%20Give",
+      "type": "PRODUCED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Nancy%20Meyers",
+      "to": "movies:Movie:Something's%20Gotta%20Give",
+      "type": "WROTE",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Robin%20Williams",
+      "to": "movies:Movie:Bicentennial%20Man",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Andrew Marin"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Oliver%20Platt",
+      "to": "movies:Movie:Bicentennial%20Man",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Rupert Burns"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Chris%20Columbus",
+      "to": "movies:Movie:Bicentennial%20Man",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Hanks",
+      "to": "movies:Movie:Charlie%20Wilson's%20War",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Rep. Charlie Wilson"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Julia%20Roberts",
+      "to": "movies:Movie:Charlie%20Wilson's%20War",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Joanne Herring"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Philip%20Seymour%20Hoffman",
+      "to": "movies:Movie:Charlie%20Wilson's%20War",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Gust Avrakotos"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Mike%20Nichols",
+      "to": "movies:Movie:Charlie%20Wilson's%20War",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Hanks",
+      "to": "movies:Movie:The%20Polar%20Express",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Hero Boy",
+          "Father",
+          "Conductor",
+          "Hobo",
+          "Scrooge",
+          "Santa Claus"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Robert%20Zemeckis",
+      "to": "movies:Movie:The%20Polar%20Express",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Tom%20Hanks",
+      "to": "movies:Movie:A%20League%20of%20Their%20Own",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Jimmy Dugan"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Geena%20Davis",
+      "to": "movies:Movie:A%20League%20of%20Their%20Own",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Dottie Hinson"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Lori%20Petty",
+      "to": "movies:Movie:A%20League%20of%20Their%20Own",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Kit Keller"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Rosie%20O'Donnell",
+      "to": "movies:Movie:A%20League%20of%20Their%20Own",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Doris Murphy"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Madonna",
+      "to": "movies:Movie:A%20League%20of%20Their%20Own",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "\"All the Way\" Mae Mordabito"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Bill%20Paxton",
+      "to": "movies:Movie:A%20League%20of%20Their%20Own",
+      "type": "ACTED_IN",
+      "scope": "movies",
+      "properties": {
+        "roles": [
+          "Bob Hinson"
+        ]
+      }
+    },
+    {
+      "from": "movies:Person:Penny%20Marshall",
+      "to": "movies:Movie:A%20League%20of%20Their%20Own",
+      "type": "DIRECTED",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:James%20Thompson",
+      "to": "movies:Person:Jessica%20Thompson",
+      "type": "FOLLOWS",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Angela%20Scope",
+      "to": "movies:Person:Jessica%20Thompson",
+      "type": "FOLLOWS",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Paul%20Blythe",
+      "to": "movies:Person:Angela%20Scope",
+      "type": "FOLLOWS",
+      "scope": "movies",
+      "properties": {}
+    },
+    {
+      "from": "movies:Person:Jessica%20Thompson",
+      "to": "movies:Movie:Cloud%20Atlas",
+      "type": "REVIEWED",
+      "scope": "movies",
+      "properties": {
+        "summary": "An amazing journey",
+        "rating": 95
+      }
+    },
+    {
+      "from": "movies:Person:Jessica%20Thompson",
+      "to": "movies:Movie:The%20Replacements",
+      "type": "REVIEWED",
+      "scope": "movies",
+      "properties": {
+        "summary": "Silly, but fun",
+        "rating": 65
+      }
+    },
+    {
+      "from": "movies:Person:James%20Thompson",
+      "to": "movies:Movie:The%20Replacements",
+      "type": "REVIEWED",
+      "scope": "movies",
+      "properties": {
+        "summary": "The coolest football movie ever",
+        "rating": 100
+      }
+    },
+    {
+      "from": "movies:Person:Angela%20Scope",
+      "to": "movies:Movie:The%20Replacements",
+      "type": "REVIEWED",
+      "scope": "movies",
+      "properties": {
+        "summary": "Pretty funny at times",
+        "rating": 62
+      }
+    },
+    {
+      "from": "movies:Person:Jessica%20Thompson",
+      "to": "movies:Movie:Unforgiven",
+      "type": "REVIEWED",
+      "scope": "movies",
+      "properties": {
+        "summary": "Dark, but compelling",
+        "rating": 85
+      }
+    },
+    {
+      "from": "movies:Person:Jessica%20Thompson",
+      "to": "movies:Movie:The%20Birdcage",
+      "type": "REVIEWED",
+      "scope": "movies",
+      "properties": {
+        "summary": "Slapstick redeemed only by the Robin Williams and Gene Hackman's stellar performances",
+        "rating": 45
+      }
+    },
+    {
+      "from": "movies:Person:Jessica%20Thompson",
+      "to": "movies:Movie:The%20Da%20Vinci%20Code",
+      "type": "REVIEWED",
+      "scope": "movies",
+      "properties": {
+        "summary": "A solid romp",
+        "rating": 68
+      }
+    },
+    {
+      "from": "movies:Person:James%20Thompson",
+      "to": "movies:Movie:The%20Da%20Vinci%20Code",
+      "type": "REVIEWED",
+      "scope": "movies",
+      "properties": {
+        "summary": "Fun, but a little far fetched",
+        "rating": 65
+      }
+    },
+    {
+      "from": "movies:Person:Jessica%20Thompson",
+      "to": "movies:Movie:Jerry%20Maguire",
+      "type": "REVIEWED",
+      "scope": "movies",
+      "properties": {
+        "summary": "You had me at Jerry",
+        "rating": 92
+      }
+    }
+  ]
+}

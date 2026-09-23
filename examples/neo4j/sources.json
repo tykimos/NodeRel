@@ -1,0 +1,50 @@
+[
+  {
+    "file": "movies.cypher",
+    "url": "https://raw.githubusercontent.com/neo4j-graph-examples/movies/main/scripts/movies.cypher",
+    "bytes": 40257,
+    "sha256": "7be04aba2193790e0051308e6aa8550236e651cae652ea7da44b7dc01f4c4e69"
+  },
+  {
+    "file": "northwind.cypher",
+    "url": "https://raw.githubusercontent.com/neo4j-graph-examples/northwind/main/scripts/northwind.cypher",
+    "bytes": 1983,
+    "sha256": "09a438cc45029fd70a17435e60a962cd84976398dcfff771919db0e590538fa2"
+  },
+  {
+    "file": "products.csv",
+    "url": "https://data.neo4j.com/northwind/products.csv",
+    "bytes": 4475,
+    "sha256": "bc377ab1fac01d6e99cb659d30d4bce10d77c23d8c97242c2dd5e649d2f5a4ea"
+  },
+  {
+    "file": "categories.csv",
+    "url": "https://data.neo4j.com/northwind/categories.csv",
+    "bytes": 2465,
+    "sha256": "66c4589f53701e0d58fa8d790803bc57299e144e22334cc2d9590f4ad4cb7e7f"
+  },
+  {
+    "file": "suppliers.csv",
+    "url": "https://data.neo4j.com/northwind/suppliers.csv",
+    "bytes": 4229,
+    "sha256": "cb6fb5e350660d6e7053b68b311237e1ae7e54bd501a4e8f787f5a1a4fcafca1"
+  },
+  {
+    "file": "customers.csv",
+    "url": "https://data.neo4j.com/northwind/customers.csv",
+    "bytes": 11887,
+    "sha256": "52e8440c812d2901d81cb9ffbe87a293547bca9c9ae95b1fe3dbeddbc4be6964"
+  },
+  {
+    "file": "orders.csv",
+    "url": "https://data.neo4j.com/northwind/orders.csv",
+    "bytes": 132533,
+    "sha256": "3c96ed654550f7b5a9b059fa66357cc24493435f985e780fed3ff0d83727a558"
+  },
+  {
+    "file": "order-details.csv",
+    "url": "https://data.neo4j.com/northwind/order-details.csv",
+    "bytes": 44378,
+    "sha256": "a95f3f1697f6e8d9a7683e5fe6bbb934b9262adb9d58e0c727bac532a0ee725b"
+  }
+]

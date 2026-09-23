@@ -1,0 +1,1728 @@
+{
+  "testedAt": "2026-09-23T04:06:59.063Z",
+  "environment": {
+    "cpu": "Apple M3",
+    "node": "v24.13.1",
+    "sqlite": "3.51.2",
+    "neo4j": "2025.06.2 Community",
+    "neo4jHeapMiB": 512,
+    "neo4jPageCacheMiB": 256
+  },
+  "method": "Single client; 3 warmups + 11 measured calls, medians; SQLite in process and Neo4j localhost HTTP with reused connections including JSON transport; not production throughput or pure-engine comparison.",
+  "datasets": [
+    {
+      "scope": "movies",
+      "nodes": 171,
+      "edges": 253,
+      "kinds": [
+        {
+          "kind": "Movie",
+          "count": 38
+        },
+        {
+          "kind": "Person",
+          "count": 133
+        }
+      ],
+      "types": [
+        {
+          "type": "ACTED_IN",
+          "count": 172
+        },
+        {
+          "type": "DIRECTED",
+          "count": 44
+        },
+        {
+          "type": "FOLLOWS",
+          "count": 3
+        },
+        {
+          "type": "PRODUCED",
+          "count": 15
+        },
+        {
+          "type": "REVIEWED",
+          "count": 9
+        },
+        {
+          "type": "WROTE",
+          "count": 10
+        }
+      ],
+      "allIndexedFieldsAndRelationshipPropertiesMatch": true
+    },
+    {
+      "scope": "northwind",
+      "nodes": 1035,
+      "edges": 3139,
+      "kinds": [
+        {
+          "kind": "Category",
+          "count": 8
+        },
+        {
+          "kind": "Customer",
+          "count": 91
+        },
+        {
+          "kind": "Order",
+          "count": 830
+        },
+        {
+          "kind": "Product",
+          "count": 77
+        },
+        {
+          "kind": "Supplier",
+          "count": 29
+        }
+      ],
+      "types": [
+        {
+          "type": "ORDERS",
+          "count": 2155
+        },
+        {
+          "type": "PART_OF",
+          "count": 77
+        },
+        {
+          "type": "PURCHASED",
+          "count": 830
+        },
+        {
+          "type": "SUPPLIES",
+          "count": 77
+        }
+      ],
+      "allIndexedFieldsAndRelationshipPropertiesMatch": true
+    }
+  ],
+  "cases": [
+    {
+      "name": "키아누 리브스의 출연 영화",
+      "scope": "movies",
+      "passed": true,
+      "resultCount": 7,
+      "sqlite": {
+        "medianMs": 0.005625000000009095,
+        "minMs": 0.005166999999971722,
+        "maxMs": 0.011249999999961346,
+        "samplesMs": [
+          0.006333999999981188,
+          0.005875000000003183,
+          0.005625000000009095,
+          0.005417000000022654,
+          0.005959000000018477,
+          0.011249999999961346,
+          0.006041999999979453,
+          0.005457999999975982,
+          0.005374999999958163,
+          0.005166999999971722,
+          0.005207999999981894
+        ]
+      },
+      "neo4j": {
+        "medianMs": 6.165750000000003,
+        "minMs": 2.4944580000000087,
+        "maxMs": 9.551832999999988,
+        "samplesMs": [
+          7.757416999999975,
+          6.26279199999999,
+          6.098458000000051,
+          5.617250000000013,
+          7.235833000000014,
+          8.911416999999972,
+          9.551832999999988,
+          6.165750000000003,
+          4.658500000000004,
+          3.7804590000000076,
+          2.4944580000000087
+        ]
+      },
+      "result": [
+        {
+          "title": "Johnny Mnemonic"
+        },
+        {
+          "title": "Something's Gotta Give"
+        },
+        {
+          "title": "The Devil's Advocate"
+        },
+        {
+          "title": "The Matrix"
+        },
+        {
+          "title": "The Matrix Reloaded"
+        },
+        {
+          "title": "The Matrix Revolutions"
+        },
+        {
+          "title": "The Replacements"
+        }
+      ],
+      "cypher": "MATCH (:GIItem {gi_id:$id})-[:ACTED_IN]->(m:Movie) RETURN m.title AS title ORDER BY title",
+      "params": {
+        "id": "movies:Person:Keanu%20Reeves"
+      },
+      "sql": "SELECT m.title FROM links l JOIN items m ON m.id=l.to_id WHERE l.from_id=:id AND l.type='ACTED_IN' ORDER BY m.title"
+    },
+    {
+      "name": "매트릭스 출연진과 배역",
+      "scope": "movies",
+      "passed": true,
+      "resultCount": 5,
+      "sqlite": {
+        "medianMs": 0.0105829999999969,
+        "minMs": 0.009082999999975527,
+        "maxMs": 0.08637499999997544,
+        "samplesMs": [
+          0.017083000000013726,
+          0.010249999999984993,
+          0.00933399999996709,
+          0.08637499999997544,
+          0.027208000000030097,
+          0.013083999999992102,
+          0.0105829999999969,
+          0.011374999999986812,
+          0.009582999999963704,
+          0.009082999999975527,
+          0.009082999999975527
+        ]
+      },
+      "neo4j": {
+        "medianMs": 3.100749999999948,
+        "minMs": 1.895584000000099,
+        "maxMs": 4.799291000000039,
+        "samplesMs": [
+          3.7982079999999314,
+          3.2066659999999274,
+          3.1739579999999705,
+          2.3805419999999913,
+          2.2094999999999345,
+          2.963333000000034,
+          4.799291000000039,
+          3.100749999999948,
+          2.175958000000037,
+          1.895584000000099,
+          3.2701250000000073
+        ]
+      },
+      "result": [
+        {
+          "name": "Carrie-Anne Moss",
+          "roles": [
+            "Trinity"
+          ]
+        },
+        {
+          "name": "Emil Eifrem",
+          "roles": [
+            "Emil"
+          ]
+        },
+        {
+          "name": "Hugo Weaving",
+          "roles": [
+            "Agent Smith"
+          ]
+        },
+        {
+          "name": "Keanu Reeves",
+          "roles": [
+            "Neo"
+          ]
+        },
+        {
+          "name": "Laurence Fishburne",
+          "roles": [
+            "Morpheus"
+          ]
+        }
+      ],
+      "cypher": "MATCH (p:Person)-[r:ACTED_IN]->(:GIItem {gi_id:$id}) RETURN p.name AS name,r.roles AS roles ORDER BY name",
+      "params": {
+        "id": "movies:Movie:The%20Matrix"
+      },
+      "sql": "SELECT p.title AS name,json_extract(l.attrs,'$.roles') AS roles FROM links l JOIN items p ON p.id=l.from_id WHERE l.to_id=:id AND l.type='ACTED_IN' ORDER BY name"
+    },
+    {
+      "name": "톰 행크스의 공동 출연자",
+      "scope": "movies",
+      "passed": true,
+      "resultCount": 34,
+      "sqlite": {
+        "medianMs": 0.02616699999998673,
+        "minMs": 0.025249999999914507,
+        "maxMs": 0.028042000000027656,
+        "samplesMs": [
+          0.028042000000027656,
+          0.026542000000063126,
+          0.026292000000012195,
+          0.02691600000002836,
+          0.02612499999997908,
+          0.02616699999998673,
+          0.025791000000026543,
+          0.026375000000030013,
+          0.02612499999997908,
+          0.02583300000003419,
+          0.025249999999914507
+        ]
+      },
+      "neo4j": {
+        "medianMs": 2.967292000000043,
+        "minMs": 2.162916999999993,
+        "maxMs": 5.627834000000007,
+        "samplesMs": [
+          2.162916999999993,
+          3.3832089999999653,
+          3.0409159999999247,
+          3.4694169999999076,
+          3.1063330000000633,
+          2.359833999999978,
+          5.627834000000007,
+          2.967292000000043,
+          2.846292000000062,
+          2.4955830000000105,
+          2.456707999999935
+        ]
+      },
+      "result": [
+        {
+          "name": "Audrey Tautou"
+        },
+        {
+          "name": "Bill Paxton"
+        },
+        {
+          "name": "Bill Pullman"
+        },
+        {
+          "name": "Bonnie Hunt"
+        },
+        {
+          "name": "Charlize Theron"
+        },
+        {
+          "name": "Dave Chappelle"
+        },
+        {
+          "name": "David Morse"
+        },
+        {
+          "name": "Ed Harris"
+        },
+        {
+          "name": "Gary Sinise"
+        },
+        {
+          "name": "Geena Davis"
+        },
+        {
+          "name": "Greg Kinnear"
+        },
+        {
+          "name": "Halle Berry"
+        },
+        {
+          "name": "Helen Hunt"
+        },
+        {
+          "name": "Hugo Weaving"
+        },
+        {
+          "name": "Ian McKellen"
+        },
+        {
+          "name": "James Cromwell"
+        },
+        {
+          "name": "Jim Broadbent"
+        },
+        {
+          "name": "Julia Roberts"
+        },
+        {
+          "name": "Kevin Bacon"
+        },
+        {
+          "name": "Liv Tyler"
+        },
+        {
+          "name": "Lori Petty"
+        },
+        {
+          "name": "Madonna"
+        },
+        {
+          "name": "Meg Ryan"
+        },
+        {
+          "name": "Michael Clarke Duncan"
+        },
+        {
+          "name": "Nathan Lane"
+        },
+        {
+          "name": "Parker Posey"
+        },
+        {
+          "name": "Patricia Clarkson"
+        },
+        {
+          "name": "Paul Bettany"
+        },
+        {
+          "name": "Philip Seymour Hoffman"
+        },
+        {
+          "name": "Rita Wilson"
+        },
+        {
+          "name": "Rosie O'Donnell"
+        },
+        {
+          "name": "Sam Rockwell"
+        },
+        {
+          "name": "Steve Zahn"
+        },
+        {
+          "name": "Victor Garber"
+        }
+      ],
+      "cypher": "MATCH (p:GIItem {gi_id:$id})-[:ACTED_IN]->(:Movie)<-[:ACTED_IN]-(other:Person) WHERE other<>p RETURN DISTINCT other.name AS name ORDER BY name",
+      "params": {
+        "id": "movies:Person:Tom%20Hanks"
+      },
+      "sql": "SELECT DISTINCT p.title AS name FROM links a JOIN links b ON a.to_id=b.to_id JOIN items p ON p.id=b.from_id WHERE a.from_id=:id AND a.type='ACTED_IN' AND b.type='ACTED_IN' AND p.id<>:id ORDER BY name"
+    },
+    {
+      "name": "같은 영화를 감독하고 출연한 사람",
+      "scope": "movies",
+      "passed": true,
+      "resultCount": 3,
+      "sqlite": {
+        "medianMs": 0.1246249999999236,
+        "minMs": 0.11641600000007202,
+        "maxMs": 0.1914160000000038,
+        "samplesMs": [
+          0.12912499999993088,
+          0.1215829999999869,
+          0.1527089999999589,
+          0.13654199999996308,
+          0.124416999999994,
+          0.1246249999999236,
+          0.1914160000000038,
+          0.18954100000007656,
+          0.1220419999999649,
+          0.11720800000000509,
+          0.11641600000007202
+        ]
+      },
+      "neo4j": {
+        "medianMs": 4.52475000000004,
+        "minMs": 3.14220899999998,
+        "maxMs": 10.66604099999995,
+        "samplesMs": [
+          10.66604099999995,
+          5.649708000000032,
+          3.495375000000081,
+          3.14220899999998,
+          3.8230419999999867,
+          4.089375000000018,
+          5.477125000000001,
+          4.849375000000009,
+          6.801124999999956,
+          4.52475000000004,
+          3.2982920000000604
+        ]
+      },
+      "result": [
+        {
+          "name": "Clint Eastwood",
+          "title": "Unforgiven"
+        },
+        {
+          "name": "Danny DeVito",
+          "title": "Hoffa"
+        },
+        {
+          "name": "Tom Hanks",
+          "title": "That Thing You Do"
+        }
+      ],
+      "cypher": "MATCH (p:Person)-[:ACTED_IN]->(m:Movie),(p)-[:DIRECTED]->(m) RETURN p.name AS name,m.title AS title ORDER BY name,title",
+      "params": {},
+      "sql": "SELECT p.title AS name,m.title AS title FROM links a JOIN links b ON a.from_id=b.from_id AND a.to_id=b.to_id JOIN items p ON p.id=a.from_id JOIN items m ON m.id=a.to_id WHERE a.scope='movies' AND a.type='ACTED_IN' AND b.type='DIRECTED' ORDER BY name,title"
+    },
+    {
+      "name": "키아누 리브스에서 양방향 4단계 추적",
+      "scope": "movies",
+      "passed": true,
+      "resultCount": 57,
+      "sqlite": {
+        "medianMs": 0.8291249999999764,
+        "minMs": 0.7646250000000236,
+        "maxMs": 1.4384999999999764,
+        "samplesMs": [
+          0.8473340000000462,
+          0.7646250000000236,
+          0.8495829999999387,
+          0.972332999999935,
+          0.7862499999999955,
+          0.81837500000006,
+          0.7801670000000058,
+          0.7742090000000417,
+          1.4384999999999764,
+          1.1126669999999876,
+          0.8291249999999764
+        ]
+      },
+      "neo4j": {
+        "medianMs": 4.301666000000068,
+        "minMs": 2.8876670000000786,
+        "maxMs": 12.839749999999981,
+        "samplesMs": [
+          4.301666000000068,
+          2.925958000000037,
+          3.0890000000000555,
+          3.2164999999999964,
+          3.8692499999999654,
+          4.782666999999947,
+          10.256124999999997,
+          4.7822909999999865,
+          5.433915999999954,
+          12.839749999999981,
+          2.8876670000000786
+        ]
+      },
+      "result": [
+        {
+          "id": "movies:Movie:Johnny%20Mnemonic",
+          "depth": 1
+        },
+        {
+          "id": "movies:Movie:Something's%20Gotta%20Give",
+          "depth": 1
+        },
+        {
+          "id": "movies:Movie:The%20Devil's%20Advocate",
+          "depth": 1
+        },
+        {
+          "id": "movies:Movie:The%20Matrix",
+          "depth": 1
+        },
+        {
+          "id": "movies:Movie:The%20Matrix%20Reloaded",
+          "depth": 1
+        },
+        {
+          "id": "movies:Movie:The%20Matrix%20Revolutions",
+          "depth": 1
+        },
+        {
+          "id": "movies:Movie:The%20Replacements",
+          "depth": 1
+        },
+        {
+          "id": "movies:Person:Al%20Pacino",
+          "depth": 2
+        },
+        {
+          "id": "movies:Person:Brooke%20Langton",
+          "depth": 2
+        },
+        {
+          "id": "movies:Person:Carrie-Anne%20Moss",
+          "depth": 2
+        },
+        {
+          "id": "movies:Person:Charlize%20Theron",
+          "depth": 2
+        },
+        {
+          "id": "movies:Person:Diane%20Keaton",
+          "depth": 2
+        },
+        {
+          "id": "movies:Person:Dina%20Meyer",
+          "depth": 2
+        },
+        {
+          "id": "movies:Person:Emil%20Eifrem",
+          "depth": 2
+        },
+        {
+          "id": "movies:Person:Gene%20Hackman",
+          "depth": 2
+        },
+        {
+          "id": "movies:Person:Hugo%20Weaving",
+          "depth": 2
+        },
+        {
+          "id": "movies:Person:Ice-T",
+          "depth": 2
+        },
+        {
+          "id": "movies:Person:Jack%20Nicholson",
+          "depth": 2
+        },
+        {
+          "id": "movies:Person:Laurence%20Fishburne",
+          "depth": 2
+        },
+        {
+          "id": "movies:Person:Orlando%20Jones",
+          "depth": 2
+        },
+        {
+          "id": "movies:Person:Takeshi%20Kitano",
+          "depth": 2
+        },
+        {
+          "id": "movies:Movie:A%20Few%20Good%20Men",
+          "depth": 3
+        },
+        {
+          "id": "movies:Movie:As%20Good%20as%20It%20Gets",
+          "depth": 3
+        },
+        {
+          "id": "movies:Movie:Cloud%20Atlas",
+          "depth": 3
+        },
+        {
+          "id": "movies:Movie:Hoffa",
+          "depth": 3
+        },
+        {
+          "id": "movies:Movie:One%20Flew%20Over%20the%20Cuckoo's%20Nest",
+          "depth": 3
+        },
+        {
+          "id": "movies:Movie:That%20Thing%20You%20Do",
+          "depth": 3
+        },
+        {
+          "id": "movies:Movie:The%20Birdcage",
+          "depth": 3
+        },
+        {
+          "id": "movies:Movie:Unforgiven",
+          "depth": 3
+        },
+        {
+          "id": "movies:Movie:V%20for%20Vendetta",
+          "depth": 3
+        },
+        {
+          "id": "movies:Person:Aaron%20Sorkin",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Ben%20Miles",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Christopher%20Guest",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Clint%20Eastwood",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Cuba%20Gooding%20Jr.",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Danny%20DeVito",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Demi%20Moore",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Greg%20Kinnear",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Halle%20Berry",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Helen%20Hunt",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:J.T.%20Walsh",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:James%20Marshall",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Jim%20Broadbent",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:John%20C.%20Reilly",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:John%20Hurt",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Kevin%20Bacon",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Kevin%20Pollak",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Kiefer%20Sutherland",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Liv%20Tyler",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Natalie%20Portman",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Nathan%20Lane",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Noah%20Wyle",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Richard%20Harris",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Robin%20Williams",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Stephen%20Rea",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Tom%20Cruise",
+          "depth": 4
+        },
+        {
+          "id": "movies:Person:Tom%20Hanks",
+          "depth": 4
+        }
+      ],
+      "cypher": "MATCH p=(s:GIItem {gi_id:$id})-[:ACTED_IN*1..4]-(n:GIItem) WHERE n<>s RETURN n.gi_id AS id,min(length(p)) AS depth",
+      "params": {
+        "id": "movies:Person:Keanu%20Reeves"
+      },
+      "sql": "WITH RECURSIVE edge(src,dst) AS (SELECT from_id src,to_id dst FROM links WHERE scope=:scope AND type IN (:t0) UNION SELECT to_id src,from_id dst FROM links WHERE scope=:scope AND type IN (:t0)), walk(id,depth) AS (\n   SELECT id,0 FROM items WHERE id=:id AND scope=:scope\n   UNION\n   SELECT e.dst,w.depth+1 FROM walk w JOIN edge e ON e.src=w.id\n   JOIN items target ON target.id=e.dst AND target.scope=:scope\n   WHERE w.depth<:maxDepth\n  ) SELECT i.id,i.title,i.kind,min(w.depth) AS depth\n  FROM walk w JOIN items i ON i.id=w.id\n  WHERE w.id<>:id GROUP BY i.id ORDER BY depth,i.id"
+    },
+    {
+      "name": "키아누 리브스와 톰 행크스의 최소 연결 거리",
+      "scope": "movies",
+      "passed": true,
+      "resultCount": 1,
+      "sqlite": {
+        "medianMs": 1.8939159999999902,
+        "minMs": 1.7865830000000642,
+        "maxMs": 2.5965410000001157,
+        "samplesMs": [
+          1.9767919999999322,
+          1.8939159999999902,
+          1.9203340000000253,
+          1.8344170000000304,
+          1.8437920000000076,
+          2.5965410000001157,
+          1.8612920000000486,
+          1.7865830000000642,
+          1.8695840000000317,
+          2.1679169999999885,
+          2.218208000000004
+        ]
+      },
+      "neo4j": {
+        "medianMs": 3.3116249999998217,
+        "minMs": 1.8150410000000647,
+        "maxMs": 11.720375000000104,
+        "samplesMs": [
+          3.170082999999977,
+          3.2658329999999296,
+          3.3116249999998217,
+          2.2227080000000115,
+          1.8150410000000647,
+          2.2849590000000717,
+          6.195625000000064,
+          11.720375000000104,
+          5.575167000000192,
+          3.9300419999999576,
+          4.960541000000148
+        ]
+      },
+      "result": [
+        {
+          "depth": 4
+        }
+      ],
+      "cypher": "MATCH (s:GIItem {gi_id:$id}),(t:GIItem {gi_id:$target}),p=shortestPath((s)-[:ACTED_IN*..10]-(t)) RETURN length(p) AS depth",
+      "params": {
+        "id": "movies:Person:Keanu%20Reeves",
+        "target": "movies:Person:Tom%20Hanks"
+      },
+      "sql": "WITH RECURSIVE edge(src,dst) AS (SELECT from_id src,to_id dst FROM links WHERE scope=:scope AND type IN (:t0) UNION SELECT to_id src,from_id dst FROM links WHERE scope=:scope AND type IN (:t0)), walk(id,depth) AS (\n   SELECT id,0 FROM items WHERE id=:id AND scope=:scope\n   UNION\n   SELECT e.dst,w.depth+1 FROM walk w JOIN edge e ON e.src=w.id\n   JOIN items target ON target.id=e.dst AND target.scope=:scope\n   WHERE w.depth<:maxDepth\n  ) SELECT i.id,i.title,i.kind,min(w.depth) AS depth\n  FROM walk w JOIN items i ON i.id=w.id\n  WHERE w.id<>:id GROUP BY i.id ORDER BY depth,i.id"
+    },
+    {
+      "name": "출연 연결이 없는 인물",
+      "scope": "movies",
+      "passed": true,
+      "resultCount": 31,
+      "sqlite": {
+        "medianMs": 0.06783400000017537,
+        "minMs": 0.06579200000010132,
+        "maxMs": 0.07395799999994779,
+        "samplesMs": [
+          0.070667000000185,
+          0.06662499999993088,
+          0.06829199999992852,
+          0.06945800000016789,
+          0.06870899999989888,
+          0.07395799999994779,
+          0.06612500000005639,
+          0.0677499999999327,
+          0.06629199999997581,
+          0.06783400000017537,
+          0.06579200000010132
+        ]
+      },
+      "neo4j": {
+        "medianMs": 3.068125000000009,
+        "minMs": 2.025916000000052,
+        "maxMs": 10.5971669999999,
+        "samplesMs": [
+          4.404667000000018,
+          4.308250000000044,
+          3.068125000000009,
+          3.6287499999998545,
+          2.5432079999998223,
+          2.025916000000052,
+          3.999666000000161,
+          10.5971669999999,
+          2.833708999999999,
+          2.5511249999999563,
+          2.430458000000044
+        ]
+      },
+      "result": [
+        {
+          "id": "movies:Person:Angela%20Scope",
+          "title": "Angela Scope"
+        },
+        {
+          "id": "movies:Person:Cameron%20Crowe",
+          "title": "Cameron Crowe"
+        },
+        {
+          "id": "movies:Person:Chris%20Columbus",
+          "title": "Chris Columbus"
+        },
+        {
+          "id": "movies:Person:David%20Mitchell",
+          "title": "David Mitchell"
+        },
+        {
+          "id": "movies:Person:Frank%20Darabont",
+          "title": "Frank Darabont"
+        },
+        {
+          "id": "movies:Person:Howard%20Deutch",
+          "title": "Howard Deutch"
+        },
+        {
+          "id": "movies:Person:James%20L.%20Brooks",
+          "title": "James L. Brooks"
+        },
+        {
+          "id": "movies:Person:James%20Thompson",
+          "title": "James Thompson"
+        },
+        {
+          "id": "movies:Person:Jan%20de%20Bont",
+          "title": "Jan de Bont"
+        },
+        {
+          "id": "movies:Person:Jessica%20Thompson",
+          "title": "Jessica Thompson"
+        },
+        {
+          "id": "movies:Person:Jim%20Cash",
+          "title": "Jim Cash"
+        },
+        {
+          "id": "movies:Person:Joel%20Silver",
+          "title": "Joel Silver"
+        },
+        {
+          "id": "movies:Person:John%20Patrick%20Stanley",
+          "title": "John Patrick Stanley"
+        },
+        {
+          "id": "movies:Person:Lana%20Wachowski",
+          "title": "Lana Wachowski"
+        },
+        {
+          "id": "movies:Person:Lilly%20Wachowski",
+          "title": "Lilly Wachowski"
+        },
+        {
+          "id": "movies:Person:Mike%20Nichols",
+          "title": "Mike Nichols"
+        },
+        {
+          "id": "movies:Person:Milos%20Forman",
+          "title": "Milos Forman"
+        },
+        {
+          "id": "movies:Person:Nancy%20Meyers",
+          "title": "Nancy Meyers"
+        },
+        {
+          "id": "movies:Person:Nora%20Ephron",
+          "title": "Nora Ephron"
+        },
+        {
+          "id": "movies:Person:Paul%20Blythe",
+          "title": "Paul Blythe"
+        },
+        {
+          "id": "movies:Person:Penny%20Marshall",
+          "title": "Penny Marshall"
+        },
+        {
+          "id": "movies:Person:Rob%20Reiner",
+          "title": "Rob Reiner"
+        },
+        {
+          "id": "movies:Person:Robert%20Longo",
+          "title": "Robert Longo"
+        },
+        {
+          "id": "movies:Person:Robert%20Zemeckis",
+          "title": "Robert Zemeckis"
+        },
+        {
+          "id": "movies:Person:Ron%20Howard",
+          "title": "Ron Howard"
+        },
+        {
+          "id": "movies:Person:Scott%20Hicks",
+          "title": "Scott Hicks"
+        },
+        {
+          "id": "movies:Person:Stefan%20Arndt",
+          "title": "Stefan Arndt"
+        },
+        {
+          "id": "movies:Person:Taylor%20Hackford",
+          "title": "Taylor Hackford"
+        },
+        {
+          "id": "movies:Person:Tom%20Tykwer",
+          "title": "Tom Tykwer"
+        },
+        {
+          "id": "movies:Person:Tony%20Scott",
+          "title": "Tony Scott"
+        },
+        {
+          "id": "movies:Person:Vincent%20Ward",
+          "title": "Vincent Ward"
+        }
+      ],
+      "cypher": "MATCH (p:Person) WHERE NOT EXISTS { MATCH (p)-[:ACTED_IN]->() } RETURN p.gi_id AS id,p.name AS title",
+      "params": {},
+      "sql": null
+    },
+    {
+      "name": "유제품 분류의 상품",
+      "scope": "northwind",
+      "passed": true,
+      "resultCount": 10,
+      "sqlite": {
+        "medianMs": 0.00708400000007714,
+        "minMs": 0.006791999999904874,
+        "maxMs": 0.009915999999975611,
+        "samplesMs": [
+          0.00804100000004837,
+          0.008500000000140062,
+          0.0072909999998955755,
+          0.007499999999936335,
+          0.00708400000007714,
+          0.00687500000003638,
+          0.009915999999975611,
+          0.007082999999965978,
+          0.006792000000132248,
+          0.006959000000051674,
+          0.006791999999904874
+        ]
+      },
+      "neo4j": {
+        "medianMs": 2.206083000000035,
+        "minMs": 1.4688750000000255,
+        "maxMs": 4.926292000000103,
+        "samplesMs": [
+          3.554875000000038,
+          2.206083000000035,
+          2.969041999999945,
+          1.9434590000000753,
+          1.693416999999954,
+          2.0717919999999594,
+          4.926292000000103,
+          2.505999999999858,
+          2.776249999999891,
+          1.9320000000000164,
+          1.4688750000000255
+        ]
+      },
+      "result": [
+        {
+          "product": "Camembert Pierrot"
+        },
+        {
+          "product": "Flotemysost"
+        },
+        {
+          "product": "Geitost"
+        },
+        {
+          "product": "Gorgonzola Telino"
+        },
+        {
+          "product": "Gudbrandsdalsost"
+        },
+        {
+          "product": "Mascarpone Fabioli"
+        },
+        {
+          "product": "Mozzarella di Giovanni"
+        },
+        {
+          "product": "Queso Cabrales"
+        },
+        {
+          "product": "Queso Manchego La Pastora"
+        },
+        {
+          "product": "Raclette Courdavault"
+        }
+      ],
+      "cypher": "MATCH (p:Product)-[:PART_OF]->(:GIItem {gi_id:$id}) RETURN p.productName AS product ORDER BY product",
+      "params": {
+        "id": "northwind:Category:4"
+      },
+      "sql": "SELECT p.title AS product FROM links l JOIN items p ON p.id=l.from_id WHERE l.to_id=:id AND l.type='PART_OF' ORDER BY product"
+    },
+    {
+      "name": "공급사 1의 상품과 분류",
+      "scope": "northwind",
+      "passed": true,
+      "resultCount": 3,
+      "sqlite": {
+        "medianMs": 0.005084000000124433,
+        "minMs": 0.005000000000109139,
+        "maxMs": 0.010999999999967258,
+        "samplesMs": [
+          0.006333000000040556,
+          0.0060000000000854925,
+          0.010999999999967258,
+          0.005249999999932697,
+          0.005167000000028565,
+          0.005000000000109139,
+          0.0050420000000030996,
+          0.005084000000124433,
+          0.005000000000109139,
+          0.005000000000109139,
+          0.005000000000109139
+        ]
+      },
+      "neo4j": {
+        "medianMs": 3.2498749999999745,
+        "minMs": 1.5308330000000296,
+        "maxMs": 7.187124999999924,
+        "samplesMs": [
+          2.0755840000001626,
+          1.5308330000000296,
+          2.098417000000154,
+          2.3603330000000824,
+          2.811625000000049,
+          4.422875000000204,
+          7.187124999999924,
+          4.315291000000116,
+          3.563707999999906,
+          3.2498749999999745,
+          3.7731249999999363
+        ]
+      },
+      "result": [
+        {
+          "product": "Aniseed Syrup",
+          "category": "Condiments"
+        },
+        {
+          "product": "Chai",
+          "category": "Beverages"
+        },
+        {
+          "product": "Chang",
+          "category": "Beverages"
+        }
+      ],
+      "cypher": "MATCH (:GIItem {gi_id:$id})-[:SUPPLIES]->(p:Product)-[:PART_OF]->(c:Category) RETURN p.productName AS product,c.categoryName AS category ORDER BY product",
+      "params": {
+        "id": "northwind:Supplier:1"
+      },
+      "sql": "SELECT p.title AS product,c.title AS category FROM links s JOIN items p ON p.id=s.to_id JOIN links pc ON pc.from_id=p.id JOIN items c ON c.id=pc.to_id WHERE s.from_id=:id AND s.type='SUPPLIES' AND pc.type='PART_OF' ORDER BY product"
+    },
+    {
+      "name": "ALFKI 고객의 구매 상품과 주문 수",
+      "scope": "northwind",
+      "passed": true,
+      "resultCount": 11,
+      "sqlite": {
+        "medianMs": 0.014541999999892141,
+        "minMs": 0.013790999999855558,
+        "maxMs": 0.024916000000075655,
+        "samplesMs": [
+          0.015916000000061103,
+          0.015249999999923602,
+          0.014917000000195912,
+          0.014541999999892141,
+          0.01766700000007404,
+          0.01445800000010422,
+          0.024916000000075655,
+          0.014499999999998181,
+          0.013833000000204265,
+          0.013790999999855558,
+          0.013916000000108397
+        ]
+      },
+      "neo4j": {
+        "medianMs": 1.938083000000006,
+        "minMs": 1.4104999999999563,
+        "maxMs": 4.515834000000041,
+        "samplesMs": [
+          1.9126670000000559,
+          1.541208000000097,
+          1.54300000000012,
+          2.0225839999998243,
+          2.2374159999999392,
+          2.32425000000012,
+          4.515834000000041,
+          2.2197499999999764,
+          1.684208000000126,
+          1.4104999999999563,
+          1.938083000000006
+        ]
+      },
+      "result": [
+        {
+          "product": "Aniseed Syrup",
+          "orders": 1
+        },
+        {
+          "product": "Chartreuse verte",
+          "orders": 1
+        },
+        {
+          "product": "Escargots de Bourgogne",
+          "orders": 1
+        },
+        {
+          "product": "Flotemysost",
+          "orders": 1
+        },
+        {
+          "product": "Grandma's Boysenberry Spread",
+          "orders": 1
+        },
+        {
+          "product": "Lakkalikööri",
+          "orders": 1
+        },
+        {
+          "product": "Original Frankfurter grüne Soße",
+          "orders": 1
+        },
+        {
+          "product": "Raclette Courdavault",
+          "orders": 1
+        },
+        {
+          "product": "Rössle Sauerkraut",
+          "orders": 2
+        },
+        {
+          "product": "Spegesild",
+          "orders": 1
+        },
+        {
+          "product": "Vegie-spread",
+          "orders": 1
+        }
+      ],
+      "cypher": "MATCH (:GIItem {gi_id:$id})-[:PURCHASED]->(o:Order)-[:ORDERS]->(p:Product) RETURN p.productName AS product,count(DISTINCT o) AS orders ORDER BY product",
+      "params": {
+        "id": "northwind:Customer:ALFKI"
+      },
+      "sql": "SELECT p.title AS product,count(DISTINCT a.to_id) AS orders FROM links a JOIN links b ON b.from_id=a.to_id JOIN items p ON p.id=b.to_id WHERE a.from_id=:id AND a.type='PURCHASED' AND b.type='ORDERS' GROUP BY p.id ORDER BY product"
+    },
+    {
+      "name": "ALFKI 고객이 구매한 상품 분류",
+      "scope": "northwind",
+      "passed": true,
+      "resultCount": 5,
+      "sqlite": {
+        "medianMs": 0.010125000000016371,
+        "minMs": 0.009958000000096945,
+        "maxMs": 0.012249999999994543,
+        "samplesMs": [
+          0.011332999999922322,
+          0.0107500000001437,
+          0.010374999999839929,
+          0.01008300000012241,
+          0.010042000000112239,
+          0.009999999999990905,
+          0.010125000000016371,
+          0.010125000000016371,
+          0.010125000000016371,
+          0.009958000000096945,
+          0.012249999999994543
+        ]
+      },
+      "neo4j": {
+        "medianMs": 1.8495419999999285,
+        "minMs": 1.3485829999999623,
+        "maxMs": 5.5597080000000005,
+        "samplesMs": [
+          1.8495419999999285,
+          2.791541999999936,
+          1.7918749999998909,
+          1.4014580000000478,
+          1.3485829999999623,
+          1.6975840000000062,
+          5.5597080000000005,
+          2.571457999999893,
+          3.0823749999999563,
+          2.1146249999999327,
+          1.6953330000001188
+        ]
+      },
+      "result": [
+        {
+          "category": "Beverages"
+        },
+        {
+          "category": "Condiments"
+        },
+        {
+          "category": "Dairy Products"
+        },
+        {
+          "category": "Produce"
+        },
+        {
+          "category": "Seafood"
+        }
+      ],
+      "cypher": "MATCH (:GIItem {gi_id:$id})-[:PURCHASED]->(:Order)-[:ORDERS]->(:Product)-[:PART_OF]->(c:Category) RETURN DISTINCT c.categoryName AS category ORDER BY category",
+      "params": {
+        "id": "northwind:Customer:ALFKI"
+      },
+      "sql": "SELECT DISTINCT c.title AS category FROM links a JOIN links b ON b.from_id=a.to_id JOIN links d ON d.from_id=b.to_id JOIN items c ON c.id=d.to_id WHERE a.from_id=:id AND a.type='PURCHASED' AND b.type='ORDERS' AND d.type='PART_OF' ORDER BY category"
+    },
+    {
+      "name": "공급사 1의 상품을 구매한 고객",
+      "scope": "northwind",
+      "passed": true,
+      "resultCount": 49,
+      "sqlite": {
+        "medianMs": 0.12429199999996854,
+        "minMs": 0.07783300000005511,
+        "maxMs": 0.5485000000001037,
+        "samplesMs": [
+          0.08399999999983265,
+          0.07950000000005275,
+          0.07783300000005511,
+          0.08120899999994435,
+          0.20704200000000128,
+          0.12429199999996854,
+          0.381458000000066,
+          0.3110829999998259,
+          0.5485000000001037,
+          0.41412500000001273,
+          0.10191699999995762
+        ]
+      },
+      "neo4j": {
+        "medianMs": 2.422207999999955,
+        "minMs": 1.8472499999998035,
+        "maxMs": 4.770999999999958,
+        "samplesMs": [
+          2.8507090000000517,
+          2.5706249999998363,
+          2.6542500000000473,
+          2.3650830000001406,
+          1.8472499999998035,
+          2.184792000000016,
+          4.770999999999958,
+          2.4249999999999545,
+          2.422207999999955,
+          2.1944579999999405,
+          1.8562079999999241
+        ]
+      },
+      "result": [
+        {
+          "customer": "Alfreds Futterkiste"
+        },
+        {
+          "customer": "Antonio Moreno Taquería"
+        },
+        {
+          "customer": "Around the Horn"
+        },
+        {
+          "customer": "B's Beverages"
+        },
+        {
+          "customer": "Berglunds snabbköp"
+        },
+        {
+          "customer": "Blondesddsl père et fils"
+        },
+        {
+          "customer": "Bottom-Dollar Markets"
+        },
+        {
+          "customer": "Chop-suey Chinese"
+        },
+        {
+          "customer": "Consolidated Holdings"
+        },
+        {
+          "customer": "Die Wandernde Kuh"
+        },
+        {
+          "customer": "Du monde entier"
+        },
+        {
+          "customer": "Eastern Connection"
+        },
+        {
+          "customer": "Ernst Handel"
+        },
+        {
+          "customer": "Folk och fä HB"
+        },
+        {
+          "customer": "Frankenversand"
+        },
+        {
+          "customer": "Godos Cocina Típica"
+        },
+        {
+          "customer": "Gourmet Lanchonetes"
+        },
+        {
+          "customer": "Great Lakes Food Market"
+        },
+        {
+          "customer": "HILARION-Abastos"
+        },
+        {
+          "customer": "Hungry Owl All-Night Grocers"
+        },
+        {
+          "customer": "Island Trading"
+        },
+        {
+          "customer": "Königlich Essen"
+        },
+        {
+          "customer": "LINO-Delicateses"
+        },
+        {
+          "customer": "La maison d'Asie"
+        },
+        {
+          "customer": "Lehmanns Marktstand"
+        },
+        {
+          "customer": "Lonesome Pine Restaurant"
+        },
+        {
+          "customer": "Magazzini Alimentari Riuniti"
+        },
+        {
+          "customer": "Mère Paillarde"
+        },
+        {
+          "customer": "North/South"
+        },
+        {
+          "customer": "Ottilies Käseladen"
+        },
+        {
+          "customer": "Pericles Comidas clásicas"
+        },
+        {
+          "customer": "Princesa Isabel Vinhos"
+        },
+        {
+          "customer": "QUICK-Stop"
+        },
+        {
+          "customer": "Queen Cozinha"
+        },
+        {
+          "customer": "Rattlesnake Canyon Grocery"
+        },
+        {
+          "customer": "Ricardo Adocicados"
+        },
+        {
+          "customer": "Richter Supermarkt"
+        },
+        {
+          "customer": "Save-a-lot Markets"
+        },
+        {
+          "customer": "Seven Seas Imports"
+        },
+        {
+          "customer": "Suprêmes délices"
+        },
+        {
+          "customer": "The Cracker Box"
+        },
+        {
+          "customer": "Tortuga Restaurante"
+        },
+        {
+          "customer": "Vaffeljernet"
+        },
+        {
+          "customer": "Victuailles en stock"
+        },
+        {
+          "customer": "Wartian Herkku"
+        },
+        {
+          "customer": "Wellington Importadora"
+        },
+        {
+          "customer": "White Clover Markets"
+        },
+        {
+          "customer": "Wilman Kala"
+        },
+        {
+          "customer": "Wolski  Zajazd"
+        }
+      ],
+      "cypher": "MATCH (:GIItem {gi_id:$id})-[:SUPPLIES]->(:Product)<-[:ORDERS]-(:Order)<-[:PURCHASED]-(c:Customer) RETURN DISTINCT c.companyName AS customer ORDER BY customer",
+      "params": {
+        "id": "northwind:Supplier:1"
+      },
+      "sql": "SELECT DISTINCT c.title AS customer FROM links s JOIN links o ON o.to_id=s.to_id JOIN links b ON b.to_id=o.from_id JOIN items c ON c.id=b.from_id WHERE s.from_id=:id AND s.type='SUPPLIES' AND o.type='ORDERS' AND b.type='PURCHASED' ORDER BY customer"
+    },
+    {
+      "name": "주문이 없는 고객",
+      "scope": "northwind",
+      "passed": true,
+      "resultCount": 2,
+      "sqlite": {
+        "medianMs": 0.046959000000015294,
+        "minMs": 0.04479200000014316,
+        "maxMs": 0.050416000000041095,
+        "samplesMs": [
+          0.04845799999998235,
+          0.04758399999991525,
+          0.046959000000015294,
+          0.04645800000002964,
+          0.04899999999997817,
+          0.04583300000012969,
+          0.04645899999991343,
+          0.048125000000027285,
+          0.04479200000014316,
+          0.050416000000041095,
+          0.04591600000003382
+        ]
+      },
+      "neo4j": {
+        "medianMs": 1.808999999999969,
+        "minMs": 1.1445000000001073,
+        "maxMs": 3.181041999999934,
+        "samplesMs": [
+          1.6857919999999922,
+          2.3246670000000904,
+          1.4999589999999898,
+          1.225500000000011,
+          1.3108749999998963,
+          1.1445000000001073,
+          3.1103749999999764,
+          3.181041999999934,
+          1.9337499999999181,
+          2.4792919999999867,
+          1.808999999999969
+        ]
+      },
+      "result": [
+        {
+          "id": "northwind:Customer:FISSA",
+          "title": "FISSA Fabrica Inter. Salchichas S.A."
+        },
+        {
+          "id": "northwind:Customer:PARIS",
+          "title": "Paris spécialités"
+        }
+      ],
+      "cypher": "MATCH (c:Customer) WHERE NOT EXISTS { MATCH (c)-[:PURCHASED]->() } RETURN c.gi_id AS id,c.companyName AS title",
+      "params": {},
+      "sql": null
+    },
+    {
+      "name": "ALFKI 고객에서 하류 3단계 추적",
+      "scope": "northwind",
+      "passed": true,
+      "resultCount": 22,
+      "sqlite": {
+        "medianMs": 0.18450000000007094,
+        "minMs": 0.17658299999993687,
+        "maxMs": 0.3199170000000322,
+        "samplesMs": [
+          0.18833399999994072,
+          0.18341699999996308,
+          0.1792920000000322,
+          0.184833000000026,
+          0.18450000000007094,
+          0.1817909999999756,
+          0.17887499999983447,
+          0.17658299999993687,
+          0.21179099999994833,
+          0.3199170000000322,
+          0.20375000000012733
+        ]
+      },
+      "neo4j": {
+        "medianMs": 2.3937499999999545,
+        "minMs": 1.389790999999832,
+        "maxMs": 3.7764169999998103,
+        "samplesMs": [
+          1.665625000000091,
+          2.471667000000025,
+          2.4720410000002175,
+          1.6231669999999667,
+          2.7702090000000226,
+          2.018041999999923,
+          3.7764169999998103,
+          2.5953329999999823,
+          2.3937499999999545,
+          2.0635829999998805,
+          1.389790999999832
+        ]
+      },
+      "result": [
+        {
+          "id": "northwind:Order:10643",
+          "depth": 1
+        },
+        {
+          "id": "northwind:Order:10692",
+          "depth": 1
+        },
+        {
+          "id": "northwind:Order:10702",
+          "depth": 1
+        },
+        {
+          "id": "northwind:Order:10835",
+          "depth": 1
+        },
+        {
+          "id": "northwind:Order:10952",
+          "depth": 1
+        },
+        {
+          "id": "northwind:Order:11011",
+          "depth": 1
+        },
+        {
+          "id": "northwind:Product:28",
+          "depth": 2
+        },
+        {
+          "id": "northwind:Product:3",
+          "depth": 2
+        },
+        {
+          "id": "northwind:Product:39",
+          "depth": 2
+        },
+        {
+          "id": "northwind:Product:46",
+          "depth": 2
+        },
+        {
+          "id": "northwind:Product:58",
+          "depth": 2
+        },
+        {
+          "id": "northwind:Product:59",
+          "depth": 2
+        },
+        {
+          "id": "northwind:Product:6",
+          "depth": 2
+        },
+        {
+          "id": "northwind:Product:63",
+          "depth": 2
+        },
+        {
+          "id": "northwind:Product:71",
+          "depth": 2
+        },
+        {
+          "id": "northwind:Product:76",
+          "depth": 2
+        },
+        {
+          "id": "northwind:Product:77",
+          "depth": 2
+        },
+        {
+          "id": "northwind:Category:1",
+          "depth": 3
+        },
+        {
+          "id": "northwind:Category:2",
+          "depth": 3
+        },
+        {
+          "id": "northwind:Category:4",
+          "depth": 3
+        },
+        {
+          "id": "northwind:Category:7",
+          "depth": 3
+        },
+        {
+          "id": "northwind:Category:8",
+          "depth": 3
+        }
+      ],
+      "cypher": "MATCH p=(s:GIItem {gi_id:$id})-[*1..3]->(n:GIItem) WHERE n<>s AND n.gi_scope='northwind' RETURN n.gi_id AS id,min(length(p)) AS depth",
+      "params": {
+        "id": "northwind:Customer:ALFKI"
+      },
+      "sql": "WITH RECURSIVE edge(src,dst) AS (SELECT from_id src,to_id dst FROM links WHERE scope=:scope), walk(id,depth) AS (\n   SELECT id,0 FROM items WHERE id=:id AND scope=:scope\n   UNION\n   SELECT e.dst,w.depth+1 FROM walk w JOIN edge e ON e.src=w.id\n   JOIN items target ON target.id=e.dst AND target.scope=:scope\n   WHERE w.depth<:maxDepth\n  ) SELECT i.id,i.title,i.kind,min(w.depth) AS depth\n  FROM walk w JOIN items i ON i.id=w.id\n  WHERE w.id<>:id GROUP BY i.id ORDER BY depth,i.id"
+    },
+    {
+      "name": "주문 10248의 상품별 수량",
+      "scope": "northwind",
+      "passed": true,
+      "resultCount": 3,
+      "sqlite": {
+        "medianMs": 0.005291000000170243,
+        "minMs": 0.005165999999917403,
+        "maxMs": 0.006542000000081316,
+        "samplesMs": [
+          0.006542000000081316,
+          0.005958000000191532,
+          0.005750000000034561,
+          0.005457999999862295,
+          0.005415999999968335,
+          0.005291000000170243,
+          0.0052079999998113635,
+          0.005249999999932697,
+          0.005208999999922526,
+          0.005249999999932697,
+          0.005165999999917403
+        ]
+      },
+      "neo4j": {
+        "medianMs": 2.2195420000000468,
+        "minMs": 1.6220840000000862,
+        "maxMs": 11.989958999999999,
+        "samplesMs": [
+          1.6220840000000862,
+          1.9099170000001777,
+          2.577207999999928,
+          1.7344160000000102,
+          2.2195420000000468,
+          2.4977499999999964,
+          7.497749999999996,
+          2.6884999999999764,
+          1.754165999999941,
+          1.9644169999999122,
+          11.989958999999999
+        ]
+      },
+      "result": [
+        {
+          "product": "Mozzarella di Giovanni",
+          "quantity": 5
+        },
+        {
+          "product": "Queso Cabrales",
+          "quantity": 12
+        },
+        {
+          "product": "Singaporean Hokkien Fried Mee",
+          "quantity": 10
+        }
+      ],
+      "cypher": "MATCH (:GIItem {gi_id:$id})-[r:ORDERS]->(p:Product) RETURN p.productName AS product,r.quantity AS quantity ORDER BY product",
+      "params": {
+        "id": "northwind:Order:10248"
+      },
+      "sql": "SELECT p.title AS product,json_extract(l.attrs,'$.quantity') AS quantity FROM links l JOIN items p ON p.id=l.to_id WHERE l.from_id=:id AND l.type='ORDERS' ORDER BY product"
+    }
+  ],
+  "regressions": [
+    {
+      "name": "부분 문자열 ID와 순환을 포함해도 정확한 최소 깊이 반환",
+      "passed": true
+    },
+    {
+      "name": "다른 scope의 시작 항목 접근 차단",
+      "passed": true
+    },
+    {
+      "name": "깊이 상한 검증",
+      "passed": true
+    },
+    {
+      "name": "잘못된 재구축 입력에서 기존 인덱스 보존",
+      "passed": true
+    }
+  ]
+}

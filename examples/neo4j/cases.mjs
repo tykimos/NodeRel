@@ -1,0 +1,61 @@
+export const cases=[
+ {name:'키아누 리브스의 출연 영화',scope:'movies',
+  params:{id:'movies:Person:Keanu%20Reeves'},
+  sql:`SELECT m.title FROM links l JOIN items m ON m.id=l.to_id WHERE l.from_id=:id AND l.type='ACTED_IN' ORDER BY m.title`,
+  cypher:`MATCH (:GIItem {gi_id:$id})-[:ACTED_IN]->(m:Movie) RETURN m.title AS title ORDER BY title`},
+ {name:'매트릭스 출연진과 배역',scope:'movies',
+  params:{id:'movies:Movie:The%20Matrix'},
+  sql:`SELECT p.title AS name,json_extract(l.attrs,'$.roles') AS roles FROM links l JOIN items p ON p.id=l.from_id WHERE l.to_id=:id AND l.type='ACTED_IN' ORDER BY name`,
+  decode:r=>({...r,roles:JSON.parse(r.roles)}),
+  cypher:`MATCH (p:Person)-[r:ACTED_IN]->(:GIItem {gi_id:$id}) RETURN p.name AS name,r.roles AS roles ORDER BY name`},
+ {name:'톰 행크스의 공동 출연자',scope:'movies',
+  params:{id:'movies:Person:Tom%20Hanks'},
+  sql:`SELECT DISTINCT p.title AS name FROM links a JOIN links b ON a.to_id=b.to_id JOIN items p ON p.id=b.from_id WHERE a.from_id=:id AND a.type='ACTED_IN' AND b.type='ACTED_IN' AND p.id<>:id ORDER BY name`,
+  cypher:`MATCH (p:GIItem {gi_id:$id})-[:ACTED_IN]->(:Movie)<-[:ACTED_IN]-(other:Person) WHERE other<>p RETURN DISTINCT other.name AS name ORDER BY name`},
+ {name:'같은 영화를 감독하고 출연한 사람',scope:'movies',params:{},
+  sql:`SELECT p.title AS name,m.title AS title FROM links a JOIN links b ON a.from_id=b.from_id AND a.to_id=b.to_id JOIN items p ON p.id=a.from_id JOIN items m ON m.id=a.to_id WHERE a.scope='movies' AND a.type='ACTED_IN' AND b.type='DIRECTED' ORDER BY name,title`,
+  cypher:`MATCH (p:Person)-[:ACTED_IN]->(m:Movie),(p)-[:DIRECTED]->(m) RETURN p.name AS name,m.title AS title ORDER BY name,title`},
+ {name:'키아누 리브스에서 양방향 4단계 추적',scope:'movies',
+  trace:{id:'movies:Person:Keanu%20Reeves',scope:'movies',direction:'both',maxDepth:4,types:['ACTED_IN']},
+  params:{id:'movies:Person:Keanu%20Reeves'},
+  cypher:`MATCH p=(s:GIItem {gi_id:$id})-[:ACTED_IN*1..4]-(n:GIItem) WHERE n<>s RETURN n.gi_id AS id,min(length(p)) AS depth`},
+ {name:'키아누 리브스와 톰 행크스의 최소 연결 거리',scope:'movies',
+  trace:{id:'movies:Person:Keanu%20Reeves',scope:'movies',direction:'both',maxDepth:10,types:['ACTED_IN']},
+  target:'movies:Person:Tom%20Hanks',params:{id:'movies:Person:Keanu%20Reeves',target:'movies:Person:Tom%20Hanks'},
+  cypher:`MATCH (s:GIItem {gi_id:$id}),(t:GIItem {gi_id:$target}),p=shortestPath((s)-[:ACTED_IN*..10]-(t)) RETURN length(p) AS depth`},
+ {name:'출연 연결이 없는 인물',scope:'movies',
+  orphans:{scope:'movies',kind:'Person',type:'ACTED_IN'},params:{},
+  cypher:`MATCH (p:Person) WHERE NOT EXISTS { MATCH (p)-[:ACTED_IN]->() } RETURN p.gi_id AS id,p.name AS title`},
+ {name:'유제품 분류의 상품',scope:'northwind',params:{id:'northwind:Category:4'},
+  sql:`SELECT p.title AS product FROM links l JOIN items p ON p.id=l.from_id WHERE l.to_id=:id AND l.type='PART_OF' ORDER BY product`,
+  cypher:`MATCH (p:Product)-[:PART_OF]->(:GIItem {gi_id:$id}) RETURN p.productName AS product ORDER BY product`},
+ {name:'공급사 1의 상품과 분류',scope:'northwind',params:{id:'northwind:Supplier:1'},
+  sql:`SELECT p.title AS product,c.title AS category FROM links s JOIN items p ON p.id=s.to_id JOIN links pc ON pc.from_id=p.id JOIN items c ON c.id=pc.to_id WHERE s.from_id=:id AND s.type='SUPPLIES' AND pc.type='PART_OF' ORDER BY product`,
+  cypher:`MATCH (:GIItem {gi_id:$id})-[:SUPPLIES]->(p:Product)-[:PART_OF]->(c:Category) RETURN p.productName AS product,c.categoryName AS category ORDER BY product`},
+ {name:'ALFKI 고객의 구매 상품과 주문 수',scope:'northwind',params:{id:'northwind:Customer:ALFKI'},
+  sql:`SELECT p.title AS product,count(DISTINCT a.to_id) AS orders FROM links a JOIN links b ON b.from_id=a.to_id JOIN items p ON p.id=b.to_id WHERE a.from_id=:id AND a.type='PURCHASED' AND b.type='ORDERS' GROUP BY p.id ORDER BY product`,
+  cypher:`MATCH (:GIItem {gi_id:$id})-[:PURCHASED]->(o:Order)-[:ORDERS]->(p:Product) RETURN p.productName AS product,count(DISTINCT o) AS orders ORDER BY product`},
+ {name:'ALFKI 고객이 구매한 상품 분류',scope:'northwind',params:{id:'northwind:Customer:ALFKI'},
+  sql:`SELECT DISTINCT c.title AS category FROM links a JOIN links b ON b.from_id=a.to_id JOIN links d ON d.from_id=b.to_id JOIN items c ON c.id=d.to_id WHERE a.from_id=:id AND a.type='PURCHASED' AND b.type='ORDERS' AND d.type='PART_OF' ORDER BY category`,
+  cypher:`MATCH (:GIItem {gi_id:$id})-[:PURCHASED]->(:Order)-[:ORDERS]->(:Product)-[:PART_OF]->(c:Category) RETURN DISTINCT c.categoryName AS category ORDER BY category`},
+ {name:'공급사 1의 상품을 구매한 고객',scope:'northwind',params:{id:'northwind:Supplier:1'},
+  sql:`SELECT DISTINCT c.title AS customer FROM links s JOIN links o ON o.to_id=s.to_id JOIN links b ON b.to_id=o.from_id JOIN items c ON c.id=b.from_id WHERE s.from_id=:id AND s.type='SUPPLIES' AND o.type='ORDERS' AND b.type='PURCHASED' ORDER BY customer`,
+  cypher:`MATCH (:GIItem {gi_id:$id})-[:SUPPLIES]->(:Product)<-[:ORDERS]-(:Order)<-[:PURCHASED]-(c:Customer) RETURN DISTINCT c.companyName AS customer ORDER BY customer`},
+ {name:'주문이 없는 고객',scope:'northwind',orphans:{scope:'northwind',kind:'Customer',type:'PURCHASED'},params:{},
+  cypher:`MATCH (c:Customer) WHERE NOT EXISTS { MATCH (c)-[:PURCHASED]->() } RETURN c.gi_id AS id,c.companyName AS title`},
+ {name:'ALFKI 고객에서 하류 3단계 추적',scope:'northwind',
+  trace:{id:'northwind:Customer:ALFKI',scope:'northwind',direction:'out',maxDepth:3},params:{id:'northwind:Customer:ALFKI'},
+  cypher:`MATCH p=(s:GIItem {gi_id:$id})-[*1..3]->(n:GIItem) WHERE n<>s AND n.gi_scope='northwind' RETURN n.gi_id AS id,min(length(p)) AS depth`},
+ {name:'주문 10248의 상품별 수량',scope:'northwind',params:{id:'northwind:Order:10248'},
+  sql:`SELECT p.title AS product,json_extract(l.attrs,'$.quantity') AS quantity FROM links l JOIN items p ON p.id=l.to_id WHERE l.from_id=:id AND l.type='ORDERS' ORDER BY product`,
+  cypher:`MATCH (:GIItem {gi_id:$id})-[r:ORDERS]->(p:Product) RETURN p.productName AS product,r.quantity AS quantity ORDER BY product`},
+];
+
+export function sqliteCase(gi,c) {
+ if(c.trace){const rows=gi.trace(c.trace);return c.target?rows.filter(r=>r.id===c.target).map(r=>({depth:r.depth})):rows.map(r=>({id:r.id,depth:r.depth}));}
+ if(c.orphans)return gi.orphans(c.orphans);
+ if(!c.prepared)c.prepared=gi.db.prepare(c.sql);
+ const rows=c.prepared.all(c.params);return c.decode?rows.map(c.decode):rows;
+}
+function ordered(v){if(Array.isArray(v))return v.map(ordered);if(v&&typeof v==='object')return Object.fromEntries(Object.keys(v).sort().map(k=>[k,ordered(v[k])]));return v;}
+export function canonical(rows){return rows.map(r=>JSON.stringify(ordered(r))).sort();}

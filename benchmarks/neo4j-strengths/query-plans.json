@@ -1,0 +1,240 @@
+{
+  "floor": {
+    "operator": "ProduceResults@neo4j",
+    "rows": 1,
+    "dbHits": 0,
+    "details": "value",
+    "children": [
+      {
+        "operator": "Projection@neo4j",
+        "rows": 1,
+        "dbHits": 0,
+        "details": "$autoint_0 AS value",
+        "children": []
+      }
+    ]
+  },
+  "point": {
+    "operator": "ProduceResults@neo4j",
+    "rows": 1,
+    "dbHits": 0,
+    "details": "value",
+    "children": [
+      {
+        "operator": "Projection@neo4j",
+        "rows": 1,
+        "dbHits": 0,
+        "details": "cache[n.id] AS value",
+        "children": [
+          {
+            "operator": "NodeUniqueIndexSeek@neo4j",
+            "rows": 1,
+            "dbHits": 2,
+            "details": "UNIQUE n:Bench(id) WHERE id = $source, cache[n.id]",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  "shortest": {
+    "operator": "ProduceResults@neo4j",
+    "rows": 1,
+    "dbHits": 0,
+    "details": "distance",
+    "children": [
+      {
+        "operator": "Projection@neo4j",
+        "rows": 1,
+        "dbHits": 0,
+        "details": "length(p) AS distance",
+        "children": [
+          {
+            "operator": "ShortestPath@neo4j",
+            "rows": 1,
+            "dbHits": 1244,
+            "details": "p = (s)-[anon_0:LINK*..10]->(t)",
+            "children": [
+              {
+                "operator": "CartesianProduct@neo4j",
+                "rows": 1,
+                "dbHits": 0,
+                "children": [
+                  {
+                    "operator": "NodeUniqueIndexSeek@neo4j",
+                    "rows": 1,
+                    "dbHits": 2,
+                    "details": "UNIQUE s:Bench(id) WHERE id = $source",
+                    "children": []
+                  },
+                  {
+                    "operator": "NodeUniqueIndexSeek@neo4j",
+                    "rows": 1,
+                    "dbHits": 2,
+                    "details": "UNIQUE t:Bench(id) WHERE id = $target",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "filtered": {
+    "operator": "ProduceResults@neo4j",
+    "rows": 1,
+    "dbHits": 0,
+    "details": "distance",
+    "children": [
+      {
+        "operator": "Projection@neo4j",
+        "rows": 1,
+        "dbHits": 0,
+        "details": "length(p) AS distance",
+        "children": [
+          {
+            "operator": "ShortestPath@neo4j",
+            "rows": 1,
+            "dbHits": 3111,
+            "details": "p = (s)-[anon_0:LINK*..10]->(t) WHERE all(n IN nodes(p) WHERE n.status = $autostring_0)",
+            "children": [
+              {
+                "operator": "CartesianProduct@neo4j",
+                "rows": 1,
+                "dbHits": 0,
+                "children": [
+                  {
+                    "operator": "NodeUniqueIndexSeek@neo4j",
+                    "rows": 1,
+                    "dbHits": 2,
+                    "details": "UNIQUE s:Bench(id) WHERE id = $source",
+                    "children": []
+                  },
+                  {
+                    "operator": "NodeUniqueIndexSeek@neo4j",
+                    "rows": 1,
+                    "dbHits": 2,
+                    "details": "UNIQUE t:Bench(id) WHERE id = $target",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "reach3": {
+    "operator": "ProduceResults@neo4j",
+    "rows": 1,
+    "dbHits": 0,
+    "details": "count, depthSum",
+    "children": [
+      {
+        "operator": "Projection@neo4j",
+        "rows": 1,
+        "dbHits": 0,
+        "details": "coalesce(anon_1, $autoint_0) AS depthSum",
+        "children": [
+          {
+            "operator": "EagerAggregation@neo4j",
+            "rows": 1,
+            "dbHits": 0,
+            "details": "sum(depth) AS anon_1, count(n) AS count",
+            "children": [
+              {
+                "operator": "Filter@neo4j",
+                "rows": 258,
+                "dbHits": 0,
+                "details": "NOT n = s",
+                "children": [
+                  {
+                    "operator": "Projection@neo4j",
+                    "rows": 258,
+                    "dbHits": 0,
+                    "details": "anon_2 AS depth, s, n",
+                    "children": [
+                      {
+                        "operator": "VarLengthExpand(Pruning,BFS,All)@neo4j",
+                        "rows": 258,
+                        "dbHits": 581,
+                        "details": "(s)-[:LINK*..3]->(n) anon_2",
+                        "children": [
+                          {
+                            "operator": "NodeUniqueIndexSeek@neo4j",
+                            "rows": 1,
+                            "dbHits": 2,
+                            "details": "UNIQUE s:Bench(id) WHERE id = $source",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "reach6": {
+    "operator": "ProduceResults@neo4j",
+    "rows": 1,
+    "dbHits": 0,
+    "details": "count, depthSum",
+    "children": [
+      {
+        "operator": "Projection@neo4j",
+        "rows": 1,
+        "dbHits": 0,
+        "details": "coalesce(anon_1, $autoint_0) AS depthSum",
+        "children": [
+          {
+            "operator": "EagerAggregation@neo4j",
+            "rows": 1,
+            "dbHits": 0,
+            "details": "sum(depth) AS anon_1, count(n) AS count",
+            "children": [
+              {
+                "operator": "Filter@neo4j",
+                "rows": 32151,
+                "dbHits": 0,
+                "details": "NOT n = s",
+                "children": [
+                  {
+                    "operator": "Projection@neo4j",
+                    "rows": 32152,
+                    "dbHits": 0,
+                    "details": "anon_2 AS depth, s, n",
+                    "children": [
+                      {
+                        "operator": "VarLengthExpand(Pruning,BFS,All)@neo4j",
+                        "rows": 32152,
+                        "dbHits": 115864,
+                        "details": "(s)-[:LINK*..6]->(n) anon_2",
+                        "children": [
+                          {
+                            "operator": "NodeUniqueIndexSeek@neo4j",
+                            "rows": 1,
+                            "dbHits": 2,
+                            "details": "UNIQUE s:Bench(id) WHERE id = $source",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
