@@ -1,12 +1,92 @@
 # NodeRel
 
-**A small SQLite graph layer with a schema AI tools can inspect.**
+**Understand your data by following its connections.**
 
-NodeRel stores nodes and relationships in a local SQLite file, follows connections, finds missing relationships, and describes the data for AI applications. It is a Node.js prototype for a **derived graph index**: keep the authoritative data in your existing files or systems, and rebuild the graph when you need it.
+NodeRel is a small software library that helps applications keep track of things and how they are related. It can find the films featuring an actor, the products connected to a customer's orders, or the tasks that depend on a requirement.
 
-The core uses Node's built-in SQLite module, requires no database server, and has no external npm dependencies. It includes working Movies and Northwind examples, stored Neo4j reference results, and reproducible performance experiments.
+You provide the items and their connections. NodeRel stores them in a local database file and gives your application ways to follow those connections and ask questions. It can also describe the data to an AI application.
 
-[Visual guide](docs/visual-guide.md) · [Quick start](#quick-start) · [Query examples](#query-examples) · [Neo4j comparison](#noderel-and-neo4j) · [Benchmarks](#measured-performance) · [AI integration](#a-schema-for-ai-generated-queries)
+[Start here](#new-to-graphs-start-here) · [Visual guide](docs/visual-guide.md) · [Quick start](#quick-start) · [Query examples](#query-examples) · [Neo4j comparison](#noderel-and-neo4j) · [Benchmarks](#measured-performance) · [AI integration](#a-schema-for-ai-generated-queries)
+
+## New to graphs? Start here
+
+### Start with one everyday fact
+
+**Keanu Reeves acted in The Matrix.** You can represent that sentence as two things connected by a named arrow:
+
+![A beginner's graph: the person Keanu Reeves points to the movie The Matrix through ACTED_IN. The relationship has a roles property containing Neo.](docs/assets/graph-basics.png)
+
+[View SVG](docs/assets/graph-basics.svg)
+
+In this README, a **graph** is a map of connected things. Each box represents a thing, and each arrow explains a relationship between two things. Three words are enough to read the picture:
+
+| Graph word | Everyday meaning | Example in the picture |
+|---|---|---|
+| **Node** | A thing you want to keep track of | The person Keanu Reeves or the movie The Matrix |
+| **Relationship** (also called an **edge**) | A named connection between two things | Keanu Reeves `ACTED_IN` The Matrix |
+| **Property** | A detail about a thing or a connection | The movie's title, or Keanu's role, Neo, in this particular film |
+
+A person can appear in many movies and play a different role in each one. That is why the role belongs to the connection between the person and the movie. The arrow also gives the fact a direction: **person → acted in → movie**. These are the basic building blocks of the property graph model described in [Neo4j's introductory guide](https://neo4j.com/docs/getting-started/appendix/graphdb-concepts/).
+
+### Follow the connections to answer a question
+
+Add another fact: **Laurence Fishburne acted in The Matrix.** Now the two people share a connection through the same film.
+
+| Question | How the graph helps |
+|---|---|
+| Which films feature Keanu Reeves? | Start at Keanu and follow his `ACTED_IN` arrows to films. |
+| Who acted in The Matrix? | Start at the film and follow the incoming `ACTED_IN` arrows back to people. |
+| Who has acted with Keanu Reeves? | Find his films, then find other people connected to those same films. |
+
+Following connections is called **traversal**. Crossing one connection is one **hop**. Going from Keanu to The Matrix to Laurence takes two hops, with the second hop going against the stored arrow. NodeRel supports following outgoing arrows, incoming arrows, or both.
+
+The two facts above are selected cast relationships from the included Movies dataset. That dataset contains more films and cast members. You can express the questions through NodeRel functions or SQL; the [query examples](#query-examples) show how.
+
+### Graphs, graph databases, and knowledge graphs
+
+These terms describe different parts of the idea:
+
+| Term | Plain-language explanation |
+|---|---|
+| **Graph** | The connected information itself: things and their relationships. |
+| **Graph database** | Software designed to store connected information and answer questions about it. Neo4j is one example. |
+| **Knowledge graph** | A way to organize knowledge about real things or concepts using relationships with explicit meaning, such as a person acting in a film or a product belonging to a category. |
+| **NodeRel** | This project's small library for storing and querying a graph using SQLite, a database engine that runs inside an application. |
+
+A knowledge graph describes **what the information means**; a database provides **a way to store and query it**. The meaning comes from identifying the things and defining what their connections represent. See [Neo4j's explanation of knowledge graphs and graph databases](https://neo4j.com/blog/knowledge-graph/knowledge-graph-vs-graph-database/).
+
+NodeRel can represent a small knowledge graph when you supply those things and meaningful relationships. For example, you can connect documents to the topics they mention or products to their categories. You define those connections; NodeRel does not automatically read arbitrary documents, discover facts, or decide what is true.
+
+### What you can use NodeRel for
+
+The same idea works beyond movies:
+
+| Information you already have | Connections you could record | Questions your application could answer |
+|---|---|---|
+| Requirements and project tasks | A task implements a requirement; another task depends on it | Which tasks are connected to a requirement that changed? |
+| Customers, orders, and products | A customer places an order; the order contains products | Which products and categories has this customer purchased? |
+| Documents and topics | A document mentions a topic or refers to another document | Which documents are connected to this topic? |
+
+The repository includes working movie and purchase examples, plus a small requirement/task example. A document graph would require your own data preparation. A list or spreadsheet can also store these facts; the graph representation makes their connections explicit and gives the application a consistent way to follow them.
+
+### Where NodeRel fits in your application
+
+A typical workflow has four steps:
+
+1. **Keep your original data.** Files or existing systems remain the source you maintain.
+2. **Describe the connections.** Prepare a list of items and a list of named relationships between them.
+3. **Build a local graph file.** NodeRel stores those lists in SQLite so they can be queried together.
+4. **Ask about related items.** Your application calls NodeRel to find neighbors, follow several connections, or find items missing a particular relationship.
+
+We call the local graph a **derived index** because it is an extra representation made from your source data and can be rebuilt. The word **index** here means a structure that helps look things up. In NodeRel, it helps look up connections.
+
+NodeRel is currently a developer toolkit. A developer prepares the data and connects the library to an application; you do not need to understand its code to understand the examples above. Its diagrams illustrate the concepts, and an interactive graph editor is not included.
+
+For an AI interface, NodeRel can export a **schema**: a description of the kinds of items, the available relationships, and the supported queries. An AI application can use that description to propose a query for a user's question. The developer still supplies the AI model and checks the request before execution. A built-in chat assistant is not included.
+
+Under the hood, this prototype uses Node.js and SQLite. It runs without a separate database server, and its core has no external npm dependencies. Neo4j is a dedicated graph database with a broader graph query interface; the [comparison](#noderel-and-neo4j) explains the differences, including workloads where Neo4j performed better.
+
+Continue with the [quick start](#quick-start), or read the [first graph example](#your-first-graph) to see how a requirement connects to its tasks.
 
 ## Why NodeRel?
 
@@ -17,7 +97,7 @@ Many applications already have the data they need, but the connections are diffi
 - Which products did a customer buy, and which categories do they belong to?
 - Which items are missing a required relationship?
 
-NodeRel makes those connections explicit without first moving the entire application into a graph database. Here, **index** means a rebuildable representation that helps answer relationship questions. SQLite's own table indexes then help locate individual nodes and edges inside that representation.
+NodeRel makes those connections explicit without first moving the entire application into a graph database. The derived graph can be rebuilt from your source data. SQLite's own table indexes help locate individual nodes and edges inside it.
 
 The AI idea is simple: a user should be able to ask a question without learning a query language. An AI application can inspect node kinds, relationship directions, example IDs, and available operations, then produce a structured query request. NodeRel supplies that description and a small execution API. **The language model, entity resolution, and application integration are still supplied by the application developer.**
 

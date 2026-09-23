@@ -6,12 +6,17 @@ English is the default language for explanations, labels, and captions. The READ
 
 | Diagram | What it explains | PNG | SVG |
 |---|---|---|---|
+| Graph basics | How one everyday fact becomes nodes, a relationship, and a property | [Image](assets/graph-basics.png) | [Vector](assets/graph-basics.svg) |
 | Architecture | How snapshots become a SQLite graph and an AI-readable description | [Image](assets/architecture.png) | [Vector](assets/architecture.svg) |
 | Inbound traversal | How a requirement reaches its implementing and dependent tasks | [Image](assets/inbound-traversal.png) | [Vector](assets/inbound-traversal.svg) |
 | Example graphs | Movies cast relationships and the Northwind purchase pattern | [Image](assets/example-graphs.png) | [Vector](assets/example-graphs.svg) |
 | AI query sequence | The handoffs among user, application, model, and NodeRel | [Image](assets/ai-query-sequence.png) | [Vector](assets/ai-query-sequence.svg) |
 | Execution models | Embedded SQLite calls compared with a Neo4j server over Bolt | [Image](assets/execution-models.png) | [Vector](assets/execution-models.svg) |
 | Storage model | Node records, edge records, and snapshot metadata | [Image](assets/storage-model.png) | [Vector](assets/storage-model.svg) |
+
+### Start with one fact
+
+The beginner diagram reads like a sentence: Keanu Reeves acted in The Matrix. The person and movie are nodes; `ACTED_IN` is the relationship; the role Neo is a property of that relationship. The [beginner introduction](../README.md#new-to-graphs-start-here) explains these terms before introducing database architecture or code.
 
 ### Architecture and application boundaries
 

@@ -78,6 +78,22 @@ def save(fig, name):
     print(f'Rendered {name}.svg and {name}.png')
 
 
+def basics():
+    fig, ax = canvas(6.1, 'A graph connects things with meaning',
+                     'Read this as a sentence: Keanu Reeves acted in The Matrix.')
+    card(ax, .7, 3.1, 2.9, 1.2, 'Keanu Reeves', 'Person', title_size=15)
+    card(ax, 8.4, 3.1, 2.9, 1.2, 'The Matrix', 'Movie', tone='blue', title_size=15)
+    arrow(ax, [(3.66, 3.7), (8.34, 3.7)], color='teal')
+    label(ax, 6.0, 4.12, 'ACTED_IN', color='teal', size=14)
+    label(ax, 6.0, 3.27, 'roles: ["Neo"]', color='orange', size=12)
+    card(ax, .55, 1.12, 3.45, 1.1, 'NODE', 'A thing: Keanu Reeves', title_size=12.5)
+    card(ax, 4.275, 1.12, 3.45, 1.1, 'RELATIONSHIP', 'A connection: acted in', title_size=12.5)
+    card(ax, 8.0, 1.12, 3.45, 1.1, 'PROPERTY', 'A detail: the role Neo', tone='orange', title_size=12.5)
+    text(ax, .55, .47, 'You supply the facts. NodeRel stores the connections so your application can follow them.',
+         size=10.8, color=C['muted'])
+    save(fig, 'graph-basics')
+
+
 def architecture():
     fig, ax = canvas(6.6, 'A rebuildable graph over your data',
                      'Keep the source authoritative. Derive the graph. Describe it for your application.')
@@ -241,5 +257,5 @@ def storage():
 
 
 if __name__ == '__main__':
-    for render in [architecture, traversal, domains, ai_sequence, deployment, storage]:
+    for render in [basics, architecture, traversal, domains, ai_sequence, deployment, storage]:
         render()
