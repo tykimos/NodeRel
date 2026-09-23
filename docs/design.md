@@ -1,32 +1,92 @@
-# NodeRel 설계
+# Design and semantics
 
-## 원본과 인덱스
+## A derived index over authoritative source data
 
-NodeRel는 원본 스냅샷에서 다시 만들 수 있는 파생 인덱스입니다. 현재 수집기 입력은 `nodes`와 `edges` 배열을 갖는 JSON입니다. `rebuild()`는 ID와 관계 중복을 검사하고, 트랜잭션 안에서 내용을 교체합니다. 자기 참조와 없는 끝점을 가리키는 연결은 제외 목록에 남깁니다.
+NodeRel's input is an array of snapshots, each containing `nodes` and `edges`. An adapter can create these from files, application records, or another database. NodeRel does not currently supply general-purpose adapters or monitor the sources for changes.
 
-외부 원본 변경 감지, 자동 재구축, 업무 의미의 자동 확정은 구현하지 않았습니다.
+The source remains authoritative. The SQLite file is a derived view that can be rebuilt. This makes a local relationship layer useful even when an application does not need a separate graph server.
 
-## 탐색
+`rebuild()` validates duplicate IDs and duplicate `(from, to, type)` relationships before replacing the tables in a transaction. Self-references and edges with missing endpoints are excluded and recorded. An accepted edge and both endpoints must share a scope. An insertion failure rolls the transaction back.
 
-핵심 `trace()`는 재귀 SQL의 `(id, depth)` 상태에 UNION을 적용합니다. 같은 노드에 다른 깊이로 도착하면 별도 상태가 되며, 결과에서 노드별 최소 깊이를 구합니다. 경로 문자열을 쌓는 UNION ALL보다 중복 확장을 줄일 수 있지만, 모든 경로를 구하는 질의는 아닙니다.
+`sync_meta` stores the SHA-256 of `JSON.stringify(snapshots)`, the rebuild timestamp, and rejected edges. The signature identifies the serialized input, including its array ordering; it is not a canonical graph hash. There is no incremental merge or background synchronization.
 
-벤치마크의 `SqlReader`는 전체 방문 집합을 관리하는 BFS와 양방향 최단 거리 알고리즘을 따로 구현합니다. 핵심 API에 통합한 상태가 아니므로 성능 결과를 구분합니다.
+## Storage contract
 
-## AI용 질의 흐름
+| Concept | Representation |
+|---|---|
+| Node identity | Globally unique `items.id` |
+| Node category | One `items.kind` value |
+| Partition | `items.scope` and `links.scope` |
+| Display name | `items.title` |
+| Other indexed node fields | `no`, `status`, `updated_at` |
+| Directed relationship | `links.from_id`, `to_id`, `type` |
+| Relationship properties | JSON object encoded in `links.attrs` |
+| Rebuild metadata | Key/value rows in `sync_meta` |
 
-1. 사용자가 자연어로 질문합니다.
-2. AI가 허용된 범위의 스키마, 관계 방향과 조회 기능을 읽습니다.
-3. 이름을 실제 ID로 찾고 모호한 후보를 구분합니다.
-4. AI가 구조화된 함수 호출 요청을 만듭니다.
-5. 애플리케이션이 권한·입력·작업 한도를 확인하고 SQL 또는 탐색 함수를 실행합니다.
-6. 결과와 근거를 AI에 돌려주어 답변을 작성합니다.
+An edge's primary key is `(from_id, to_id, type)`. Different types can connect the same pair, but two edges with the same type and endpoints cannot be stored separately. IDs must be unique across scopes, not just within one scope. Prefixing sample IDs with scope and kind is an importer convention.
 
-현재 제공하는 부분은 설명서 추출, 기존 조회 함수, 검증한 요청 예시입니다. `find_nodes`, 일반적인 한글 인명 해석, 전체 요청 검증기, 실행 시간 제한기, 자연어 변환 모델은 아직 통합되지 않았습니다. 설명서의 지침이 실행 제한을 대신하지 않습니다.
+SQLite indexes support lookup by node ID, kind/scope, and incoming/outgoing endpoint plus relationship type. JSON relationship properties are retained, but there is no automatic property-index creation or general property-filter API. Most original node properties remain in the source snapshots.
 
-물리적 테이블 구조와 관찰된 노드·관계 모양은 자동 추출할 수 있습니다. 업무 의미, 지표 정의, 관계 해석과 권한은 별도 정의가 필요합니다. 필요한 scope와 종류만 AI에 선택적으로 전달하도록 확장할 수 있습니다.
+The importer enforces endpoint and scope checks; the schema does not define SQL foreign keys or triggers that enforce all of those invariants. Applications that write directly through `.db` can bypass importer validation.
 
-## 비용과 결과 계약
+## Direction, depth, and duplicate handling
 
-결과 행 수 제한과 탐색 작업량 제한은 다릅니다. 깊이 10도 연결 수가 많으면 큰 작업이 됩니다. 서비스에서는 방문 수, 실행 시간, 동시 요청 등의 한도를 별도로 설계해야 합니다.
+`out` follows `from_id → to_id`; `in` reverses that direction; `both` permits either. Direction describes the stored arrow, not a universal business notion of cause or impact.
 
-DatabaseSync는 동기 실행입니다. 긴 재구축과 조회는 별도 작업 스레드나 프로세스 구성이 필요할 수 있습니다. 벤치마크의 동시 읽기는 작업 스레드와 독립 연결을 사용합니다.
+The public `trace()` implementation uses a recursive CTE with `UNION` over `(id, depth)`. An identical node/depth state is explored once. A node reached at different depths produces different states, and final aggregation returns the minimum depth for each node. Consequently:
+
+- Cycles terminate within the requested depth limit.
+- The start node is excluded from the returned rows, including after a cycle.
+- Returned rows contain `id`, `title`, `kind`, and minimum `depth`, sorted by depth and ID.
+- Results do not contain every path or a reconstructed shortest path.
+- A missing or out-of-scope start, or depth zero, returns an empty result.
+- A nonempty `types` array is an allowed-type set at every step, not a sequence of required types.
+
+The depth must be an integer from 0 to 10. This bounds recursion depth, not total work or response time. A broad graph can still produce many intermediate states.
+
+`neighbors()` returns all incoming and outgoing incident relationships, including parsed JSON properties. `orphans()` checks the absence of a specified relationship in one direction; it does not require the node to be completely disconnected. `graph()` exports stored rows in a scope, keeping edge `attrs` as JSON text.
+
+## Why the benchmark has another traversal implementation
+
+The benchmark's `SqlReader` implements BFS using a global visited set, and bidirectional BFS for shortest distance. It reads adjacency lists from SQLite in batches, reuses statements, and has an additional reverse-lookup index. It does not preload the full graph for measured queries.
+
+That code is separate from the public API. The benchmark's recursive SQL is also adapted to return counts/depth sums or one target distance, so its timing is not a direct measurement of `NodeRel.trace()` returning complete node records. The README and charts distinguish these implementations.
+
+This separation matters: using a different search algorithm can change performance much more than changing the database. A shortest-distance query that explores an entire bounded neighborhood should not be treated as algorithmically equivalent to bidirectional search that stops early.
+
+## An AI-facing query flow
+
+The intended integration is:
+
+1. The user asks a natural-language question.
+2. The application supplies descriptions for authorized scopes, node kinds, relationships, and operations.
+3. The application/model resolves names to actual IDs and handles ambiguous matches.
+4. The model proposes a structured operation and arguments.
+5. The application validates access, arguments, and resource budgets, then executes an allowed API call or parameterized statement.
+6. The application returns results and source information for an answer grounded in the data.
+
+Implemented here: database description export, query functions, and one verified request/result example. A model adapter, generic entity resolver, complete operation dispatcher/validator, and resource-budget runner remain application work. No model is called by `npm run schema`.
+
+Table fields, counts, observed relationship shapes, and JSON property types can be inferred from the database. Business meanings, policy, and metric definitions need explicit domain context. The sample exporter supplies curated descriptions for Movies and Northwind; its observed shapes are not enforced relationship constraints.
+
+The schema lists proposed operations separately from existing ones. In particular, `find_nodes`, `shortest_path`, `match_pattern`, and `explain` are proposals, not callable methods. Describing an operation is not the same as implementing it.
+
+## Execution and service boundaries
+
+`DatabaseSync` is synchronous. A long query or rebuild blocks its calling JavaScript thread. An integrating service can use worker threads or separate processes; the benchmark uses independent worker/read connections for concurrent SQLite requests.
+
+A final result limit is not a traversal budget. Services may need explicit visited-node, time, memory, and concurrency limits. None is automatically provided by instructions written into the AI schema.
+
+Scope checks partition supported API operations, but they are not authentication, authorization, or a complete tenant-isolation system. A caller with the raw database handle can issue other SQL. An AI-generated request therefore needs an application-controlled execution boundary.
+
+## Current status
+
+| Implemented | Requires additional work |
+|---|---|
+| Transactional snapshot rebuild | Automatic source synchronization |
+| Bounded traversal, neighbors, missing relationships, statistics | General pattern language and complete path results |
+| Fixed node columns and JSON relationship attributes | Arbitrary indexed node properties, multiple labels, same-type parallel edges |
+| Actual schema observations and operation descriptions | Automatic natural-language query service and generic name resolution |
+| Stored correctness baselines and reproducible benchmarks | A production service with access policies and execution budgets |
+
+See the [query guide](queries.md), [AI integration example](../examples/ai/README.md), and [benchmark report](../benchmarks/neo4j-strengths/REPORT.md) for working examples and measured behavior.

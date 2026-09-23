@@ -1,14 +1,44 @@
 # NodeRel
 
-**SQLite 기반 파생 그래프 인덱스와 AI용 스키마 설명서.**
+**A small SQLite graph layer with a schema AI tools can inspect.**
 
-항목과 연결을 SQLite 파일에 저장하고, 연결 추적·이웃 조회·관계 누락 검사를 수행하는 Node.js 프로토타입입니다. 원본 데이터로부터 재구축할 수 있으며, 별도 DB 서버 없이 실행합니다.
+NodeRel stores nodes and relationships in a local SQLite file, follows connections, finds missing relationships, and describes the data for AI applications. It is a Node.js prototype for a **derived graph index**: keep the authoritative data in your existing files or systems, and rebuild the graph when you need it.
 
-AI가 데이터 구조를 읽고 조회 요청을 만들 수 있도록 실제 노드 종류, 관계 방향, 속성 정보와 사용 가능한 함수를 설명하는 스키마 추출기를 제공합니다. 자연어 자동 처리 서비스와 Cypher 실행기는 포함하지 않습니다.
+The core uses Node's built-in SQLite module, requires no database server, and has no external npm dependencies. It includes working Movies and Northwind examples, stored Neo4j reference results, and reproducible performance experiments.
 
-## 빠른 시작
+[Quick start](#quick-start) · [Query examples](#query-examples) · [Neo4j comparison](#noderel-and-neo4j) · [Benchmarks](#measured-performance) · [AI integration](#a-schema-for-ai-generated-queries)
 
-Node.js **24.13.1 이상**이 필요합니다. 핵심 기능은 내장 SQLite를 사용하므로 추가 패키지를 설치하지 않습니다.
+## Why NodeRel?
+
+Many applications already have the data they need, but the connections are difficult to ask about:
+
+- Which tasks depend on a requirement?
+- Who worked with this actor?
+- Which products did a customer buy, and which categories do they belong to?
+- Which items are missing a required relationship?
+
+NodeRel makes those connections explicit without first moving the entire application into a graph database. Here, **index** means a rebuildable representation that helps answer relationship questions. SQLite's own table indexes then help locate individual nodes and edges inside that representation.
+
+The AI idea is simple: a user should be able to ask a question without learning a query language. An AI application can inspect node kinds, relationship directions, example IDs, and available operations, then produce a structured query request. NodeRel supplies that description and a small execution API. **The language model, entity resolution, and application integration are still supplied by the application developer.**
+
+AI can also generate Cypher for Neo4j. NodeRel's distinction is its embedded storage and explicit, compact operation contract; AI does not remove differences in query expressiveness or execution performance.
+
+```mermaid
+flowchart LR
+    S[Source files or systems] -->|Snapshot adapter| J[Nodes and edges]
+    J -->|rebuild| D[(SQLite file)]
+    D -->|describeNodeRel| C[Schema and operation descriptions]
+    C -.-> A[Your AI application]
+    A -.->|Structured request| Q[NodeRel API or parameterized SQL]
+    Q --> D
+    D --> R[Query results]
+```
+
+The snapshot importer, SQLite queries, and schema exporter are implemented. Source adapters and the AI application are integration points; there is no automatic source watcher or natural-language service.
+
+## Quick start
+
+Use **Node.js 24.13.1 or later**. Run these commands from a source checkout; the package is not published on npm.
 
 ```sh
 git clone https://github.com/tykimos/NodeRel.git
@@ -19,101 +49,292 @@ npm run demo -- show 1
 npm run schema
 ```
 
-- `npm test`: 임시 DB로 예제 질의, 경계 조건, AI 스키마와 도구 호출 결과를 확인합니다.
-- `demo:build`: 스냅샷으로 `examples/neo4j/noderel.sqlite`를 생성합니다.
-- `demo -- show 1`: 키아누 리브스의 출연 영화를 조회합니다.
-- `schema`: AI용 설명서를 `examples/ai/schema.json`에 저장합니다.
+| Command | What it does |
+|---|---|
+| `npm test` | Builds a temporary database and checks 15 sample queries, boundary behavior, the AI schema, and SQLite integrity. |
+| `npm run demo:build` | Rebuilds `examples/neo4j/noderel.sqlite` from the committed snapshots. |
+| `npm run demo -- show 1` | Shows the films featuring Keanu Reeves. |
+| `npm run demo -- test` | Compares current SQLite results with the stored Neo4j baseline. |
+| `npm run schema` | Exports the database description to `examples/ai/schema.json`. |
 
-Node 24.13.1은 `node:sqlite` 사용 시 실험 기능 경고를 표시할 수 있습니다.
+These commands do not require Neo4j or an npm dependency installation. Node 24.13.1 may print an experimental warning for `node:sqlite`.
 
-## 기본 사용
+## Your first graph
+
+Run this JavaScript from the repository root, for example with `node --input-type=module`:
 
 ```js
 import { NodeRel } from './src/noderel.mjs';
 
-const index = new NodeRel('./examples/neo4j/noderel.sqlite', {
-  readOnly: true
-});
+const graph = new NodeRel(':memory:');
 try {
-  console.log(index.trace({
+  graph.rebuild([{
+    nodes: [
+      { id: 'req:login', kind: 'Requirement', scope: 'app', title: 'User login' },
+      { id: 'task:api', kind: 'Task', scope: 'app', title: 'Build login API' },
+      { id: 'task:ui', kind: 'Task', scope: 'app', title: 'Build login screen' }
+    ],
+    edges: [
+      { from: 'task:api', to: 'req:login', type: 'IMPLEMENTS', scope: 'app' },
+      { from: 'task:ui', to: 'task:api', type: 'DEPENDS_ON', scope: 'app' }
+    ]
+  }]);
+
+  const affected = graph.trace({
+    id: 'req:login',
+    scope: 'app',
+    direction: 'in',
+    maxDepth: 2,
+    types: ['IMPLEMENTS', 'DEPENDS_ON']
+  });
+  console.log(affected.map(({ title, depth }) => ({ title, depth })));
+  // [ { title: 'Build login API', depth: 1 },
+  //   { title: 'Build login screen', depth: 2 } ]
+} finally {
+  graph.close();
+}
+```
+
+`in` follows incoming relationships, so the query starts at the requirement and reaches the tasks pointing toward it. The `types` list allows either relationship type at every step; it does not enforce a different type at each depth.
+
+## Query examples
+
+### Which movies feature Keanu Reeves?
+
+After `npm run demo:build`, run from the repository root:
+
+```js
+import { NodeRel } from './src/noderel.mjs';
+
+const graph = new NodeRel('./examples/neo4j/noderel.sqlite', { readOnly: true });
+try {
+  const movies = graph.trace({
     id: 'movies:Person:Keanu%20Reeves',
     scope: 'movies',
     direction: 'out',
     maxDepth: 1,
     types: ['ACTED_IN']
-  }));
+  });
+  console.log(movies.map(movie => movie.title));
 } finally {
-  index.close();
+  graph.close();
 }
 ```
 
-| 기능 | API |
-|---|---|
-| 스냅샷으로 재구축 | `rebuild(snapshots)` |
-| 연결된 항목과 최소 깊이 | `trace({ id, scope, direction, maxDepth, types })` |
-| 직접 연결과 관계 속성 | `neighbors(id, scope)` |
-| 특정 연결이 없는 항목 | `orphans({ scope, kind, type, side })` |
-| 종류별 개수 | `stats(scope)` |
-| 해당 범위의 전체 그래프 | `graph(scope)` |
+The sample returns seven films, including *The Matrix*, *The Matrix Reloaded*, and *The Matrix Revolutions*. The full result is in the [verified tool-call example](examples/ai/example.json).
 
-`out`은 관계 방향, `in`은 역방향, `both`는 양방향입니다. `trace`는 시작 노드를 제외한 중복 없는 노드와 최소 깊이를 반환하며, 전체 경로 목록을 반환하지 않습니다. 깊이는 0~10입니다.
+The equivalent question in the original Neo4j Movies model is:
 
-## AI용 설명서
+```cypher
+MATCH (:Person {name: $name})-[:ACTED_IN]->(movie:Movie)
+RETURN movie.title AS title
+ORDER BY title
+```
+
+Bind `$name` to `Keanu Reeves`. **NodeRel does not execute Cypher**; its public interface is JavaScript functions and SQLite SQL.
+
+### Who has acted with Tom Hanks?
+
+A typed two-step pattern can be expressed with parameterized SQL. Here, both relationships point from a person to a shared movie:
+
+```sql
+SELECT DISTINCT other.title AS name
+FROM links AS acted
+JOIN links AS shared ON shared.to_id = acted.to_id
+JOIN items AS other ON other.id = shared.from_id
+WHERE acted.from_id = :id
+  AND acted.type = 'ACTED_IN'
+  AND shared.type = 'ACTED_IN'
+  AND acted.scope = :scope
+  AND shared.scope = :scope
+  AND other.scope = :scope
+  AND other.id <> :id
+ORDER BY name;
+```
+
+Bind `:id` to `movies:Person:Tom%20Hanks` and `:scope` to `movies`. This returns **34 distinct people** in the committed sample. Execute parameterized statements through `graph.db.prepare(sql).all({ id, scope })`.
+
+The corresponding Cypher pattern is:
+
+```cypher
+MATCH (actor:Person {name: $name})-[:ACTED_IN]->(:Movie)<-[:ACTED_IN]-(other:Person)
+WHERE other <> actor
+RETURN DISTINCT other.name AS name
+ORDER BY name
+```
+
+See the [query guide](docs/queries.md) for relationship properties, missing relationships, multi-hop traversal, shortest distance, and expected outputs. The repository contains [15 executable SQL/API–Cypher examples](examples/neo4j/cases.mjs).
+
+## A schema for AI-generated queries
 
 ```js
 import { describeNodeRel } from './src/describe.mjs';
+
 const schema = describeNodeRel('./examples/neo4j/noderel.sqlite');
 console.log(schema.scopes);
 console.log(schema.existingOperations);
 ```
 
-실제 노드 종류, 관계의 시작·도착 종류, JSON 관계 속성 자료형, 개수, 예시 ID와 현재 조회 함수가 담깁니다. `Person → ACTED_IN → Movie`를 읽은 AI가 출연 영화 조회 요청을 만들 수 있습니다.
+The exporter reads the actual database and describes:
 
-업무 의미와 이름 필드의 설명은 공식 샘플에 맞춰 별도로 작성했습니다. 다른 도메인에는 해당 설명을 보완해야 합니다. 관찰된 데이터 모양은 강제되는 스키마 제약이나 접근 권한이 아닙니다.
+- Node kinds, counts, example IDs, and populated node columns.
+- Observed relationships such as `Person → ACTED_IN → Movie`.
+- Relationship property names and JSON types, such as the `roles` array.
+- Existing operations, including a JSON Schema input contract for `trace`.
+- A source signature for identifying the imported snapshot.
 
-[AI 스키마와 요청 예시](examples/ai/README.md) · [설계와 구현 범위](docs/design.md)
+An application can provide the relevant description to an AI model, resolve the user's entity to a real ID, and have the model propose a request like this:
 
-## 예제와 검증
-
-| 데이터 | 노드 | 연결 |
-|---|---:|---:|
-| Neo4j Movies | 171 | 253 |
-| Neo4j Northwind | 1,035 | 3,139 |
-
-15개 예제 질의를 실제 Neo4j에 실행해 저장한 기준 결과와 비교합니다. 일반 테스트는 Neo4j 서버가 필요하지 않으며, 실시간 Neo4j 조회가 아닙니다. 순환, ID 부분 문자열, scope, 잘못된 깊이와 재구축 검증에 관한 경계 조건도 포함합니다.
-
-[예제 사용법](examples/neo4j/README.md) · [검증 보고서](examples/neo4j/REPORT.md)
-
-## Neo4j 비교 실험
-
-[재현 코드와 절차](benchmarks/neo4j-strengths/README.md) · [상세 보고서](benchmarks/neo4j-strengths/REPORT.md) · [측정값](benchmarks/neo4j-strengths/results.json)
-
-5만 노드·30만 연결, Apple M3, 캐시 예열 후 측정한 단일 요청 중앙값입니다. NodeRel 전용 탐색은 벤치마크에서 별도로 구현한 BFS이며, 핵심 `trace()`의 재귀 SQL과 구분합니다.
-
-| 작업 | NodeRel 전용 탐색 | Neo4j Bolt |
-|---|---:|---:|
-| 노드 하나 조회 | 0.006 ms | 0.276 ms |
-| 두 지점 최단 거리 | 1.530 ms | 1.919 ms |
-| 3단계 연결 탐색 | 0.194 ms | 1.043 ms |
-| 6단계 연결 탐색 | 25.846 ms | 13.592 ms |
-
-8개 동시 요청의 넓은 탐색에서는 Neo4j 처리량이 약 3.1~3.3배 높았습니다. 보고서에서 재귀 SQL, 전용 BFS, Neo4j의 차이와 통신 비용을 구분합니다. 합성 데이터 실험으로 모든 그래프나 운영 서비스의 성능을 보장하지 않습니다.
-
-## 저장 구조와 범위
-
-- `items`: ID, 종류, scope, 표시 이름 등 기본 필드.
-- `links`: 시작 ID, 도착 ID, 관계 종류와 JSON 관계 속성.
-- `sync_meta`: 스냅샷 서명, 재구축 시각, 제외된 연결 정보.
-
-원본의 모든 노드 속성이 인덱스에 들어가는 것은 아닙니다. 같은 `(시작, 도착, 종류)`의 병렬 관계와 여러 라벨을 가진 노드는 별도 모델 확장이 필요합니다. scope 필터는 인증·인가 전체를 제공하지 않습니다. 자동 동기화, HTTP 서버, MCP 서버, 자연어 변환 모델은 포함하지 않습니다.
-
-```text
-src/                         핵심 구현과 스키마 추출기
-examples/neo4j/               스냅샷, 질의, 저장된 기준 결과
-examples/ai/                  AI용 설명서와 요청 예시
-benchmarks/neo4j-strengths/   비교 실험과 측정 결과
-docs/                        설계 설명
-scripts/                     서버 없이 실행하는 검증
+```json
+{
+  "tool": "trace",
+  "arguments": {
+    "id": "movies:Person:Keanu%20Reeves",
+    "scope": "movies",
+    "direction": "out",
+    "maxDepth": 1,
+    "types": ["ACTED_IN"]
+  }
+}
 ```
 
-예제 DB, 서버 데이터, 로그와 설치된 의존성은 Git에 포함하지 않습니다. [외부 데이터와 의존성 출처](THIRD_PARTY_NOTICES.md)를 기록했습니다. 자체 코드에는 별도의 오픈소스 라이선스를 지정하지 않았습니다.
+The application validates the operation, scope, arguments, and execution budget, then calls `graph.trace(request.arguments)`. The repository verifies this request's result; it does **not** measure a model's ability to translate natural language.
+
+Observed relationship shapes are descriptions of the snapshot, not enforced domain rules. Business meanings in the sample schema are curated. Generic name/alias resolution, complete request validation, time budgets, and an MCP/HTTP service are not implemented. See the [AI integration guide](examples/ai/README.md).
+
+## NodeRel and Neo4j
+
+| Dimension | NodeRel today | Neo4j in this comparison |
+|---|---|---|
+| Deployment | SQLite inside a Node.js process; local file | A separate Community database server, queried over Bolt |
+| Query interface | Small JavaScript API and SQL | Cypher graph patterns, paths, and aggregations |
+| Data model | One `kind` per node; fixed node columns; JSON edge properties | Labeled nodes and typed relationships with properties |
+| Graph traversal | Public `trace()` uses recursive SQL | Graph operators chosen by the query planner |
+| Shortest distance | Can derive from bounded `trace()`; specialized BFS exists only in the benchmark | Expressed directly with `shortestPath` in the tested queries |
+| AI integration | Actual schema and operation descriptions are exported | AI can generate Cypher using the application's schema/context |
+| Concurrency tested | Independent SQLite read connections in worker threads | Independent Bolt sessions |
+| Natural fit | Rebuildable local relationship views over existing data | Applications centered on varied graph queries and shared graph access |
+
+Neo4j's advantage includes the ability to express graph work declaratively and let its execution planner choose graph operators. In the recorded plans, shortest-path and broad-reach queries use `ShortestPath` and `VarLengthExpand(Pruning,BFS,All)`. Building comparable specialized SQLite traversals required extra application code. See the [recorded plans](benchmarks/neo4j-strengths/query-plans.json) and [Neo4j shortest-path documentation](https://neo4j.com/docs/cypher-manual/25/patterns/shortest-paths/).
+
+SQLite supports concurrent readers; it is not limited to one reader. Its embedded architecture and single-writer behavior serve different workloads from a database server. See [SQLite's guidance on suitable uses](https://www.sqlite.org/whentouse.html).
+
+## Measured performance
+
+These charts use the **recorded September 23, 2026 experiment**, not new measurements made while writing this README. The graph has **50,000 nodes and 300,000 directed edges**. Three implementations are kept separate:
+
+1. **SQLite recursive SQL:** the bounded `(id, depth)` CTE approach adapted for benchmark outputs. This is related to the public `trace()` implementation, but the measurements are not direct timings of that API.
+2. **SQLite + custom BFS:** separate, benchmark-only JavaScript breadth-first search, including bidirectional search for shortest distance. It queries SQLite indexes as it explores; it is **not integrated into NodeRel's public API**. Single-node lookup uses direct SQL.
+3. **Neo4j over Bolt:** Cypher executed through a reused local driver/session, including transport and result handling.
+
+### Query latency
+
+![Median query latency on a logarithmic scale. Custom SQLite BFS is faster for small traversals; Neo4j is faster for broad six-hop reachability.](docs/assets/query-latency.svg)
+
+Median milliseconds; lower is better. A dash means that separate implementation was not measured.
+
+| Workload | SQLite recursive SQL | SQLite + custom BFS* | Neo4j Bolt |
+|---|---:|---:|---:|
+| Single node lookup | — | 0.006 | 0.276 |
+| Shortest distance, up to 10 hops | 1,709.006 | 1.530 | 1.919 |
+| Shortest distance avoiding inactive nodes | 1,291.534 | 1.903 | 1.984 |
+| Reachability within 3 hops | 0.535 | 0.194 | 1.043 |
+| Reachability within 6 hops | 98.085 | 25.846 | 13.592 |
+
+\* Benchmark-only traversal code; point lookup is direct SQL. Reachability returns a count and the sum of minimum depths, rather than every reached node.
+
+Neo4j was about **1.9× faster than custom SQLite BFS** on six-hop reachability, which reached roughly 32,000 nodes per source. SQLite had lower latency for small local reads. The large shortest-distance gap against the CTE reflects different algorithms: the CTE explores the bounded reachable graph, whereas bidirectional BFS can stop early. It is not evidence of a universal database-engine speed ratio.
+
+### Concurrent traversal
+
+![Six-hop traversal throughput with 1, 4, and 8 concurrent clients, plus an eight-client repeat with reversed measurement order.](docs/assets/concurrent-throughput.svg)
+
+Completed requests per second; higher is better. Each client sends its next request after the previous one finishes.
+
+| Run | Clients | SQLite + custom BFS | Neo4j Bolt | Neo4j / SQLite |
+|---|---:|---:|---:|---:|
+| Primary | 1 | 35.4 | 80.8 | 2.28× |
+| Primary | 4 | 78.0 | 188.2 | 2.41× |
+| Primary | 8 | 67.4 | 225.5 | 3.34× |
+| Reversed-order repeat | 8 | 105.0 | 325.9 | 3.10× |
+
+Neo4j delivered **3.1–3.3× the throughput** at eight concurrent clients in these short runs. Absolute rates changed in the repeat, so the results do not establish sustained production capacity.
+
+### How to read the numbers
+
+- **Hardware/software:** Apple M3, 24 GiB RAM, Node 24.13.1, SQLite 3.51.2, Neo4j Community 2025.06.2, driver 5.28.3.
+- **Warm cache, local machine:** SQLite runs in process; Neo4j includes a local Bolt round trip. These are client-observed timings, not isolated engine timings. Startup and import are excluded.
+- **Memory:** Neo4j uses a 1 GiB heap plus 1 GiB page cache; SQLite allows 64 MiB cache per connection for an approximately 43 MiB file. Memory budgets were not equalized.
+- **Samples:** 120 point lookups, 12 pairs for each shortest-distance workload, and 24 sources for each reachability workload. Concurrent conditions ran for approximately six seconds each.
+- **Correctness:** 7,529 result checks across the primary run and repeat, using fixed expected values for simple reads and an independent in-memory BFS for graph searches. Complete node/depth sets were also compared for three sources. Reference computation is excluded from timings.
+- **Scope:** one synthetic graph, read-only workloads, no cold-cache, concurrent-write, high-availability, or GDS evaluation. Graph shape and query design matter as much as hop count.
+
+The [full benchmark report](benchmarks/neo4j-strengths/REPORT.md) includes p95 latency, methodology, Cypher, interpretation, and limitations. Use the [reproduction instructions](benchmarks/neo4j-strengths/README.md) and [raw results](benchmarks/neo4j-strengths/results.json) to inspect or rerun the experiment.
+
+## API at a glance
+
+| API | Result / purpose |
+|---|---|
+| `new NodeRel(file, { readOnly })` | Opens a file or `:memory:` database. Writable mode initializes the tables. |
+| `rebuild(snapshots)` | Replaces the index transactionally; returns node/edge counts and rejected edges. |
+| `trace({ id, scope, direction, maxDepth, types })` | Returns unique reached nodes with `id`, `title`, `kind`, and minimum `depth`. |
+| `traceQuery(options)` | Returns the generated SQL and bound parameters without executing it. |
+| `neighbors(id, scope)` | Returns incident incoming/outgoing edges with parsed JSON properties. |
+| `orphans({ scope, kind, type, side })` | Finds nodes without a specified incoming or outgoing relationship. |
+| `stats(scope)` | Counts node kinds and relationship types. |
+| `graph(scope)` | Returns all stored nodes and edges in a scope; edge `attrs` remains JSON text. |
+| `close()` | Closes the SQLite connection. |
+| `describeNodeRel(file)` | Exports schema observations and operation descriptions from a read-only connection. |
+
+`trace()` defaults to `direction: 'out'`, `maxDepth: 10`, and all relationship types. Directions are `out`, `in`, or `both`; depth must be an integer from 0 to 10. The start node is excluded. Results contain minimum hop counts, **not complete paths**. A missing or out-of-scope start returns no reached nodes.
+
+## Storage and current boundaries
+
+| Table | Contents |
+|---|---|
+| `items` | `id`, `kind`, `scope`, `no`, `title`, `status`, `updated_at` |
+| `links` | `from_id`, `to_id`, `type`, `scope`, JSON `attrs` |
+| `sync_meta` | Snapshot SHA-256, rebuild timestamp, rejected edges |
+
+A rebuild requires globally unique node IDs and at most one edge for each `(from, to, type)` tuple. It rejects cross-scope edges with an error, records self-links and missing-endpoint edges as excluded, and rolls back if writing fails. Different relationship types between the same endpoints are supported.
+
+The index does not store every original node property: birth dates, release years, and product prices remain in the sample snapshots. Multiple node labels and same-type parallel relationships require a model extension. Synchronization is manual. `scope` filtering does not implement authentication or authorization, and the raw `.db` handle has no application policy layer.
+
+`DatabaseSync` blocks its calling thread. Depth limits also do not guarantee a small amount of work: a shallow, highly connected graph may be expensive. Worker placement, execution budgets, and service-level controls belong in the integrating application. See [design and semantics](docs/design.md).
+
+## Example coverage
+
+| Official dataset | Nodes | Relationships |
+|---|---:|---:|
+| Movies | 171 | 253 |
+| Northwind | 1,035 | 3,139 |
+| **Total** | **1,206** | **3,392** |
+
+Fifteen queries cover one-hop lookups, co-actors, relationship properties, joins, aggregation, missing relationships, reachability, and minimum distance. Current tests compare SQLite output with results previously recorded from Neo4j; **they do not query a live Neo4j server**. The earlier small-sample timings used HTTP and are kept separate from the Bolt charts above.
+
+[Sample instructions](examples/neo4j/README.md) · [Correctness report](examples/neo4j/REPORT.md) · [Data sources and checksums](examples/neo4j/sources.json)
+
+## Repository map
+
+```text
+src/                         Core graph API and schema exporter
+examples/neo4j/               Snapshots, runnable queries, stored reference results
+examples/ai/                  AI-readable schema and verified request example
+benchmarks/neo4j-strengths/   Synthetic dataset benchmark and recorded measurements
+docs/                        Query guide, design notes, and chart assets
+scripts/                     Tests and benchmark chart renderer
+```
+
+To regenerate the SVG and PNG charts from the recorded measurements, install the optional Python plotting dependency in a virtual environment:
+
+```sh
+python3 -m venv /tmp/noderel-charts
+/tmp/noderel-charts/bin/python -m pip install -r scripts/requirements-charts.txt
+/tmp/noderel-charts/bin/python scripts/render-benchmarks.py
+```
+
+This redraws the charts; it does not rerun the databases. Python and Matplotlib are not required to use NodeRel itself.
+
+## License and attribution
+
+This repository is a prototype with **no open-source license granted for its own code** (`UNLICENSED` in `package.json`). The official Movies and Northwind data retain their respective terms. See [third-party notices](THIRD_PARTY_NOTICES.md).

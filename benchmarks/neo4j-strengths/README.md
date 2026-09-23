@@ -1,43 +1,79 @@
-# Neo4j의 장점을 확인하는 재현 실험
+# Reproducing the NodeRel / Neo4j traversal experiment
 
-`REPORT.md`에 결과와 해석, `results.json`에 개별 측정값 및 실행 계획을 담았습니다.
+This benchmark tests workloads where graph-specific execution can matter: bounded shortest distance, paths avoiding inactive nodes, broad reachability, and concurrent reads. It compares recursive SQL, separate custom SQLite traversal code, and Neo4j Cypher over Bolt.
 
-- Node.js 24.13.1, 내장 SQLite 3.51.2
-- Neo4j Community 2025.06.2, Java 21
-- neo4j-driver 5.28.3 (`package-lock.json` 고정)
-- 50,000 노드 / 300,000 방향성 연결, 고정 난수 시드 20260923
+Read the [report](REPORT.md), [raw measurements](results.json), and [query plans](query-plans.json). The custom BFS is benchmark code, not the implementation of the public `NodeRel.trace()` API.
 
-## 재현
+## Recorded environment
 
-이 폴더에 의존성을 설치하고, 테스트 전용 설정을 만듭니다. Neo4j와 Node.js는 미리 설치되어 있어야 합니다.
+- Node.js 24.13.1 with built-in SQLite 3.51.2.
+- Neo4j Community 2025.06.2 and Java 21.
+- Official `neo4j-driver` 5.28.3, pinned by `package-lock.json`.
+- Apple M3, eight logical CPUs, 24 GiB RAM.
+- 50,000 nodes and 300,000 directed edges, seed `20260923`.
+
+The runtime and server must be installed separately. Different versions or hardware can change plans and timings.
+
+## Start the dedicated server
+
+From this directory:
 
 ```sh
 npm ci
-python3 prepare-config.py  # 설치된 Neo4j의 설정 파일을 자동 검색
+python3 prepare-config.py
 NEO4J_CONF="$PWD/conf" neo4j console
 ```
 
-별도 터미널에서 같은 폴더로 이동한 뒤 실행합니다.
+The configuration helper locates the installed Neo4j logging configuration. If needed, supply the installation explicitly:
+
+```sh
+python3 prepare-config.py --neo4j-home /path/to/neo4j
+```
+
+It creates isolated data and log directories under `server/`, a 1 GiB heap and 1 GiB page cache, and loopback-only HTTP/Bolt listeners on ports `17474` and `17687`. Authentication is disabled for this dedicated local test server. Keep it bound to loopback and use the generated benchmark configuration.
+
+## Import and measure
+
+In a second terminal, change to this same directory and run:
 
 ```sh
 node import.mjs
 node benchmark.mjs
+node repeat-concurrency.mjs
 ```
 
-`import.mjs`는 `bench.sqlite`를 다시 만들고, 전용 Neo4j 서버에 데이터를 적재합니다. Neo4j에 `Bench` 노드가 이미 있으면 중복 적재하지 않고 중단합니다. 서버를 재사용해 측정만 반복하려면 `benchmark.mjs`만 실행합니다. 실행 후 Neo4j 콘솔에서 Ctrl+C로 종료합니다.
+`import.mjs` recreates the local `bench.sqlite` file and loads the matching graph into the dedicated Neo4j server. It stops if that server already contains `Bench` nodes. Once data is imported, rerun only `benchmark.mjs` to repeat the measurements against the existing graph.
 
-서버는 127.0.0.1의 17474/17687 포트로만 연결을 받습니다. 데이터와 로그는 이 폴더의 `server/` 아래에 만들어집니다. 다른 Neo4j 데이터베이스를 가리키도록 접속 정보를 바꾸지 마세요.
+`benchmark.mjs` overwrites `results.json` and `query-plans.json`. `repeat-concurrency.mjs` adds `concurrencyRepeat` to the results, rerunning the eight-client condition with SQLite measured before Neo4j. The primary run measures Neo4j first for each concurrency level. Keep a copy of the committed results if you want to compare your run with the published one.
 
-## 파일
+Stop the test server with Ctrl+C in its console when finished. Generated SQLite files, server state, logs, configuration, and `dataset.json` are excluded from Git.
 
-- `common.mjs`: 결정적 데이터 생성, 독립적인 메모리 BFS 정답 계산, SQLite CTE / 직접 구현한 BFS, Cypher 쿼리.
-- `schema.mjs`: NodeRel 테이블 및 인덱스.
-- `import.mjs`: 같은 그래프를 양쪽 DB에 적재. SQLite에는 역방향 탐색을 위한 추가 인덱스도 생성.
-- `benchmark.mjs`: 예열, 순서 교대 측정, 정답 대조, 실행 계획, 동시 조회 측정.
-- `worker.mjs`: SQLite도 별도 작업 스레드와 읽기 연결을 사용해 병렬 조회.
+## How the implementation works
 
-측정은 캐시가 준비된 상태의 로컬 조회 성능입니다. 전체 그래프를 메모리에 미리 읽어 사용하는 정답 계산기는 측정 대상이 아닙니다. 실제 SQLite 조회는 매번 인덱스로 필요한 연결을 읽습니다. 결과를 저장해 반환하는 응답 캐시는 사용하지 않습니다.
+| File | Responsibility |
+|---|---|
+| [common.mjs](common.mjs) | Deterministic graph generation, independent in-memory reference, SQLite CTE/custom BFS, and Cypher |
+| [schema.mjs](schema.mjs) | Shared NodeRel schema |
+| [import.mjs](import.mjs) | Load the same graph into both systems; add benchmark reverse-lookup index |
+| [benchmark.mjs](benchmark.mjs) | Warmup, alternating single-query measurement order, correctness checks, profiles, concurrent reads |
+| [worker.mjs](worker.mjs) | Independent SQLite worker and read connection per concurrent client |
+| [repeat-concurrency.mjs](repeat-concurrency.mjs) | Reverse-order repeat at eight clients |
+| [prepare-config.py](prepare-config.py) | Dedicated local Neo4j configuration |
 
-동시 요청의 순서를 바꿔 재확인하려면 본 측정 후 `node repeat-concurrency.mjs`를 실행합니다. 결과 JSON에 `concurrencyRepeat`가 추가됩니다.
+The independent reference BFS preloads the graph solely to calculate expected answers and is excluded from timings. Measured custom SQLite BFS queries adjacency indexes as it explores. It does not use a preloaded graph or a query-response cache.
 
-Neo4j 설치 경로를 찾지 못하면 `python3 prepare-config.py --neo4j-home /path/to/neo4j`로 지정합니다. 서버 로그 설정은 설치된 Neo4j에서 복사합니다.
+## Regenerate the charts
+
+After recording results, return to the repository root and run:
+
+```sh
+python3 -m venv /tmp/noderel-charts
+/tmp/noderel-charts/bin/python -m pip install -r scripts/requirements-charts.txt
+/tmp/noderel-charts/bin/python scripts/render-benchmarks.py
+```
+
+The renderer reads `results.json` and writes SVG/PNG charts under `docs/assets/`; it does not run database queries. The committed report and README describe the published run and must be reviewed if you replace its measurements.
+
+## Interpretation
+
+These are warm-cache, client-observed, local read measurements. SQLite is embedded and Neo4j includes Bolt transport; memory budgets are different. Concurrent runs last approximately six seconds per condition and use closed-loop clients. They do not measure production capacity, cold-cache behavior, mixed reads/writes, or every graph shape. The [report](REPORT.md) explains the workload, algorithm, and system differences behind the results.

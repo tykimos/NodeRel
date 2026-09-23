@@ -1,6 +1,6 @@
 {
   "schemaVersion": "noderel-ai-description/1",
-  "generatedAt": "2026-09-23T05:15:58.328Z",
+  "generatedAt": "2026-09-23T05:34:12.260Z",
   "sourceSignature": "7ebe39e5a77db85df399fcdc8ec08567721198682e3e447b30886a86f01d53de",
   "provenance": {
     "countsAndShapes": "Observed from SQLite, not enforced relationship constraints.",
@@ -140,7 +140,7 @@
         {
           "kind": "Movie",
           "count": 38,
-          "titleMeaning": "영화 제목",
+          "titleMeaning": "Movie title",
           "examples": [
             {
               "id": "movies:Movie:A%20Few%20Good%20Men",
@@ -161,7 +161,7 @@
         {
           "kind": "Person",
           "count": 133,
-          "titleMeaning": "인물 이름",
+          "titleMeaning": "Person name",
           "examples": [
             {
               "id": "movies:Person:Aaron%20Sorkin",
@@ -186,7 +186,7 @@
           "type": "ACTED_IN",
           "toKind": "Movie",
           "count": 172,
-          "meaning": "인물이 영화에 출연함",
+          "meaning": "Person acts in a movie",
           "observedProperties": [
             {
               "name": "roles",
@@ -200,7 +200,7 @@
           "type": "DIRECTED",
           "toKind": "Movie",
           "count": 44,
-          "meaning": "인물이 영화를 감독함",
+          "meaning": "Person directs a movie",
           "observedProperties": []
         },
         {
@@ -208,7 +208,7 @@
           "type": "FOLLOWS",
           "toKind": "Person",
           "count": 3,
-          "meaning": "인물이 다른 인물을 팔로우함",
+          "meaning": "Person follows another person",
           "observedProperties": []
         },
         {
@@ -216,7 +216,7 @@
           "type": "PRODUCED",
           "toKind": "Movie",
           "count": 15,
-          "meaning": "인물이 영화를 제작함",
+          "meaning": "Person produces a movie",
           "observedProperties": []
         },
         {
@@ -224,7 +224,7 @@
           "type": "REVIEWED",
           "toKind": "Movie",
           "count": 9,
-          "meaning": "인물이 영화를 평가함",
+          "meaning": "Person reviews a movie",
           "observedProperties": [
             {
               "name": "rating",
@@ -243,7 +243,7 @@
           "type": "WROTE",
           "toKind": "Movie",
           "count": 10,
-          "meaning": "인물이 영화의 각본을 씀",
+          "meaning": "Person writes a movie screenplay",
           "observedProperties": []
         }
       ]
@@ -254,7 +254,7 @@
         {
           "kind": "Category",
           "count": 8,
-          "titleMeaning": "상품 분류 이름",
+          "titleMeaning": "Product category name",
           "examples": [
             {
               "id": "northwind:Category:1",
@@ -275,7 +275,7 @@
         {
           "kind": "Customer",
           "count": 91,
-          "titleMeaning": "고객 회사명",
+          "titleMeaning": "Customer company name",
           "examples": [
             {
               "id": "northwind:Customer:ALFKI",
@@ -296,7 +296,7 @@
         {
           "kind": "Order",
           "count": 830,
-          "titleMeaning": "주문 식별자",
+          "titleMeaning": "Order identifier",
           "examples": [
             {
               "id": "northwind:Order:10248",
@@ -317,7 +317,7 @@
         {
           "kind": "Product",
           "count": 77,
-          "titleMeaning": "상품 이름",
+          "titleMeaning": "Product name",
           "examples": [
             {
               "id": "northwind:Product:1",
@@ -338,7 +338,7 @@
         {
           "kind": "Supplier",
           "count": 29,
-          "titleMeaning": "공급사 이름",
+          "titleMeaning": "Supplier name",
           "examples": [
             {
               "id": "northwind:Supplier:1",
@@ -363,7 +363,7 @@
           "type": "ORDERS",
           "toKind": "Product",
           "count": 2155,
-          "meaning": "주문에 상품이 포함됨",
+          "meaning": "Order contains a product",
           "observedProperties": [
             {
               "name": "discount",
@@ -397,7 +397,7 @@
           "type": "PART_OF",
           "toKind": "Category",
           "count": 77,
-          "meaning": "상품이 분류에 속함",
+          "meaning": "Product belongs to a category",
           "observedProperties": []
         },
         {
@@ -405,7 +405,7 @@
           "type": "PURCHASED",
           "toKind": "Order",
           "count": 830,
-          "meaning": "고객이 주문을 생성함; 상품 직접 연결이 아님",
+          "meaning": "Customer places an order; this is not a direct link to a product",
           "observedProperties": []
         },
         {
@@ -413,7 +413,7 @@
           "type": "SUPPLIES",
           "toKind": "Product",
           "count": 77,
-          "meaning": "공급사가 상품을 공급함",
+          "meaning": "Supplier supplies a product",
           "observedProperties": []
         }
       ]

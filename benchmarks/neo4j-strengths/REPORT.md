@@ -1,131 +1,166 @@
-# Neo4j의 장점을 드러내는 실제 비교 실험
+# NodeRel and Neo4j: traversal benchmark report
 
-2026-09-23 · Apple M3 / RAM 24 GiB · 같은 컴퓨터에서 실제 실행
+Recorded: `2026-09-23T04:31:28.406Z`. Apple M3, 24 GiB RAM, both systems on the same computer.
 
-## 확인된 결과
+## Findings
 
-**Neo4j는 넓은 다단계 탐색과 그 탐색을 동시에 수행하는 조건에서 장점이 확인됐다.**
+Neo4j showed an advantage on broad multi-hop reachability and concurrent execution of that workload. Small local reads favored embedded SQLite. Specialized bidirectional BFS substantially changed the SQLite shortest-distance results.
 
-- 6단계 연결 탐색: 최적화한 NodeRel 25.85ms, Neo4j 13.59ms. Neo4j가 약 1.90배 빠름.
-- 같은 탐색을 8개 요청이 동시에 수행: 본 측정과 순서 반전 재측정에서 Neo4j 처리량이 약 3.1~3.3배 높음.
-- 단일 노드 조회, 3단계의 작은 탐색은 NodeRel가 더 빠름.
-- 최단 경로는 CTE와 비교하면 큰 차이가 나지만, NodeRel에 양방향 BFS를 직접 구현하자 두 시스템이 비슷한 수준에 도달함. 이것을 DB 엔진 자체의 수백 배 차이로 해석하면 안 됨.
+- Six-hop reachability: **25.846 ms** for custom SQLite BFS and **13.592 ms** for Neo4j, about a **1.9× latency advantage** for Neo4j.
+- At eight concurrent clients, Neo4j delivered approximately **3.1–3.3× the throughput** in the primary run and a reversed-order repeat.
+- Single-node lookup and three-hop reachability were faster with custom SQLite code in this environment.
+- Shortest-distance queries were similar in median latency once SQLite used bidirectional BFS. The large difference from recursive SQL is heavily algorithm-dependent.
 
-Neo4j의 이점에는 **최단 경로, 조건부 경로, 중복을 줄이는 탐색을 DB에 선언적으로 요청할 수 있다는 것**도 포함된다. NodeRel도 가능하지만 이번처럼 별도 탐색 코드와 병렬 실행 구성을 만들어야 한다.
+These findings apply to this graph, query set, environment, and measurement procedure. They are not a universal ranking of database engines.
 
-## 단일 요청 결과
+## Implementations
 
-단위 ms, 작을수록 빠름. 반복 측정의 중앙값이며, DB 결과를 받아 해석하는 시간까지 포함한다.
+| Label | Implementation | Relationship to the public API |
+|---|---|---|
+| `sqlite-cte` | Recursive `UNION` over `(id, depth)`, followed by minimum-depth aggregation | Same general approach as `trace()`, adapted to benchmark outputs; not a direct timing of the public method |
+| `sqlite-optimized` | Indexed SQL for point lookup; batched JavaScript BFS for reachability and bidirectional BFS for shortest distance | Separate benchmark implementation; not integrated into `NodeRel.trace()` |
+| `neo4j-bolt` | Cypher via the official JavaScript driver, local Bolt, reused connections | Server query execution plus transport and client result handling |
 
-| 작업 | NodeRel CTE | NodeRel 전용 탐색 | Neo4j Bolt |
+The CTE does not accumulate path strings. It removes duplicate node/depth states but can revisit a node at another depth. For shortest-distance questions it explores the bounded reachable graph before selecting the target distance. Custom BFS keeps a global visited set; bidirectional search can stop when frontiers meet.
+
+The custom implementation reads adjacency through SQLite indexes in batches of up to 256 frontier nodes, reuses prepared statements, and uses an additional reverse-lookup index. It does not preload the graph or cache answers. The separate in-memory reference used for correctness is excluded from timings.
+
+## Single-request latency
+
+![Recorded median query latency](../../docs/assets/query-latency.svg)
+
+Median milliseconds, including receiving and handling results. Lower is better. A dash means no separate measurement.
+
+| Workload | SQLite CTE | SQLite + custom BFS* | Neo4j Bolt |
 |---|---:|---:|---:|
-| 호출 기본 비용 (SELECT/RETURN 1) | — | 0.002 | 0.311 |
-| 노드 1개 조회 | — | 0.006 | 0.276 |
-| 두 지점 최단 거리 (최대 10단계) | 1709.006 | 1.530 | 1.919 |
-| 비활성 노드를 피하는 최단 거리 | 1291.534 | 1.903 | 1.984 |
-| 3단계 내 연결 탐색 · 집계 | 0.535 | 0.194 | 1.043 |
-| 6단계 내 연결 탐색 · 집계 | 98.085 | 25.846 | 13.592 |
+| Call overhead: SELECT / RETURN 1 | — | 0.002 | 0.311 |
+| Single node lookup | — | 0.006 | 0.276 |
+| Shortest distance, up to 10 hops | 1,709.006 | 1.530 | 1.919 |
+| Shortest distance avoiding inactive nodes | 1,291.534 | 1.903 | 1.984 |
+| Reachability within 3 hops | 0.535 | 0.194 | 1.043 |
+| Reachability within 6 hops | 98.085 | 25.846 | 13.592 |
 
+\* Call-overhead and point-lookup rows use direct SQL. BFS applies to the graph-search workloads.
 
-NodeRel CTE는 원본의 경로 문자열을 쌓는 UNION ALL 버전이 아니다. 앞선 실험에서 개선한 `(id, depth)` UNION 방식이며, 경로 문자열 없이 중복 상태를 줄인다. 이 방식으로 모든 도달 노드의 최소 깊이를 구하고, 최단 거리 질문에서는 대상 노드의 값을 선택한다.
+Six-hop queries reached **31,761–32,283 nodes** per source. Three-hop queries reached roughly 250 nodes. Hop count alone is not a portable threshold for choosing a database: branching, graph shape, and the returned result all change the workload.
 
-NodeRel 전용 탐색은 SQLite 인덱스를 이용한 별도 JavaScript 알고리즘이다. 최단 거리는 양방향 BFS, 범위 탐색은 전역 방문 집합을 가진 BFS를 쓴다. 한 번에 최대 256개 노드의 인접 연결을 읽고, 준비된 SQL을 재사용하며, 역방향 탐색용 인덱스도 추가했다. 전체 그래프를 미리 메모리에 적재한 조회 방식은 아니다.
+Reachability returns a node count and the sum of minimum depths. It does not transfer every reached node to the client. Shortest-distance queries are bounded at ten hops and return a distance, not a reconstructed path.
 
-6단계 탐색은 시작점마다 31,761~32,283개 노드에 도달한다. 3단계는 약 250개 정도여서 작업량 차이가 크다. 따라서 단순히 “깊이 6부터 Neo4j가 빠르다”는 보편적 기준으로 해석할 수는 없다.
+The no-op row measures total fixed call overhead, including transaction/driver handling, not pure network time. Its median was 0.311084 ms for Bolt and 0.001542 ms for SQLite. These values were not subtracted from query timings.
 
-## 동시 조회 결과
+## Concurrent reachability
 
-작업은 같은 6단계 탐색이다. SQLite도 동시 요청 수만큼 작업 스레드와 읽기 전용 연결을 제공했다. Neo4j는 같은 수의 Bolt 세션을 사용했다. 각 조건은 준비 후 약 6초간 요청을 계속 보내고, 마지막 요청 완료까지 집계했다. 앞 요청이 끝나면 다음 요청을 보내는 방식이므로 무제한 대기열을 발생시키는 부하 시험은 아니다.
+![Recorded six-hop reachability throughput](../../docs/assets/concurrent-throughput.svg)
 
-| 회차 | 동시 요청 | NodeRel 요청/초 | Neo4j 요청/초 | Neo4j 처리량 배율 | NodeRel p95 ms | Neo4j p95 ms |
+Each SQLite client has a separate worker thread and read connection. Neo4j uses the same number of Bolt sessions. Each client submits its next request after the previous one completes: this is a closed-loop workload. Each condition runs for about six seconds after preparation, and its elapsed time includes completion of the final requests.
+
+| Run | Clients | SQLite requests/s | Neo4j requests/s | Neo4j / SQLite | SQLite p95 ms | Neo4j p95 ms |
 |---|---:|---:|---:|---:|---:|---:|
-| 본 측정 | 1 | 35.4 | 80.8 | 2.28배 | 34.1 | 16.5 |
-| 본 측정 | 4 | 78.0 | 188.2 | 2.41배 | 68.4 | 34.1 |
-| 본 측정 | 8 | 67.4 | 225.5 | 3.34배 | 211.3 | 69.7 |
-| 순서 반전 재측정 | 8 | 105.0 | 325.9 | 3.10배 | 110.4 | 47.5 |
+| Primary | 1 | 35.4 | 80.8 | 2.28× | 34.1 | 16.5 |
+| Primary | 4 | 78.0 | 188.2 | 2.41× | 68.4 | 34.1 |
+| Primary | 8 | 67.4 | 225.5 | 3.34× | 211.3 | 69.7 |
+| Reversed-order repeat | 8 | 105.0 | 325.9 | 3.10× | 110.4 | 47.5 |
 
+The primary run measured Neo4j before SQLite at each concurrency level. The repeat measured SQLite before Neo4j at eight clients. Absolute throughput changed substantially, while the relative advantage remained. These short local read runs do not establish sustained service capacity, and increasing SQLite workers did not always increase throughput.
 
-8개 동시 요청에서 측정 순서를 SQLite→Neo4j로 바꿔 재확인했다. 절대 처리량은 달라졌지만 상대적인 우위는 유지됐다. 이 결과는 **짧은 로컬 읽기 부하 시험**이며 장시간 서비스 처리량, 혼합 읽기/쓰기, 장애 복구, 클러스터 성능을 입증하지 않는다. 작업자 수를 늘린다고 SQLite 처리량이 항상 증가하지도 않았다.
+## Where Neo4j helped
 
-## 어떤 장점을 실제로 사용했나
+### Graph execution operators
 
-### 1. 그래프 전용 탐색과 자동 실행 계획
+Unique indexes locate the start and target nodes. The recorded `PROFILE` output includes `ShortestPath` for shortest distance and `VarLengthExpand(Pruning,BFS,All)` for reachability. These plans are visible in [query-plans.json](query-plans.json). Neo4j selected graph operators from a declarative query; the comparable SQLite BFS required custom application code.
 
-두 끝점에 고유 인덱스를 두었다. PROFILE에서 최단 경로는 `ShortestPath`, 범위 탐색은 `VarLengthExpand(Pruning,BFS,All)`가 선택됐다. 단순히 모든 경로를 만들고 마지막에 중복을 제거하지 않는다.
-
-예를 들어 6단계 탐색은 아래 질의로 수행했다. 시작 노드 제외 조건은 문자열 속성을 매번 읽지 않도록 노드 자체를 비교한다. 예비 측정에서 이 부분을 개선하고 최종 측정을 다시 수행했다.
+The measured six-hop query is:
 
 ```cypher
-MATCH p=(s:Bench {id:$source})-[:LINK*1..6]->(n)
+MATCH p=(s:Bench {id: $source})-[:LINK*1..6]->(n)
 WITH s, n, min(length(p)) AS depth
 WHERE n <> s
-RETURN count(n) AS count, coalesce(sum(depth),0) AS depthSum
+RETURN count(n) AS count, coalesce(sum(depth), 0) AS depthSum
 ```
 
-### 2. 경로 전체에 조건을 붙이는 표현력
+The source is excluded by node identity. This query was improved during preliminary work before the recorded final run.
 
-“비활성 노드를 하나도 거치지 않고 목적지까지 가는 최단 거리”를 다음과 같이 검증했다.
+### Conditions on a path
+
+The filtered shortest-distance workload asks for a path containing only active nodes:
 
 ```cypher
-MATCH (s:Bench {id:$source}), (t:Bench {id:$target})
+MATCH (s:Bench {id: $source}), (t:Bench {id: $target})
 MATCH p=shortestPath((s)-[:LINK*1..10]->(t))
 WHERE all(n IN nodes(p) WHERE n.status = 'active')
 RETURN length(p) AS distance
 ```
 
-조건을 포함한 최단 거리도 정답이 일치했다. 다만 이 시험에서는 전용 BFS를 추가한 NodeRel보다 뚜렷한 속도 우위가 없었다. **표현력과 구현 부담 측면의 장점**을 성능 우위와 구분해야 한다.
+The result matched the independent reference. Its median latency did not demonstrate an advantage over specialized SQLite BFS in this run. Expressing the constraint directly is an implementation-effort advantage, separate from a measured speed advantage. The examples retain the syntax used in the experiment; see [Neo4j shortest-path documentation](https://neo4j.com/docs/cypher-manual/25/patterns/shortest-paths/) for current path constructs.
 
-### 3. 여러 탐색 요청을 처리하는 서버 구조
+### Concurrent broad reads
 
-이번 범위 탐색에서 실제 동시 읽기 성능 이점이 확인됐다. SQLite도 여러 독자를 지원하므로 “SQLite는 동시에 읽을 수 없다”는 설명은 잘못이다. 이번 결과에는 Neo4j 내부 처리, SQLite의 SQL↔JavaScript 데이터 전달, 자료구조, 작업 스레드 메시지 전달 등이 모두 포함된다.
+Neo4j handled more completed six-hop requests per second under the tested concurrency. This does not mean SQLite lacks concurrent reading; [SQLite supports multiple readers](https://www.sqlite.org/whentouse.html). The measured difference also includes SQL-to-JavaScript data movement, JavaScript data structures, worker communication, and each system's execution design.
 
-## 측정 조건과 정확성
+## Methodology
 
-- Neo4j Community 2025.06.2, 공식 JavaScript driver 5.28.3, 로컬 Bolt 연결 재사용, 데이터베이스 명시, auto-commit 읽기.
-- Node.js v24.13.1, 내장 SQLite 3.51.2, WAL, 로컬 파일, 준비된 SQL 재사용, 메모리 임시 저장.
-- Neo4j heap 1 GiB + page cache 1 GiB. SQLite 연결당 page cache 최대 64 MiB, SQLite 파일 약 43 MiB. 같은 메모리 한도를 강제한 실험은 아니며, 양쪽 모두 이 데이터가 캐시에 들어가는 조건이다.
-- 고정 난수 시드 20260923. 노드 50,000개, 연결 300,000개. 노드마다 다음 노드로 향하는 고리 연결 1개와 서로 다른 임의 연결 5개. 방향성이 있고 순환이 많으며, 자기 자신으로 향하는 연결과 중복 연결은 없다. 노드 10%는 비활성 상태다.
-- 단순 조회 120회, 최단 거리/조건부 최단 거리 각각 서로 다른 12쌍, 범위 탐색은 서로 다른 24개 시작점. 같은 작업 안에서 구현별 측정 순서를 교대했다.
-- 작업별 Neo4j 40회, NodeRel 전용 탐색 8회, CTE 2회 예열. 프로그램 및 연결 시작, 적재, 질의 계획 출력, 정답 계산은 측정에서 제외했다. 응답 캐시는 사용하지 않았다.
-- 최단 거리, 도달 개수, 최소 깊이 합을 독립적인 메모리 BFS와 총 **7,529회 대조**했다. 추가로 시작점 3개에서는 양쪽의 전체 `(노드 ID, 최소 깊이)` 집합도 비교해 일치했다.
-- 빈 작업 `RETURN 1`의 Bolt 왕복 중앙값은 0.311ms, `SELECT 1`의 SQLite 호출은 0.0015ms였다. 이것은 순수 네트워크 시간만이 아니라 호출·트랜잭션·드라이버 비용을 포함한 기준값이다. 실제 질의 시간에서 임의로 빼지 않았다.
-- Neo4j 드라이버가 보고한 서버 측 시간도 JSON에 보존했다. 정수 밀리초 해상도와 측정 범위 차이가 있어 단독으로 엔진 속도를 비교하는 데 사용하지 않았다.
+| Setting | Recorded value |
+|---|---|
+| Hardware | Apple M3, 8 logical CPUs, 24 GiB RAM |
+| Runtime | Node v24.13.1; SQLite 3.51.2 |
+| Neo4j | Community 2025.06.2; JavaScript driver 5.28.3 |
+| Neo4j memory | Heap 1 GiB + page cache 1 GiB |
+| SQLite cache | Up to 64 MiB per connection; file approximately 43 MiB |
+| Graph | 50,000 nodes; 300,000 directed edges; seed 20260923 |
+| Samples | 120 each for no-op/point; 12 each for shortest/filtered; 24 each for reach3/reach6 |
+| Warmups per workload | Neo4j 40; custom SQLite 8; CTE 2 |
 
-## 해석 범위
+The graph contains a directed ring plus five distinct pseudorandom outgoing edges per node, without self-loops or duplicate edges. Ten percent of nodes are inactive. Source/target pairs vary; selected endpoints are active and distinct. Reachability varies over 24 source nodes.
 
-이 그래프는 넓게 퍼지는 탐색을 만들기 위한 합성 데이터다. 실제 업무의 군집 구조, 인기 노드, 다양한 연결 유형, 디스크 캐시 미스, 변경 빈도에 따라 결과는 달라진다. ID 조회 위주의 작고 읽기 중심인 로컬 파생 인덱스에는 NodeRel의 간결함과 낮은 호출 비용이 유용하다. 넓은 관계 탐색이 핵심 기능이고 이런 질문이 계속 늘거나 동시에 많이 실행된다면 Neo4j를 검토할 근거가 생긴다.
+Neo4j uses a reused local Bolt connection/session, an explicit database, and auto-commit reads. These choices reduce avoidable client overhead; see the [official driver performance guidance](https://neo4j.com/docs/javascript-manual/current/performance/). SQLite uses a local WAL-mode file, prepared statements, and memory temporary storage.
 
-GDS의 PageRank·커뮤니티 탐지 같은 준비된 분석 기능도 Neo4j 생태계의 별도 장점이지만 **이번에는 GDS를 설치하거나 성능을 측정하지 않았다**. 다중 쓰기, 고가용성, 운영 권한 관리도 이번 시험 결과에 포함하지 않았다.
+For single queries, measurement order alternates between implementations within each workload. Startup, import, connection initialization, plan capture, and correctness-reference computation are excluded. No response cache is used. The data fits the configured caches; this is not an equal-memory-budget experiment.
 
-## 상세 지연 분포
+The recorded driver-reported server timings are preserved in JSON. Their integer-millisecond resolution and different measurement scope make them unsuitable as a standalone engine-speed comparison. The published tables use client wall-clock time.
 
-p95는 측정치의 95%가 이 시간 이내였다는 뜻이다. 표본이 12개인 최단 거리의 p95는 최댓값과 같으므로 일반적인 서비스 지연 지표로 해석하면 안 된다. 중앙값은 정렬한 표본의 상위 중앙 순서값을 사용했다.
+### Correctness
 
-| 작업 | 구현 | 측정 횟수 | 중앙값 ms | p95 ms |
+The primary run and reversed-order repeat recorded **7,529 result checks** in total, including concurrency warmups. No-op and point-lookup outputs were checked against fixed expected values; shortest distance, reached-node count, and summed minimum depth were checked against an independent in-memory BFS. Complete `(node ID, minimum depth)` sets were also compared for three sources:
+
+| Source | Reached nodes | Complete sets match |
+|---|---:|---|
+| `n06724` | 32,151 | Yes |
+| `n42366` | 31,829 | Yes |
+| `n25621` | 31,906 | Yes |
+
+These checks support correctness for the sampled workloads. Aggregate equality alone is not a proof of identical node sets for every source; the full-set checks address three additional cases.
+
+## Latency distribution
+
+Median uses the upper middle order statistic of sorted observations. p95 uses the nearest-rank definition. With only 12 shortest-distance samples, p95 is the maximum sample, so it should not be interpreted as a stable service-level tail estimate.
+
+| Workload | Implementation | Samples | Median ms | p95 ms |
 |---|---|---:|---:|---:|
-| 호출 기본 비용 (SELECT/RETURN 1) | neo4j-bolt | 120 | 0.311 | 0.779 |
-| 호출 기본 비용 (SELECT/RETURN 1) | sqlite-optimized | 120 | 0.002 | 0.007 |
-| 노드 1개 조회 | neo4j-bolt | 120 | 0.276 | 0.545 |
-| 노드 1개 조회 | sqlite-optimized | 120 | 0.006 | 0.173 |
-| 두 지점 최단 거리 (최대 10단계) | neo4j-bolt | 12 | 1.919 | 3.008 |
-| 두 지점 최단 거리 (최대 10단계) | sqlite-optimized | 12 | 1.530 | 6.717 |
-| 두 지점 최단 거리 (최대 10단계) | sqlite-cte | 12 | 1709.006 | 1871.743 |
-| 비활성 노드를 피하는 최단 거리 | neo4j-bolt | 12 | 1.984 | 4.875 |
-| 비활성 노드를 피하는 최단 거리 | sqlite-optimized | 12 | 1.903 | 2.601 |
-| 비활성 노드를 피하는 최단 거리 | sqlite-cte | 12 | 1291.534 | 1329.224 |
-| 3단계 내 연결 탐색 · 집계 | neo4j-bolt | 24 | 1.043 | 13.761 |
-| 3단계 내 연결 탐색 · 집계 | sqlite-optimized | 24 | 0.194 | 1.073 |
-| 3단계 내 연결 탐색 · 집계 | sqlite-cte | 24 | 0.535 | 1.046 |
-| 6단계 내 연결 탐색 · 집계 | neo4j-bolt | 24 | 13.592 | 21.336 |
-| 6단계 내 연결 탐색 · 집계 | sqlite-optimized | 24 | 25.846 | 34.997 |
-| 6단계 내 연결 탐색 · 집계 | sqlite-cte | 24 | 98.085 | 104.796 |
+| Call overhead: SELECT / RETURN 1 | `neo4j-bolt` | 120 | 0.311 | 0.779 |
+| Call overhead: SELECT / RETURN 1 | `sqlite-optimized` | 120 | 0.002 | 0.007 |
+| Single node lookup | `neo4j-bolt` | 120 | 0.276 | 0.545 |
+| Single node lookup | `sqlite-optimized` | 120 | 0.006 | 0.173 |
+| Shortest distance, up to 10 hops | `neo4j-bolt` | 12 | 1.919 | 3.008 |
+| Shortest distance, up to 10 hops | `sqlite-optimized` | 12 | 1.530 | 6.717 |
+| Shortest distance, up to 10 hops | `sqlite-cte` | 12 | 1,709.006 | 1,871.743 |
+| Shortest distance avoiding inactive nodes | `neo4j-bolt` | 12 | 1.984 | 4.875 |
+| Shortest distance avoiding inactive nodes | `sqlite-optimized` | 12 | 1.903 | 2.601 |
+| Shortest distance avoiding inactive nodes | `sqlite-cte` | 12 | 1,291.534 | 1,329.224 |
+| Reachability within 3 hops | `neo4j-bolt` | 24 | 1.043 | 13.761 |
+| Reachability within 3 hops | `sqlite-optimized` | 24 | 0.194 | 1.073 |
+| Reachability within 3 hops | `sqlite-cte` | 24 | 0.535 | 1.046 |
+| Reachability within 6 hops | `neo4j-bolt` | 24 | 13.592 | 21.336 |
+| Reachability within 6 hops | `sqlite-optimized` | 24 | 25.846 | 34.997 |
+| Reachability within 6 hops | `sqlite-cte` | 24 | 98.085 | 104.796 |
 
+## Limits and practical interpretation
 
-## 공식 문서와 재현 자료
+This synthetic graph was chosen to create broad traversals. Real graphs may have clusters, hubs, more relationship types, changing data, or disk-cache misses. A local derived index centered on small reads can benefit from SQLite's low call overhead and simple deployment. Repeated broad graph queries and concurrent graph access provide reasons to evaluate Neo4j against the application's real data.
 
-- [Neo4j 최단 경로와 실행 계획](https://neo4j.com/docs/cypher-manual/25/patterns/shortest-paths/)
-- [Neo4j JavaScript 드라이버 성능 권장 사항](https://neo4j.com/docs/javascript-manual/current/performance/)
-- [SQLite의 적합한 사용처와 동시 읽기/쓰기](https://www.sqlite.org/whentouse.html)
-- [Neo4j GDS 알고리즘](https://neo4j.com/docs/graph-data-science/current/algorithms/)
+Cold-cache performance, concurrent writes, long-running service load, high availability, production authorization, and GDS algorithms were not tested. No result here measures all features of either platform or guarantees performance at another scale.
 
-측정값: `results.json`. 실행 계획: `query-plans.json`. 재현 절차: `README.md`. `repeat-concurrency.mjs`는 본 측정 후 같은 폴더에서 실행하면 8개 동시 요청의 순서 반전 재측정을 추가한다. 기준 `benchmark.mjs`를 다시 실행하면 결과 파일을 새로 작성한다.
+## Reproduction and provenance
+
+The [reproduction guide](README.md) explains how to import the graph, run the benchmark, reverse the eight-client measurement order, and regenerate the SVG/PNG charts. [results.json](results.json) contains all raw measurements. [common.mjs](common.mjs) contains the actual queries and traversal algorithms.
+
+This English report and its charts were prepared from the existing recorded run. The documentation update did not rerun the databases or replace numeric measurements.

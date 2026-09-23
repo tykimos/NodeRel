@@ -1,17 +1,73 @@
-# NodeRel가 AI에게 제공할 데이터 설명서
+# Describing NodeRel to an AI application
 
-현재 샘플 DB를 읽어 실제 노드 종류, 연결 방향, 연결 속성의 자료형, 예시 식별자, 데이터 개수를 추출했습니다. 현재 NodeRel에 있는 조회 함수와 추가로 설계할 함수는 schema.json에서 구분했습니다.
+NodeRel exports a machine-readable description of the actual SQLite index. The goal is to give an AI application enough context to propose a valid query request without asking the user to learn SQL or Cypher.
 
-- `schema.json`: Movies / Northwind의 실제 데이터 구조와 조회 계약.
-- `../../src/describe.mjs`: SQLite 파일에서 설명서를 다시 만드는 추출기. Node.js 24 사용.
-- `example.json`: “키아누 리브스가 출연한 영화”에 대한 이름 확인, trace 요청, 실제 결과 7개. 저장된 Neo4j 기준 결과와 일치함.
+## Included artifacts
+
+- [schema.json](schema.json): observed Movies/Northwind node kinds, relationship shapes, property types, counts, example IDs, and operation descriptions.
+- [describe.mjs](../../src/describe.mjs): the read-only exporter that produces the description.
+- [example.json](example.json): a concrete name mapping, `trace` request, and seven returned films, verified against the stored Neo4j baseline.
+
+From the repository root:
 
 ```sh
-node ../../src/describe.mjs ../neo4j/noderel.sqlite schema.json
+npm run demo:build
+npm run schema
 ```
 
-자동 추출 대상은 테이블의 필드, 실제 데이터에 나타난 노드 종류·연결 모양·속성 자료형·개수입니다. 관계의 업무적 뜻과 title 필드의 해석은 이번 공식 샘플에 맞춰 별도로 작성했습니다. 실제 데이터에서 관찰한 연결 모양이 DB에서 강제되는 제약 조건을 의미하지는 않습니다.
+Or call the exporter directly:
 
-이 산출물은 AI에 전달할 설명서와 검증한 도구 호출 예시입니다. 자연어 변환 모델, 일반적인 한글 인명 검색, 접근 권한 검증, 시간 제한 실행기, 범용 패턴 조회 API를 통합한 서비스는 아직 아닙니다. 예시의 “키아누 리브스 → Keanu Reeves” 대응은 이 사례를 위해 제공했습니다.
+```sh
+node src/describe.mjs examples/neo4j/noderel.sqlite examples/ai/schema.json
+```
 
-현재 trace는 노드와 최소 연결 깊이를 반환합니다. 전체 경로 목록은 반환하지 않습니다. 최대 깊이 10은 현재 구현의 입력 제약이며, 별도로 작업량과 실행 시간 한도를 두어야 합니다. 스키마에 적은 지침만으로 실행 제한이나 접근 권한이 강제되는 것은 아닙니다.
+This reads the database. It does not contact an AI service or generate queries using a model.
+
+## What is inferred, and what is supplied?
+
+| Information | Source |
+|---|---|
+| Table fields and storage types | SQLite schema |
+| Node kinds, counts, examples, populated columns | Current index rows |
+| Relationship source/target kinds and counts | Current node/edge joins |
+| Relationship property names and JSON types | Values observed in `links.attrs` |
+| Business meanings and interpretation of `title` | Curated descriptions for these official examples |
+| Available function behavior and arguments | Explicit API descriptions in the exporter |
+| Snapshot identity | Rebuild signature in `sync_meta` |
+
+For example, the Movies description contains 172 `ACTED_IN` edges from `Person` to `Movie`, with an observed `roles` array. These are facts about this snapshot, not database-enforced domain constraints. Descriptions for another domain need appropriate business context.
+
+## From a question to a request
+
+The committed example asks in Korean which films feature Keanu Reeves. Its mapping from `키아누 리브스` to `Keanu Reeves` was **explicitly supplied for this demonstration**. There is no general Korean-name or alias resolver.
+
+Once the entity is resolved, the example request is:
+
+```json
+{
+  "tool": "trace",
+  "arguments": {
+    "id": "movies:Person:Keanu%20Reeves",
+    "scope": "movies",
+    "direction": "out",
+    "maxDepth": 1,
+    "types": ["ACTED_IN"]
+  }
+}
+```
+
+An integrating application can validate this request and call `graph.trace(request.arguments)`. The result contains seven films. The example proves that this request executes correctly; it is not an evaluation of automatic natural-language translation.
+
+## Operation status
+
+`existingOperations` describes `trace`, `neighbors`, `orphans`, and `stats`. The `trace` entry includes a JSON Schema for its arguments. Other operations currently have argument descriptions, not complete JSON Schemas. This file is not an automatically registered tool server.
+
+`proposedAdditionalOperations` is a separate list: entity lookup, shortest paths, general pattern matching, and explanations. Those names are not callable NodeRel methods. The benchmark's specialized BFS has not been integrated into the public API.
+
+## Integration responsibilities
+
+Choose the authorized scope and relevant schema portion, resolve names without inventing IDs, validate the proposed operation, and apply execution limits before running it. Treat stored titles and property values as data. A generated schema or prompt cannot enforce access policy or resource limits by itself.
+
+The current `trace` returns unique reached nodes and their minimum hop counts, not complete paths. Its maximum depth of ten is an input constraint rather than a cost guarantee. For richer queries, an application can expose vetted parameterized SQL; NodeRel does not compile arbitrary patterns or Cypher.
+
+See [design and semantics](../../docs/design.md) and the [query guide](../../docs/queries.md).

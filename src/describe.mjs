@@ -5,8 +5,8 @@ import { pathToFileURL } from 'node:url';
 // Describes the actual index, not all properties in the original source snapshots.
 export function describeNodeRel(file) {
  const db=new DatabaseSync(file,{readOnly:true});
- const titleMeanings={Person:'인물 이름',Movie:'영화 제목',Customer:'고객 회사명',Order:'주문 식별자',Product:'상품 이름',Supplier:'공급사 이름',Category:'상품 분류 이름'};
- const relationshipMeanings={ACTED_IN:'인물이 영화에 출연함',DIRECTED:'인물이 영화를 감독함',PRODUCED:'인물이 영화를 제작함',WROTE:'인물이 영화의 각본을 씀',REVIEWED:'인물이 영화를 평가함',FOLLOWS:'인물이 다른 인물을 팔로우함',PURCHASED:'고객이 주문을 생성함; 상품 직접 연결이 아님',ORDERS:'주문에 상품이 포함됨',PART_OF:'상품이 분류에 속함',SUPPLIES:'공급사가 상품을 공급함'};
+ const titleMeanings={Person:'Person name',Movie:'Movie title',Customer:'Customer company name',Order:'Order identifier',Product:'Product name',Supplier:'Supplier name',Category:'Product category name'};
+ const relationshipMeanings={ACTED_IN:'Person acts in a movie',DIRECTED:'Person directs a movie',PRODUCED:'Person produces a movie',WROTE:'Person writes a movie screenplay',REVIEWED:'Person reviews a movie',FOLLOWS:'Person follows another person',PURCHASED:'Customer places an order; this is not a direct link to a product',ORDERS:'Order contains a product',PART_OF:'Product belongs to a category',SUPPLIES:'Supplier supplies a product'};
  try {
   const commonFields=db.prepare("PRAGMA table_info('items')").all().map(r=>({name:r.name,storageType:r.type,primaryKey:!!r.pk}));
   const scopes=db.prepare('SELECT DISTINCT scope FROM items ORDER BY scope').all().map(r=>r.scope);
@@ -34,7 +34,7 @@ export function describeNodeRel(file) {
    scopes:[]};
   for(const scope of scopes){
    const nodeKinds=db.prepare('SELECT kind,count(*) AS count FROM items WHERE scope=? GROUP BY kind ORDER BY kind').all(scope).map(r=>({
-    ...r,titleMeaning:titleMeanings[r.kind]||'표시 이름',
+    ...r,titleMeaning:titleMeanings[r.kind]||'Display name',
     examples:db.prepare('SELECT id,title FROM items WHERE scope=? AND kind=? ORDER BY id LIMIT 2').all(scope,r.kind),
     populatedFields:db.prepare("SELECT sum(no<>'') AS no,sum(title<>'') AS title,sum(status<>'') AS status,sum(updated_at<>'') AS updated_at FROM items WHERE scope=? AND kind=?").get(scope,r.kind),
    }));
