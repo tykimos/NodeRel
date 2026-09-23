@@ -1,8 +1,8 @@
-# GraphIndex — Neo4j 대표 예제 실험
+# NodeRel — Neo4j 대표 예제 실험
 
-SQLite 위에 항목과 연결을 저장하는 GraphIndex의 독립 실행 데모입니다.
+SQLite 위에 항목과 연결을 저장하는 NodeRel의 독립 실행 데모입니다.
 
-Neo4j 공식 예제인 Movies와 Northwind를 별도 Neo4j 서버에 불러온 다음, 항목과 연결을 GraphIndex로 옮겼습니다. 실제 Neo4j와 15개 질의의 결과를 대조했고, 모두 일치했습니다. 테스트용 Neo4j 서버는 측정 후 종료했습니다.
+Neo4j 공식 예제인 Movies와 Northwind를 별도 Neo4j 서버에 불러온 다음, 항목과 연결을 NodeRel로 옮겼습니다. 실제 Neo4j와 15개 질의의 결과를 대조했고, 모두 일치했습니다. 테스트용 Neo4j 서버는 측정 후 종료했습니다.
 
 | 예제 | 항목 | 연결 |
 |---|---:|---:|
@@ -29,7 +29,7 @@ node demo.mjs stats
 node demo.mjs trace movies "Keanu Reeves" both 4 ACTED_IN
 ```
 
-원본 스냅샷에서 GraphIndex를 다시 만들려면 다음을 실행합니다.
+원본 스냅샷에서 NodeRel를 다시 만들려면 다음을 실행합니다.
 
 ```sh
 node demo.mjs rebuild
@@ -38,8 +38,8 @@ node demo.mjs test
 
 ## 파일
 
-- `graphindex.sqlite`: `rebuild`로 생성하는 SQLite 연결 인덱스. Git에는 포함하지 않습니다. 조회에 필요한 기본 속성과 연결을 저장합니다.
-- `graphindex.mjs`: `../../src/graphindex.mjs`의 구현을 재사용하는 진입점.
+- `noderel.sqlite`: `rebuild`로 생성하는 SQLite 연결 인덱스. Git에는 포함하지 않습니다. 조회에 필요한 기본 속성과 연결을 저장합니다.
+- `noderel.mjs`: `../../src/noderel.mjs`의 구현을 재사용하는 진입점.
 - `snapshots/movies.json`, `snapshots/northwind.json`: 원본 노드 속성과 관계 속성을 보존한 수집기 입력. 이 파일들로 인덱스를 다시 만듭니다.
 - `cases.mjs`: 15개 SQL/Cypher 대응 예제.
 - `expected-results.json`: 실제 Neo4j와 대조한 기준 결과.
@@ -49,7 +49,7 @@ node demo.mjs test
 
 ## 변환 규칙
 
-| Neo4j | GraphIndex |
+| Neo4j | NodeRel |
 |---|---|
 | Movie, Person 등 노드 라벨 | `items.kind` |
 | 예제 데이터 이름 | `items.scope` |

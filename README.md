@@ -1,4 +1,4 @@
-# GraphIndex
+# NodeRel
 
 **SQLite 기반 파생 그래프 인덱스와 AI용 스키마 설명서.**
 
@@ -11,8 +11,8 @@ AI가 데이터 구조를 읽고 조회 요청을 만들 수 있도록 실제 �
 Node.js **24.13.1 이상**이 필요합니다. 핵심 기능은 내장 SQLite를 사용하므로 추가 패키지를 설치하지 않습니다.
 
 ```sh
-git clone https://github.com/tykimos/graphindex.git
-cd graphindex
+git clone https://github.com/tykimos/NodeRel.git
+cd NodeRel
 npm test
 npm run demo:build
 npm run demo -- show 1
@@ -20,7 +20,7 @@ npm run schema
 ```
 
 - `npm test`: 임시 DB로 예제 질의, 경계 조건, AI 스키마와 도구 호출 결과를 확인합니다.
-- `demo:build`: 스냅샷으로 `examples/neo4j/graphindex.sqlite`를 생성합니다.
+- `demo:build`: 스냅샷으로 `examples/neo4j/noderel.sqlite`를 생성합니다.
 - `demo -- show 1`: 키아누 리브스의 출연 영화를 조회합니다.
 - `schema`: AI용 설명서를 `examples/ai/schema.json`에 저장합니다.
 
@@ -29,9 +29,9 @@ Node 24.13.1은 `node:sqlite` 사용 시 실험 기능 경고를 표시할 수 �
 ## 기본 사용
 
 ```js
-import { GraphIndex } from './src/graphindex.mjs';
+import { NodeRel } from './src/noderel.mjs';
 
-const index = new GraphIndex('./examples/neo4j/graphindex.sqlite', {
+const index = new NodeRel('./examples/neo4j/noderel.sqlite', {
   readOnly: true
 });
 try {
@@ -61,8 +61,8 @@ try {
 ## AI용 설명서
 
 ```js
-import { describeGraphIndex } from './src/describe.mjs';
-const schema = describeGraphIndex('./examples/neo4j/graphindex.sqlite');
+import { describeNodeRel } from './src/describe.mjs';
+const schema = describeNodeRel('./examples/neo4j/noderel.sqlite');
 console.log(schema.scopes);
 console.log(schema.existingOperations);
 ```
@@ -88,9 +88,9 @@ console.log(schema.existingOperations);
 
 [재현 코드와 절차](benchmarks/neo4j-strengths/README.md) · [상세 보고서](benchmarks/neo4j-strengths/REPORT.md) · [측정값](benchmarks/neo4j-strengths/results.json)
 
-5만 노드·30만 연결, Apple M3, 캐시 예열 후 측정한 단일 요청 중앙값입니다. GraphIndex 전용 탐색은 벤치마크에서 별도로 구현한 BFS이며, 핵심 `trace()`의 재귀 SQL과 구분합니다.
+5만 노드·30만 연결, Apple M3, 캐시 예열 후 측정한 단일 요청 중앙값입니다. NodeRel 전용 탐색은 벤치마크에서 별도로 구현한 BFS이며, 핵심 `trace()`의 재귀 SQL과 구분합니다.
 
-| 작업 | GraphIndex 전용 탐색 | Neo4j Bolt |
+| 작업 | NodeRel 전용 탐색 | Neo4j Bolt |
 |---|---:|---:|
 | 노드 하나 조회 | 0.006 ms | 0.276 ms |
 | 두 지점 최단 거리 | 1.530 ms | 1.919 ms |

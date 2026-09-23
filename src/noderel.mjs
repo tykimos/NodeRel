@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS sync_meta(key TEXT PRIMARY KEY,value TEXT NOT NULL);
 
 // This demonstration implements the supplied three-table design.
 // Original node properties stay in the source snapshots, outside the index.
-export class GraphIndex {
+export class NodeRel {
  constructor(file,{readOnly=false}={}) {
   this.db=new DatabaseSync(file,{readOnly});
   if(!readOnly)this.db.exec(SCHEMA);

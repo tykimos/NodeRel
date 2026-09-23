@@ -1,13 +1,13 @@
-# GraphIndex가 AI에게 제공할 데이터 설명서
+# NodeRel가 AI에게 제공할 데이터 설명서
 
-현재 샘플 DB를 읽어 실제 노드 종류, 연결 방향, 연결 속성의 자료형, 예시 식별자, 데이터 개수를 추출했습니다. 현재 GraphIndex에 있는 조회 함수와 추가로 설계할 함수는 schema.json에서 구분했습니다.
+현재 샘플 DB를 읽어 실제 노드 종류, 연결 방향, 연결 속성의 자료형, 예시 식별자, 데이터 개수를 추출했습니다. 현재 NodeRel에 있는 조회 함수와 추가로 설계할 함수는 schema.json에서 구분했습니다.
 
 - `schema.json`: Movies / Northwind의 실제 데이터 구조와 조회 계약.
 - `../../src/describe.mjs`: SQLite 파일에서 설명서를 다시 만드는 추출기. Node.js 24 사용.
 - `example.json`: “키아누 리브스가 출연한 영화”에 대한 이름 확인, trace 요청, 실제 결과 7개. 저장된 Neo4j 기준 결과와 일치함.
 
 ```sh
-node ../../src/describe.mjs ../neo4j/graphindex.sqlite schema.json
+node ../../src/describe.mjs ../neo4j/noderel.sqlite schema.json
 ```
 
 자동 추출 대상은 테이블의 필드, 실제 데이터에 나타난 노드 종류·연결 모양·속성 자료형·개수입니다. 관계의 업무적 뜻과 title 필드의 해석은 이번 공식 샘플에 맞춰 별도로 작성했습니다. 실제 데이터에서 관찰한 연결 모양이 DB에서 강제되는 제약 조건을 의미하지는 않습니다.

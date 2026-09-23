@@ -164,7 +164,7 @@
           "title": "The Replacements"
         }
       ],
-      "cypher": "MATCH (:GIItem {gi_id:$id})-[:ACTED_IN]->(m:Movie) RETURN m.title AS title ORDER BY title",
+      "cypher": "MATCH (:NodeRelItem {noderel_id:$id})-[:ACTED_IN]->(m:Movie) RETURN m.title AS title ORDER BY title",
       "params": {
         "id": "movies:Person:Keanu%20Reeves"
       },
@@ -243,7 +243,7 @@
           ]
         }
       ],
-      "cypher": "MATCH (p:Person)-[r:ACTED_IN]->(:GIItem {gi_id:$id}) RETURN p.name AS name,r.roles AS roles ORDER BY name",
+      "cypher": "MATCH (p:Person)-[r:ACTED_IN]->(:NodeRelItem {noderel_id:$id}) RETURN p.name AS name,r.roles AS roles ORDER BY name",
       "params": {
         "id": "movies:Movie:The%20Matrix"
       },
@@ -394,7 +394,7 @@
           "name": "Victor Garber"
         }
       ],
-      "cypher": "MATCH (p:GIItem {gi_id:$id})-[:ACTED_IN]->(:Movie)<-[:ACTED_IN]-(other:Person) WHERE other<>p RETURN DISTINCT other.name AS name ORDER BY name",
+      "cypher": "MATCH (p:NodeRelItem {noderel_id:$id})-[:ACTED_IN]->(:Movie)<-[:ACTED_IN]-(other:Person) WHERE other<>p RETURN DISTINCT other.name AS name ORDER BY name",
       "params": {
         "id": "movies:Person:Tom%20Hanks"
       },
@@ -730,7 +730,7 @@
           "depth": 4
         }
       ],
-      "cypher": "MATCH p=(s:GIItem {gi_id:$id})-[:ACTED_IN*1..4]-(n:GIItem) WHERE n<>s RETURN n.gi_id AS id,min(length(p)) AS depth",
+      "cypher": "MATCH p=(s:NodeRelItem {noderel_id:$id})-[:ACTED_IN*1..4]-(n:NodeRelItem) WHERE n<>s RETURN n.noderel_id AS id,min(length(p)) AS depth",
       "params": {
         "id": "movies:Person:Keanu%20Reeves"
       },
@@ -782,7 +782,7 @@
           "depth": 4
         }
       ],
-      "cypher": "MATCH (s:GIItem {gi_id:$id}),(t:GIItem {gi_id:$target}),p=shortestPath((s)-[:ACTED_IN*..10]-(t)) RETURN length(p) AS depth",
+      "cypher": "MATCH (s:NodeRelItem {noderel_id:$id}),(t:NodeRelItem {noderel_id:$target}),p=shortestPath((s)-[:ACTED_IN*..10]-(t)) RETURN length(p) AS depth",
       "params": {
         "id": "movies:Person:Keanu%20Reeves",
         "target": "movies:Person:Tom%20Hanks"
@@ -956,7 +956,7 @@
           "title": "Vincent Ward"
         }
       ],
-      "cypher": "MATCH (p:Person) WHERE NOT EXISTS { MATCH (p)-[:ACTED_IN]->() } RETURN p.gi_id AS id,p.name AS title",
+      "cypher": "MATCH (p:Person) WHERE NOT EXISTS { MATCH (p)-[:ACTED_IN]->() } RETURN p.noderel_id AS id,p.name AS title",
       "params": {},
       "sql": null
     },
@@ -1033,7 +1033,7 @@
           "product": "Raclette Courdavault"
         }
       ],
-      "cypher": "MATCH (p:Product)-[:PART_OF]->(:GIItem {gi_id:$id}) RETURN p.productName AS product ORDER BY product",
+      "cypher": "MATCH (p:Product)-[:PART_OF]->(:NodeRelItem {noderel_id:$id}) RETURN p.productName AS product ORDER BY product",
       "params": {
         "id": "northwind:Category:4"
       },
@@ -1094,7 +1094,7 @@
           "category": "Beverages"
         }
       ],
-      "cypher": "MATCH (:GIItem {gi_id:$id})-[:SUPPLIES]->(p:Product)-[:PART_OF]->(c:Category) RETURN p.productName AS product,c.categoryName AS category ORDER BY product",
+      "cypher": "MATCH (:NodeRelItem {noderel_id:$id})-[:SUPPLIES]->(p:Product)-[:PART_OF]->(c:Category) RETURN p.productName AS product,c.categoryName AS category ORDER BY product",
       "params": {
         "id": "northwind:Supplier:1"
       },
@@ -1187,7 +1187,7 @@
           "orders": 1
         }
       ],
-      "cypher": "MATCH (:GIItem {gi_id:$id})-[:PURCHASED]->(o:Order)-[:ORDERS]->(p:Product) RETURN p.productName AS product,count(DISTINCT o) AS orders ORDER BY product",
+      "cypher": "MATCH (:NodeRelItem {noderel_id:$id})-[:PURCHASED]->(o:Order)-[:ORDERS]->(p:Product) RETURN p.productName AS product,count(DISTINCT o) AS orders ORDER BY product",
       "params": {
         "id": "northwind:Customer:ALFKI"
       },
@@ -1251,7 +1251,7 @@
           "category": "Seafood"
         }
       ],
-      "cypher": "MATCH (:GIItem {gi_id:$id})-[:PURCHASED]->(:Order)-[:ORDERS]->(:Product)-[:PART_OF]->(c:Category) RETURN DISTINCT c.categoryName AS category ORDER BY category",
+      "cypher": "MATCH (:NodeRelItem {noderel_id:$id})-[:PURCHASED]->(:Order)-[:ORDERS]->(:Product)-[:PART_OF]->(c:Category) RETURN DISTINCT c.categoryName AS category ORDER BY category",
       "params": {
         "id": "northwind:Customer:ALFKI"
       },
@@ -1447,7 +1447,7 @@
           "customer": "Wolski  Zajazd"
         }
       ],
-      "cypher": "MATCH (:GIItem {gi_id:$id})-[:SUPPLIES]->(:Product)<-[:ORDERS]-(:Order)<-[:PURCHASED]-(c:Customer) RETURN DISTINCT c.companyName AS customer ORDER BY customer",
+      "cypher": "MATCH (:NodeRelItem {noderel_id:$id})-[:SUPPLIES]->(:Product)<-[:ORDERS]-(:Order)<-[:PURCHASED]-(c:Customer) RETURN DISTINCT c.companyName AS customer ORDER BY customer",
       "params": {
         "id": "northwind:Supplier:1"
       },
@@ -1504,7 +1504,7 @@
           "title": "Paris spécialités"
         }
       ],
-      "cypher": "MATCH (c:Customer) WHERE NOT EXISTS { MATCH (c)-[:PURCHASED]->() } RETURN c.gi_id AS id,c.companyName AS title",
+      "cypher": "MATCH (c:Customer) WHERE NOT EXISTS { MATCH (c)-[:PURCHASED]->() } RETURN c.noderel_id AS id,c.companyName AS title",
       "params": {},
       "sql": null
     },
@@ -1639,7 +1639,7 @@
           "depth": 3
         }
       ],
-      "cypher": "MATCH p=(s:GIItem {gi_id:$id})-[*1..3]->(n:GIItem) WHERE n<>s AND n.gi_scope='northwind' RETURN n.gi_id AS id,min(length(p)) AS depth",
+      "cypher": "MATCH p=(s:NodeRelItem {noderel_id:$id})-[*1..3]->(n:NodeRelItem) WHERE n<>s AND n.noderel_scope='northwind' RETURN n.noderel_id AS id,min(length(p)) AS depth",
       "params": {
         "id": "northwind:Customer:ALFKI"
       },
@@ -1700,7 +1700,7 @@
           "quantity": 10
         }
       ],
-      "cypher": "MATCH (:GIItem {gi_id:$id})-[r:ORDERS]->(p:Product) RETURN p.productName AS product,r.quantity AS quantity ORDER BY product",
+      "cypher": "MATCH (:NodeRelItem {noderel_id:$id})-[r:ORDERS]->(p:Product) RETURN p.productName AS product,r.quantity AS quantity ORDER BY product",
       "params": {
         "id": "northwind:Order:10248"
       },

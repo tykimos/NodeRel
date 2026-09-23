@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
-import {GraphIndex} from './graphindex.mjs';
+import {NodeRel} from './noderel.mjs';
 export function regressions(){
- const g=new GraphIndex(':memory:');
+ const g=new NodeRel(':memory:');
  const node=(id,scope='test')=>({id,scope,kind:'test',title:id});
  const edge=(from,to)=>({from,to,scope:'test',type:'LINK',properties:{}});
  try {

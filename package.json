@@ -1,5 +1,5 @@
 {
-  "name": "@tykimos/graphindex",
+  "name": "@tykimos/noderel",
   "version": "0.1.0",
   "description": "SQLite-based derived graph index with AI-readable schema descriptions and reproducible Neo4j comparisons",
   "type": "module",
@@ -9,17 +9,17 @@
     "node": ">=24.13.1"
   },
   "exports": {
-    ".": "./src/graphindex.mjs",
+    ".": "./src/noderel.mjs",
     "./describe": "./src/describe.mjs"
   },
   "scripts": {
     "test": "node scripts/test.mjs",
     "demo:build": "node examples/neo4j/demo.mjs rebuild",
     "demo": "node examples/neo4j/demo.mjs",
-    "schema": "node src/describe.mjs examples/neo4j/graphindex.sqlite examples/ai/schema.json"
+    "schema": "node src/describe.mjs examples/neo4j/noderel.sqlite examples/ai/schema.json"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tykimos/graphindex.git"
+    "url": "https://github.com/tykimos/NodeRel.git"
   }
 }

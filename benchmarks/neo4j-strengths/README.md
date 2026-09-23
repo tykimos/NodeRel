@@ -31,7 +31,7 @@ node benchmark.mjs
 ## 파일
 
 - `common.mjs`: 결정적 데이터 생성, 독립적인 메모리 BFS 정답 계산, SQLite CTE / 직접 구현한 BFS, Cypher 쿼리.
-- `schema.mjs`: GraphIndex 테이블 및 인덱스.
+- `schema.mjs`: NodeRel 테이블 및 인덱스.
 - `import.mjs`: 같은 그래프를 양쪽 DB에 적재. SQLite에는 역방향 탐색을 위한 추가 인덱스도 생성.
 - `benchmark.mjs`: 예열, 순서 교대 측정, 정답 대조, 실행 계획, 동시 조회 측정.
 - `worker.mjs`: SQLite도 별도 작업 스레드와 읽기 연결을 사용해 병렬 조회.

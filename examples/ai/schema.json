@@ -1,6 +1,6 @@
 {
-  "schemaVersion": "graphindex-ai-description/1",
-  "generatedAt": "2026-09-23T04:54:15.636Z",
+  "schemaVersion": "noderel-ai-description/1",
+  "generatedAt": "2026-09-23T05:15:58.328Z",
   "sourceSignature": "7ebe39e5a77db85df399fcdc8ec08567721198682e3e447b30886a86f01d53de",
   "provenance": {
     "countsAndShapes": "Observed from SQLite, not enforced relationship constraints.",

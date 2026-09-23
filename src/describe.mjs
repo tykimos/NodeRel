@@ -3,14 +3,14 @@ import { writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
 // Describes the actual index, not all properties in the original source snapshots.
-export function describeGraphIndex(file) {
+export function describeNodeRel(file) {
  const db=new DatabaseSync(file,{readOnly:true});
  const titleMeanings={Person:'인물 이름',Movie:'영화 제목',Customer:'고객 회사명',Order:'주문 식별자',Product:'상품 이름',Supplier:'공급사 이름',Category:'상품 분류 이름'};
  const relationshipMeanings={ACTED_IN:'인물이 영화에 출연함',DIRECTED:'인물이 영화를 감독함',PRODUCED:'인물이 영화를 제작함',WROTE:'인물이 영화의 각본을 씀',REVIEWED:'인물이 영화를 평가함',FOLLOWS:'인물이 다른 인물을 팔로우함',PURCHASED:'고객이 주문을 생성함; 상품 직접 연결이 아님',ORDERS:'주문에 상품이 포함됨',PART_OF:'상품이 분류에 속함',SUPPLIES:'공급사가 상품을 공급함'};
  try {
   const commonFields=db.prepare("PRAGMA table_info('items')").all().map(r=>({name:r.name,storageType:r.type,primaryKey:!!r.pk}));
   const scopes=db.prepare('SELECT DISTINCT scope FROM items ORDER BY scope').all().map(r=>r.scope);
-  const output={schemaVersion:'graphindex-ai-description/1',generatedAt:new Date().toISOString(),
+  const output={schemaVersion:'noderel-ai-description/1',generatedAt:new Date().toISOString(),
    sourceSignature:db.prepare("SELECT value FROM sync_meta WHERE key='signature'").get()?.value||null,
    provenance:{countsAndShapes:'Observed from SQLite, not enforced relationship constraints.',businessMeanings:'Explicitly supplied descriptions for these official example datasets.'},
    storage:{nodes:'items',relationships:'links',nodeKindField:'kind',displayField:'title',scopeField:'scope',relationshipDirection:'from_id -> to_id',relationshipProperties:'links.attrs (JSON)',commonNodeFields:commonFields},
@@ -51,7 +51,7 @@ export function describeGraphIndex(file) {
  } finally {db.close();}
 }
 if(process.argv[1] && import.meta.url===pathToFileURL(process.argv[1]).href){
- const [file,out]=process.argv.slice(2);if(!file||!out)throw new Error('Usage: node describe.mjs /path/to/graphindex.sqlite output.json');
- const description=describeGraphIndex(file);writeFileSync(out,JSON.stringify(description,null,2)+'\n');
+ const [file,out]=process.argv.slice(2);if(!file||!out)throw new Error('Usage: node describe.mjs /path/to/noderel.sqlite output.json');
+ const description=describeNodeRel(file);writeFileSync(out,JSON.stringify(description,null,2)+'\n');
  console.log('Described scopes:',description.scopes.map(s=>s.scope).join(', '));
 }

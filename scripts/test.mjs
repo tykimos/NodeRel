@@ -2,16 +2,16 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { GraphIndex } from '../src/graphindex.mjs';
-import { describeGraphIndex } from '../src/describe.mjs';
+import { NodeRel } from '../src/noderel.mjs';
+import { describeNodeRel } from '../src/describe.mjs';
 import { cases, sqliteCase, canonical } from '../examples/neo4j/cases.mjs';
 import { regressions } from '../examples/neo4j/test-core.mjs';
 
-const dir=mkdtempSync(join(tmpdir(),'graphindex-test-'));
+const dir=mkdtempSync(join(tmpdir(),'noderel-test-'));
 const file=join(dir,'graph.sqlite');
 const root=new URL('../examples/neo4j/',import.meta.url);
 const json=name=>JSON.parse(readFileSync(new URL(name,root),'utf8'));
-const index=new GraphIndex(file);
+const index=new NodeRel(file);
 try {
  const counts=index.rebuild(['movies','northwind'].map(s=>json(`snapshots/${s}.json`)));
  assert.equal(counts.nodes,1206);assert.equal(counts.edges,3392);assert.equal(counts.rejected.length,0);
@@ -23,7 +23,7 @@ try {
   console.log(`PASS ${c.name}`);
  }
  const boundaryChecks=regressions();
- const schema=describeGraphIndex(file);
+ const schema=describeNodeRel(file);
  const movies=schema.scopes.find(s=>s.scope==='movies');
  assert.equal(movies.nodeKinds.reduce((sum,k)=>sum+k.count,0),171);
  const acted=movies.observedRelationships.find(r=>r.type==='ACTED_IN');
