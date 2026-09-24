@@ -2,6 +2,8 @@
 
 Recorded 2026-09-24. Apple M3, 24 GiB RAM, both engines on the same computer. [Reproduction](README.md) · [Raw measurements](results.json) · [Cases](cases.json) · [Source provenance](sources.json).
 
+A subsequent [prepared CSR optimization](OPTIMIZATION.md) measures a separate in-memory snapshot API, including build and memory costs. The on-demand measurements below are preserved unchanged.
+
 ## Findings
 
 Neo4j was **11.0× / 13.1× / 18.0× faster** in median client latency for 4/6/8-hop scalar reachability than the optimized NodeRel BFS API. This dataset exposes broad, hub-connected neighborhoods. This is a workload-specific result, not a universal database ranking.

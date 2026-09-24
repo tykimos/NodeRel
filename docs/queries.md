@@ -221,6 +221,29 @@ const summary = graph.traceStats(options); // { count, depthSum }, without full 
 
 Both methods query SQLite adjacency on demand. No complete graph preload or response cache is used. The [Paradise Papers benchmark](../benchmarks/paradise-papers/REPORT.md) compares these public APIs with equivalent Cypher queries.
 
+### Prepare repeated queries in memory
+
+For repeated queries over the same scope and relationship types, prepare a CSR projection once:
+
+```js
+const projected = graph.project({ scope: 'movies', types: ['ACTED_IN'] });
+try {
+  console.log(projected.shortestDistance({
+    id: 'movies:Person:Keanu%20Reeves',
+    targetId: 'movies:Person:Tom%20Hanks',
+    direction: 'both', maxDepth: 10
+  })); // 4
+  console.log(projected.traceStats({
+    id: 'movies:Person:Keanu%20Reeves', direction: 'both', maxDepth: 4
+  }));
+  console.log(projected.info); // Counts, snapshot metadata, typed-array sizes.
+} finally {
+  projected.close();
+}
+```
+
+This pays a one-time build and memory cost. Each query searches the prepared adjacency; it does not cache answers. Scope and types are fixed at creation, so they are not query arguments. Existing projections keep their original data after a SQLite rebuild or write. Create a replacement projection to query a newer snapshot. See the [measured tradeoffs](../benchmarks/paradise-papers/OPTIMIZATION.md).
+
 ## 7. Read quantities from order relationships
 
 SQL, with `:id = northwind:Order:10248` and `:scope = northwind`:

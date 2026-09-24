@@ -167,10 +167,10 @@ L 636.76 268.771146
     <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="225" y="243.460125" transform="rotate(-0 225 243.460125)">NodeRel functions or SQL</text>
    </g>
    <g id="text_8">
-    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="225" y="311.033219" transform="rotate(-0 225 311.033219)">Built-in SQLite</text>
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #147d78" x="225" y="310.984391" transform="rotate(-0 225 310.984391)">SQLite / prepared graph</text>
    </g>
    <g id="text_9">
-    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="225" y="328.708125" transform="rotate(-0 225 328.708125)">Local graph file</text>
+    <text style="font-size: 10.8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="225" y="328.708125" transform="rotate(-0 225 328.708125)">Local file + optional CSR snapshot</text>
    </g>
    <g id="text_10">
     <g id="patch_11">
@@ -223,7 +223,7 @@ z
     <text style="font-size: 10.6px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="36" y="441.404938" transform="rotate(-0 36 441.404938)">Timings include client-observed work. SQLite avoids a server round trip; Neo4j executes graph operators.</text>
    </g>
    <g id="text_18">
-    <text style="font-size: 10.6px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="36" y="465.884938" transform="rotate(-0 36 465.884938)">NodeRel supports recursive SQL and optional batched BFS; shortestDistance() uses bidirectional BFS.</text>
+    <text style="font-size: 10.6px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="36" y="465.884938" transform="rotate(-0 36 465.884938)">NodeRel queries SQLite on demand or prepares an explicit in-memory CSR snapshot for repeated searches.</text>
    </g>
   </g>
  </g>

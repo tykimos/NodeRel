@@ -4,6 +4,8 @@ This experiment compares the public NodeRel APIs using recursive SQL or addition
 
 Read the [results and interpretation](REPORT.md), [source provenance](sources.json), [selected cases](cases.json), and [raw measurements](results.json). The older [synthetic experiment](../neo4j-strengths/REPORT.md) is a separate run with separate code and results.
 
+The subsequent [prepared CSR optimization](OPTIMIZATION.md) remeasures on-demand BFS, two CSR traversal variants, and Neo4j on the same data/cases. Unlike the first experiment, CSR explicitly pays a one-time in-memory projection cost. Build time, process memory, and ready-query latency are reported separately; Neo4j GDS is not measured.
+
 ## Dataset and projection
 
 The source has 163,414 nodes and 364,456 relationships. NodeRel allows one relationship per `(from, to, type)` tuple. The exporter collapses 52,531 repeated tuples in original relationship-ID order, leaving **163,414 nodes and 311,925 relationships in both measured databases**. There were no self-loops. Both systems retain the same normalized topology; Neo4j is not timed on the larger source multigraph.
@@ -80,6 +82,18 @@ The SQL baseline explores the full bounded neighborhood even for a nearby target
 
 ## Files
 
+### Run the prepared-projection follow-up
+
+After importing the same dataset and starting the isolated Neo4j server above:
+
+```sh
+node --expose-gc optimization-benchmark.mjs
+```
+
+This needs the original `results.json` for its independently verified case expectations and complete-result hashes. It refuses to overwrite `optimization-results.json`; preserve the committed file elsewhere before an intentional rerun. Three fresh child processes measure projection creation with warm OS caches. The main script checks store topology, runs direct public API comparisons and full-row timings, then compares CSR/Neo4j with exactly 360 requests per concurrent condition. Worker projection setup is recorded separately and is excluded from query throughput. The same 18 cases were used during development; no held-out performance claim is made. Render the report/charts from the repository root with `python3 scripts/render-optimization.py`.
+
+### Benchmark files
+
 | File | Purpose |
 |---|---|
 | `export-source.mjs` | Export the pinned dump and normalize the same topology for both engines |
@@ -90,5 +104,8 @@ The SQL baseline explores the full bounded neighborhood even for a nearby target
 | `worker.mjs` | One synchronous NodeRel reader per concurrent client |
 | `probe.mjs` | Optional exploratory checks; not the published measurements |
 | `prepare-config.py` | Isolated measured-server configuration |
+| `optimization-benchmark.mjs` | Prepared CSR follow-up, current BFS/Neo4j timings and equal concurrent batches |
+| `projection-build.mjs` | Isolated projection construction and memory observations |
+| `projection-worker.mjs` | One private reusable projection per concurrent client |
 
 Render the published figures with `python3 scripts/render-paradise.py` from the repository root. It reads `results.json`; it does not rerun queries. Stop the measured server after the experiment.

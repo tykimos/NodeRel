@@ -64,9 +64,11 @@ An integrating application can validate this request and call `graph.trace(reque
 
 ## Operation status
 
-`existingOperations` describes `trace`, `traceStats`, `shortestDistance`, `neighbors`, `orphans`, and `stats`. The three traversal/distance entries include JSON Schemas for their arguments. The remaining operations currently have argument descriptions, not complete JSON Schemas. This file is not an automatically registered tool server.
+`existingOperations` describes `trace`, `traceStats`, `shortestDistance`, `project`, `neighbors`, `orphans`, and `stats`. The traversal/distance and projection-construction entries include JSON Schemas for their arguments. The remaining operations currently have argument descriptions, not complete JSON Schemas. This file is not an automatically registered tool server.
 
 `proposedAdditionalOperations` is a separate list: entity lookup, complete shortest paths, general pattern matching, and explanations. Those names are not callable NodeRel methods. The public API now includes `traceStats` and `shortestDistance`, and `trace` accepts `algorithm: 'bfs'` as an optional traversal strategy. Their input contracts are exported alongside the original operations. `shortestDistance` returns a hop count, not a reconstructed path.
+
+For repeated queries, `project` prepares an in-memory CSR snapshot. The application owns the returned object and its lifecycle. `projectionOperations` separately describes that object's `trace`, `traceStats`, `shortestDistance`, `info`, and `close` interfaces. Scope/types are chosen when building it, not on each projected query. Building costs time and memory, and a projection does not refresh after SQLite changes; the application must replace it when fresh data is needed. These contracts do not add an automatic dispatcher or projection cache.
 
 ## Integration responsibilities
 

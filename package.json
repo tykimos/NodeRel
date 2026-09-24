@@ -13,7 +13,7 @@
     "./describe": "./src/describe.mjs"
   },
   "scripts": {
-    "test": "node scripts/test.mjs && node scripts/test-traversal.mjs",
+    "test": "node scripts/test.mjs && node scripts/test-traversal.mjs && node scripts/test-projection.mjs",
     "demo:build": "node examples/neo4j/demo.mjs rebuild",
     "demo": "node examples/neo4j/demo.mjs",
     "schema": "node src/describe.mjs examples/neo4j/noderel.sqlite examples/ai/schema.json"

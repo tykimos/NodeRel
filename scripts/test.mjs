@@ -35,6 +35,11 @@ try {
  assert.equal(schema.existingOperations.traceStats.inputSchema.properties.algorithm.default,'sql');
  assert.ok(schema.existingOperations.shortestDistance.inputSchema.required.includes('targetId'));
  assert.equal(schema.existingOperations.shortestDistance.inputSchema.properties.algorithm.default,'bfs');
+ assert.deepEqual(schema.existingOperations.project.inputSchema.required,['scope']);
+ assert.deepEqual(schema.projectionOperations.trace.inputSchema.properties.algorithm.enum,['bfs','adaptive']);
+ assert.equal(schema.projectionOperations.trace.inputSchema.properties.scope,undefined);
+ assert.equal(schema.projectionOperations.trace.inputSchema.properties.types,undefined);
+ assert.deepEqual(schema.projectionOperations.shortestDistance.inputSchema.required,['id','targetId']);
  const example=JSON.parse(readFileSync(new URL('../examples/ai/example.json',import.meta.url),'utf8'));
  assert.deepEqual(index.trace(example.arguments).map(r=>({...r})),example.result);
  assert.equal(index.db.prepare('PRAGMA integrity_check').get().integrity_check,'ok');

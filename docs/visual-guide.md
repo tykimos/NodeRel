@@ -10,8 +10,9 @@ The Mermaid source lives directly in the README and renders on GitHub:
 |---|---|
 | [NodeRel at a glance](../README.md#noderel-at-a-glance) | How source data becomes a rebuildable SQLite graph, with query results and an observed schema; dashed arrows mark optional AI application integration. |
 | [Facts and ontology](../README.md#noderel-ontology-v1) | How individual nodes and a stored relationship connect to authored concept definitions; dashed arrows map node kinds to concepts, without adding stored edges. |
+| [Prepared projection](../README.md#prepared-csr-optimization-for-repeated-queries) | On-demand SQLite queries and optional prepared CSR queries, with explicit build and refresh costs. |
 
-The two diagrams use separate legends in their surrounding text. Edit their `mermaid` blocks in the README directly. The Python renderers below generate the static assets, not these Mermaid blocks.
+The diagrams explain their conventions in the surrounding text. Edit their `mermaid` blocks in the README directly. The Python renderers below generate the static assets, not these Mermaid blocks.
 
 ## Diagrams
 
@@ -45,12 +46,14 @@ In the example graph diagram, Keanu Reeves and Laurence Fishburne point to *The 
 
 The storage diagram's connectors show how endpoint IDs refer to `items.id`. Import validation checks those references; the SQL schema does not declare foreign keys or triggers for them. The composite relationship key permits only one edge per `(from_id, to_id, type)` tuple.
 
-The execution diagram shows the local single-query call boundaries. Concurrent SQLite measurements use separate workers and read connections. The public `trace()` method defaults to recursive SQL and now also supports optional batched BFS; `shortestDistance()` defaults to bidirectional BFS. The historical synthetic benchmark's custom BFS remains a separate implementation.
+The execution diagram shows the local single-query call boundaries. On-demand SQLite measurements use separate workers and read connections. The public `trace()` method defaults to recursive SQL and also supports batched BFS; `shortestDistance()` defaults to bidirectional BFS. A prepared projection compiles SQLite into an in-memory snapshot before repeated queries; each measured projection worker owns a private copy and closes its database connection after preparation. The historical synthetic benchmark's custom BFS remains a separate implementation.
 
 ## Performance charts
 
 | Chart | Reading the chart | PNG | SVG |
 |---|---|---|---|
+| Prepared CSR latency | Same cases, newly measured BFS/CSR/Neo4j; CSR preparation excluded and separately reported | [Image](assets/projection-latency.png) | [Vector](assets/projection-latency.svg) |
+| Prepared CSR concurrency | Same 360 requests at each client count, excluding private projection builds | [Image](assets/projection-concurrency.png) | [Vector](assets/projection-concurrency.svg) |
 | Paradise Papers latency | Public NodeRel SQL/BFS versus Neo4j; separates nearby and farther shortest-distance cases | [Image](assets/paradise-latency.png) | [Vector](assets/paradise-latency.svg) |
 | Paradise Papers concurrency | Same finite batch at 1/8/16 clients; two runs in reversed engine order | [Image](assets/paradise-concurrency.png) | [Vector](assets/paradise-concurrency.svg) |
 | Query latency | Median milliseconds on a logarithmic scale; lower is better | [Image](assets/query-latency.png) | [Vector](assets/query-latency.svg) |
@@ -64,6 +67,8 @@ The charts are measured evidence. The architecture and flow diagrams explain beh
 
 ## Rebuild the visuals
 
+The [prepared-projection report](../benchmarks/paradise-papers/OPTIMIZATION.md) explains its separate [raw measurements](../benchmarks/paradise-papers/optimization-results.json), build time, memory observations, algorithm ablation, and fixed-snapshot semantics. Its charts compare prepared CSR queries with live database queries, not with Neo4j GDS.
+
 Run from the repository root:
 
 ```sh
@@ -71,10 +76,11 @@ python3 -m venv /tmp/noderel-charts
 /tmp/noderel-charts/bin/python -m pip install -r scripts/requirements-charts.txt
 /tmp/noderel-charts/bin/python scripts/render-benchmarks.py
 /tmp/noderel-charts/bin/python scripts/render-paradise.py
+/tmp/noderel-charts/bin/python scripts/render-optimization.py
 /tmp/noderel-charts/bin/python scripts/render-diagrams.py
 ```
 
-The renderers use Matplotlib and save under `docs/assets/`. `render-paradise.py` also rebuilds the corresponding report from recorded measurements. No extra graph-layout tool, database server, or model call is required. NodeRel's runtime does not depend on these plotting tools.
+The renderers use Matplotlib and save under `docs/assets/`. `render-paradise.py` and `render-optimization.py` also rebuild their corresponding reports from recorded measurements. No extra graph-layout tool, database server, or model call is required. NodeRel's runtime does not depend on these plotting tools.
 
 [render-benchmarks.py](../scripts/render-benchmarks.py) reads the recorded JSON; [render-diagrams.py](../scripts/render-diagrams.py) contains the diagram labels, shapes, and layout. Edit the renderer and regenerate both formats together when the documentation changes. The diagram renderer checks for text extending outside the canvas; exported images should also be visually reviewed for readability and overlap.
 

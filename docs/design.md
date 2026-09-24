@@ -66,7 +66,21 @@ The depth must be an integer from 0 to 10. This bounds recursion depth, not tota
 
 These algorithms do not preload the graph, cache answers, or add persistent adjacency tables. Their maps and frontiers exist only for one request; prepared statements can be reused after a rebuild. Multi-statement traversals use one SQLite read transaction for a consistent snapshot. An explicit transaction already opened by the caller remains owned by that caller. Work remains synchronous and can still be large on a broad graph.
 
-The [Paradise Papers experiment](../benchmarks/paradise-papers/REPORT.md) measures these public APIs directly. It also checks full returned node records separately from scalar result timing. Graph-wide preloading, CSR projections, weighted paths, and complete path reconstruction are outside this implementation.
+The [first Paradise Papers experiment](../benchmarks/paradise-papers/REPORT.md) measures these on-demand public APIs directly. It also checks full returned node records separately from scalar result timing. Its measurements do not use the newer prepared projection described below.
+
+## Prepared CSR projection
+
+`graph.project({ scope, types })` compiles a fixed SQLite read snapshot into compressed sparse row (CSR) arrays. Node IDs become dense integer positions; outgoing, incoming, and combined adjacency are stored in contiguous `Uint32Array` buffers. Display fields are retained for full-row queries. Invalid endpoints and cross-scope links are excluded, including records inserted through the raw DB handle. Different-type parallel links remain adjacency entries; visited tracking prevents duplicate output nodes.
+
+Queries reuse integer frontiers, byte depth arrays, and epoch-stamped visited arrays. Each query advances an epoch instead of clearing a graph-sized visited map; wraparound clears both stamp arrays. No query answers are cached. Shortest distance chooses the frontier with fewer incident adjacency entries, which estimates expansion work better than its node count on a graph with hubs.
+
+Projected `trace` and `traceStats` default to `algorithm: 'adaptive'`. Top-down BFS follows edges from the current frontier. A bottom-up step instead checks unvisited nodes for an incoming neighbor in the **previous depth layer**; it stops at the first such predecessor. The implementation switches only when the frontier's adjacency count exceeds `nodeCount + remainingAdjacencyCount`, a conservative estimate including the cost of scanning all nodes. Direction is respected by using reverse adjacency for this step. `algorithm: 'bfs'` forces top-down traversal for comparison. This heuristic does not guarantee a speedup on every graph; the report measures both variants.
+
+The hybrid traversal is inspired by [Beamer, Asanović and Patterson's direction-optimizing BFS](https://people.eecs.berkeley.edu/~krste/papers/beamer-sc2012.pdf). This implementation is synchronous JavaScript and uses its own conservative switching rule, not the paper's parallel implementation or performance claims.
+
+**Lifecycle:** a projection fixes its scope, relationship types, topology, and display fields at creation. Query options therefore omit scope/types; passing them is an error. Rebuilds or writes through any connection do not update an existing projection. Create a replacement when freshness is required. A projection remains usable after its originating database closes; `projection.close()` releases references and disables subsequent queries. An enclosing caller-owned SQLite transaction stays open when a projection is built; an eventual rollback does not undo that independent in-memory snapshot.
+
+`projection.info` reports exact retained adjacency/workspace buffer sizes. These exclude node objects, strings, the ID map, build temporaries, SQLite caches, and runtime overhead. The [optimization experiment](../benchmarks/paradise-papers/OPTIMIZATION.md) reports build latency, process memory observations, ready-query latency, full-row output, and concurrent runs separately. A projection is useful for repeated queries on data that fits in memory; an infrequent query may be better served by the on-demand APIs. Weighted paths and complete path reconstruction are not implemented.
 
 ## The earlier synthetic benchmark
 

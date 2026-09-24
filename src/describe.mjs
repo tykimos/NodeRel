@@ -4,6 +4,8 @@ import { pathToFileURL } from 'node:url';
 
 const traversalProperties={id:{type:'string'},scope:{type:'string'},direction:{type:'string',enum:['out','in','both'],default:'out'},maxDepth:{type:'integer',minimum:0,maximum:10,default:10},types:{type:'array',items:{type:'string'},default:[]},algorithm:{type:'string',enum:['sql','bfs'],default:'sql'}};
 const traversalInput={type:'object',additionalProperties:false,required:['id','scope'],properties:traversalProperties};
+const projectionProperties={id:traversalProperties.id,direction:traversalProperties.direction,maxDepth:traversalProperties.maxDepth,algorithm:{type:'string',enum:['bfs','adaptive'],default:'adaptive'}};
+const projectionInput={type:'object',additionalProperties:false,required:['id'],properties:projectionProperties};
 
 // Describes the actual index, not all properties in the original source snapshots.
 export function describeNodeRel(file) {
@@ -26,14 +28,23 @@ export function describeNodeRel(file) {
     'Operations, scopes, types and resource limits must be validated by the application before execution.',
     'Current trace returns unique reached nodes and minimum hop count, excludes the start node, and does not return complete paths.',
     'A final row limit is not a traversal cost limit. Broad/deep work needs a separate execution budget.',
+    'project creates an application-managed in-memory snapshot with fixed scope and types. It costs build time and memory and does not refresh when SQLite changes. Replace it explicitly when fresh data is required.',
    ],
    existingOperations:{
     trace:{description:'Follow selected relationship types up to maxDepth; return reached nodes and minimum depth. algorithm sql is the default; bfs uses batched adjacency reads and visits each node once.',inputSchema:traversalInput},
     traceStats:{description:'Return count and depthSum for the same reached nodes without materializing full node records.',inputSchema:traversalInput},
     shortestDistance:{description:'Return the minimum hop count to targetId within maxDepth, or null if no bounded connection exists. Default bfs uses bidirectional search; sql derives distance from the bounded reachable set. Existing source equal to target returns zero. Does not return a path.',inputSchema:{...traversalInput,required:['id','targetId','scope'],properties:{...traversalProperties,targetId:{type:'string'},algorithm:{type:'string',enum:['sql','bfs'],default:'bfs'}}}},
+    project:{description:'Build a reusable CSR graph projection. Returns an object managed by the application, not query rows. Scope/types are fixed at construction; methods below operate on that snapshot. No answer caching or automatic refresh.',inputSchema:{type:'object',additionalProperties:false,required:['scope'],properties:{scope:traversalProperties.scope,types:traversalProperties.types}}},
     neighbors:{description:'Return incident incoming and outgoing relationships, including their JSON properties.',arguments:['id','scope']},
     orphans:{description:'Find nodes without the specified outgoing or incoming relationship.',arguments:['scope','kind','type','side: out|in']},
     stats:{description:'Return node-kind and relationship-type counts in a scope.',arguments:['scope']},
+   },
+   projectionOperations:{
+    trace:{description:'Return reached nodes with minimum depth from an application-managed projection. bfs uses top-down CSR search; adaptive may switch to bottom-up traversal.',inputSchema:projectionInput},
+    traceStats:{description:'Return count and depthSum without materializing full node records.',inputSchema:projectionInput},
+    shortestDistance:{description:'Return bounded minimum distance or null using bidirectional search that expands the side with fewer incident edges.',inputSchema:{type:'object',additionalProperties:false,required:['id','targetId'],properties:{id:projectionProperties.id,targetId:{type:'string'},direction:projectionProperties.direction,maxDepth:projectionProperties.maxDepth}}},
+    info:{description:'Read the info property for scope/types, node/relationship counts, creation time, source signature and exact typed-array sizes. These sizes exclude JS strings/maps and SQLite/process memory.'},
+    close:{description:'Release projection references; later queries fail. SQLite is not modified.'},
    },
    proposedAdditionalOperations:['find_nodes (name/alias lookup with disambiguation)','shortest_path (reconstruct and return complete paths; shortestDistance already returns hop count)','match_pattern (typed multi-step joins and aggregates)','explain (show interpreted question, query plan, budgets and source version)'],
    scopes:[]};

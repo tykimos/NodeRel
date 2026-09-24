@@ -115,6 +115,7 @@ def med(w, impl): return rows[w, impl]['medianMs']
 lines = [
     '# Paradise Papers: NodeRel algorithms and Neo4j', '',
     f"Recorded {date}. Apple M3, 24 GiB RAM, both engines on the same computer. [Reproduction](README.md) · [Raw measurements](results.json) · [Cases](cases.json) · [Source provenance](sources.json).", '',
+    'A subsequent [prepared CSR optimization](OPTIMIZATION.md) measures a separate in-memory snapshot API, including build and memory costs. The on-demand measurements below are preserved unchanged.', '',
     '## Findings', '',
     f"Neo4j was **{med('reach4','noderel-bfs')/med('reach4','neo4j-bolt'):.1f}× / {med('reach6','noderel-bfs')/med('reach6','neo4j-bolt'):.1f}× / {med('reach8','noderel-bfs')/med('reach8','neo4j-bolt'):.1f}× faster** in median client latency for 4/6/8-hop scalar reachability than the optimized NodeRel BFS API. This dataset exposes broad, hub-connected neighborhoods. This is a workload-specific result, not a universal database ranking.", '',
     f"Shortest distance depends on the endpoints: for the six nearby pairs (1–2 hops), NodeRel bidirectional BFS measured **{group_median('noderel-bfs','near'):.3f} ms** versus **{group_median('neo4j-bolt','near'):.3f} ms** for Neo4j. For the eleven farther pairs (5–8 hops), the respective medians were **{group_median('noderel-bfs','far'):.3f} ms** and **{group_median('neo4j-bolt','far'):.3f} ms**, favoring Neo4j. One pair had no connection within ten hops. The large SQL/BFS gap is primarily an algorithm comparison.", '',

@@ -213,7 +213,7 @@ def deployment():
     panel(ax, .85, 1.68, 4.55, 2.9, fill='white', edge='teal', dashed=True)
     text(ax, 1.08, 4.28, 'One Node.js process', size=11, color=C['muted'])
     card(ax, 1.35, 3.15, 3.55, .75, 'JavaScript application', 'NodeRel functions or SQL', title_size=12.5)
-    card(ax, 1.35, 1.98, 3.55, .7, 'Built-in SQLite', 'Local graph file', title_size=12.5)
+    card(ax, 1.35, 1.98, 3.55, .7, 'SQLite / prepared graph', 'Local file + optional CSR snapshot', title_size=12.5)
     arrow(ax, [(3.12, 3.11), (3.12, 2.72)], both=True, color='teal')
     label(ax, 4.2, 2.91, 'In-process calls', color='teal', size=9.5)
     card(ax, 6.95, 3.76, 3.85, .75, 'JavaScript application', 'Neo4j driver + Cypher', tone='blue', title_size=12.5)
@@ -222,7 +222,7 @@ def deployment():
     label(ax, 8.88, 3.3, 'Local Bolt transport', color='blue', size=10.5)
     text(ax, 8.88, 1.48, 'Separate server process', size=10.7, ha='center', color=C['muted'])
     text(ax, .5, .61, 'Timings include client-observed work. SQLite avoids a server round trip; Neo4j executes graph operators.', size=10.6, color=C['muted'])
-    text(ax, .5, .27, 'NodeRel supports recursive SQL and optional batched BFS; shortestDistance() uses bidirectional BFS.', size=10.6, color=C['muted'])
+    text(ax, .5, .27, 'NodeRel queries SQLite on demand or prepares an explicit in-memory CSR snapshot for repeated searches.', size=10.6, color=C['muted'])
     save(fig, 'execution-models')
 
 

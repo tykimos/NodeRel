@@ -1,6 +1,7 @@
 import { DatabaseSync } from 'node:sqlite';
 import { createHash } from 'node:crypto';
 import { traceBfs, traceStatsBfs, shortestDistanceBfs, traversalOptions, readSnapshot } from './traversal.mjs';
+import { createProjection } from './projection.mjs';
 
 export const SCHEMA = `
 PRAGMA journal_mode=WAL;
@@ -119,5 +120,6 @@ export class NodeRel {
    AND NOT EXISTS(SELECT 1 FROM links l WHERE l.${endpoint}=i.id AND l.scope=i.scope AND l.type=?) ORDER BY i.id`).all(scope,kind,type);
  }
  graph(scope){return {items:this.db.prepare('SELECT * FROM items WHERE scope=? ORDER BY id').all(scope),links:this.db.prepare('SELECT * FROM links WHERE scope=? ORDER BY from_id,to_id,type').all(scope)};}
+ project(options){return createProjection(this.db,options);}
  close(){this.db.close();}
 }

@@ -177,7 +177,7 @@ npm run schema
 
 | Command | What it does |
 |---|---|
-| `npm test` | Checks 15 sample queries, SQL/BFS traversal parity, 4,500 shortest-distance combinations, the AI schema, and SQLite integrity. |
+| `npm test` | Checks sample queries, SQL/BFS/CSR equivalence, shortest distances, snapshot lifecycle, the AI schema, and SQLite integrity. |
 | `npm run demo:build` | Rebuilds `examples/neo4j/noderel.sqlite` from the committed snapshots. |
 | `npm run demo -- show 1` | Shows the films featuring Keanu Reeves. |
 | `npm run demo -- test` | Compares current SQLite results with the stored Neo4j baseline. |
@@ -322,7 +322,7 @@ The exporter reads the actual database and describes:
 - Node kinds, counts, example IDs, and populated node columns.
 - Observed relationships such as `Person → ACTED_IN → Movie`.
 - Relationship property names and JSON types, such as the `roles` array.
-- Existing operations, including JSON Schema input contracts for `trace`, `traceStats`, and `shortestDistance`.
+- Existing operations, including JSON Schema input contracts for `trace`, `traceStats`, `shortestDistance`, and `project`, plus separate contracts for prepared-projection queries.
 - A source signature for identifying the imported snapshot.
 
 An application can provide the relevant description to an AI model, resolve the user's entity to a real ID, and have the model propose a request like this:
@@ -429,7 +429,7 @@ The vocabulary is **NodeRel-specific** and makes no OWL, SHACL, or JSON-LD confo
 | Deployment | SQLite inside a Node.js process; local file | A separate Community database server, queried over Bolt |
 | Query interface | Small JavaScript API and SQL | Cypher graph patterns, paths, and aggregations |
 | Data model | One `kind` per node; fixed node columns; JSON edge properties | Labeled nodes and typed relationships with properties |
-| Graph traversal | `trace()` uses recursive SQL by default, with optional batched BFS | Graph operators chosen by the query planner |
+| Graph traversal | Recursive SQL, on-demand BFS, or an explicitly prepared CSR snapshot | Graph operators chosen by the query planner; this comparison does not measure GDS |
 | Shortest distance | `shortestDistance()` uses bidirectional BFS; optional SQL baseline | Expressed directly with `shortestPath` in the tested queries |
 | AI integration | Actual schema and operation descriptions are exported | AI can generate Cypher using the application's schema/context |
 | Concurrency tested | Independent SQLite read connections in worker threads | Independent Bolt sessions |
@@ -441,9 +441,71 @@ SQLite supports concurrent readers; it is not limited to one reader. Its embedde
 
 ## Measured performance
 
+### Prepared CSR optimization for repeated queries
+
+The latest follow-up prepares a reusable in-memory graph with **`graph.project({ scope, types })`**. It uses the same official Paradise Papers data and 18 cases as the first experiment, and remeasures both the previous BFS and Neo4j in the same run. The SQLite graph remains the stored source; queries on the prepared object use a fixed snapshot.
+
+The new implementation combines integer node IDs, compressed adjacency arrays (CSR), reusable queues and visited stamps, adaptive traversal, and bidirectional search that chooses the side with fewer edges to inspect. These changes remove repeated SQLite lookups and row conversion during projected queries. It does not cache query answers.
+
+```mermaid
+flowchart LR
+    accTitle: Two ways to query NodeRel
+    accDescr: NodeRel can query SQLite on demand or build a fixed in-memory CSR snapshot for repeated queries. Building costs time and memory. Existing projections do not refresh automatically when SQLite changes.
+    db[("Stored SQLite graph")]
+    live["On-demand SQL / BFS<br/>Read the current database snapshot"]
+    prepared["Prepared CSR snapshot<br/>Integer IDs + adjacency arrays"]
+    repeated["Repeated graph queries<br/>Reusable traversal workspace"]
+    db --> live
+    db -->|"project: pay build cost once"| prepared
+    prepared --> repeated
+    live --> result["Query results"]
+    repeated --> result
+```
+
+![Prepared CSR query latency compared with the previous NodeRel BFS and Neo4j. Projection build costs are reported separately.](docs/assets/projection-latency.png)
+
+[View SVG](docs/assets/projection-latency.svg)
+
+Median milliseconds, lower is better. **CSR numbers below exclude projection construction.** Reachability returns a count and sum of minimum depths; shortest distance returns one hop count.
+
+| Workload | Previous NodeRel BFS | Prepared NodeRel CSR | Neo4j Bolt |
+|---|---:|---:|---:|
+| Reachability within 4 hops | 121.285 | **0.269** | 10.235 |
+| Reachability within 6 hops | 717.884 | **1.793** | 53.228 |
+| Reachability within 8 hops | 1,261.861 | **2.699** | 78.659 |
+| Shortest distance: nearby pairs, 1–2 hops | 0.113 | **0.004** | 1.201 |
+| Shortest distance: farther pairs, 5–8 hops | 23.799 | **0.089** | 2.488 |
+
+Prepared reachability was **400–468× faster** than the previous on-demand BFS in this run. Most of the gain comes from the prepared representation and reusable workspace: plain CSR BFS was already much faster. The adaptive variant's medians were **1.12–1.38×** faster than plain CSR BFS in this run; the [report](benchmarks/paradise-papers/OPTIMIZATION.md#what-contributes-to-the-gain) includes that comparison.
+
+**Preparation and freshness matter.** Building the 163,414-node projection took **435–725 ms** in three fresh processes with warm OS caches. It retains the 300,963 relationships of the three queried types. Observed retained JS heap growth was about **65.5 MiB**, with another **9.3 MiB** of array buffers; total process RSS after GC was about **345.6 MiB**, including SQLite/runtime overhead. An existing projection keeps its original data after writes or rebuilds. Create a replacement when fresh data is needed. A few tiny queries may not repay the build cost.
+
+![Prepared NodeRel CSR and Neo4j concurrency using the same 360 requests per condition.](docs/assets/projection-concurrency.png)
+
+[View SVG](docs/assets/projection-concurrency.svg)
+
+At eight clients, the finite-batch rates were **2,459.5 requests/s for prepared CSR** and **97.9 for Neo4j**. Each condition processes the same 360 requests, twice in reversed engine order. Projection creation and warmup are excluded; private projections multiply memory use per worker. This is not a sustained-capacity claim.
+
+This comparison uses **Neo4j Cypher over Bolt**, not Neo4j's own GDS in-memory projections. Memory budgets are not equalized. The same 18 cases were used during development, and there is no held-out performance claim. The gains apply to repeated snapshot queries on data that fits in memory; they do not establish a universal database ranking.
+
+```js
+const projected = graph.project({ scope: 'movies', types: ['ACTED_IN'] });
+try {
+  const distance = projected.shortestDistance({
+    id: 'movies:Person:Keanu%20Reeves',
+    targetId: 'movies:Person:Tom%20Hanks',
+    direction: 'both', maxDepth: 10
+  }); // 4
+} finally {
+  projected.close();
+}
+```
+
+[Full optimization report](benchmarks/paradise-papers/OPTIMIZATION.md) · [Reproduction](benchmarks/paradise-papers/README.md#run-the-prepared-projection-follow-up) · [Raw results](benchmarks/paradise-papers/optimization-results.json) · [Algorithm and lifecycle](docs/design.md#prepared-csr-projection)
+
 ### Official Paradise Papers dataset: SQL, optimized NodeRel, and Neo4j
 
-The **September 24, 2026 follow-up** uses the official [Neo4j ICIJ Paradise Papers example](https://github.com/neo4j-graph-examples/icij-paradise-papers). Both databases contain **163,414 nodes and 311,925 normalized relationships**. The source has 364,456 relationships; identical same-type parallel connections were collapsed in both engines to match NodeRel's storage model. The tested reachability and minimum distances are preserved by this projection.
+The **first September 24, 2026 follow-up** uses the official [Neo4j ICIJ Paradise Papers example](https://github.com/neo4j-graph-examples/icij-paradise-papers). These earlier numbers exclude the prepared CSR feature above. Both databases contain **163,414 nodes and 311,925 normalized relationships**. The source has 364,456 relationships; identical same-type parallel connections were collapsed in both engines to match NodeRel's storage model. The tested reachability and minimum distances are preserved by this normalization.
 
 This experiment measures the **actual public NodeRel APIs** using either the existing recursive SQL or newly added algorithms:
 
@@ -557,6 +619,7 @@ The [full benchmark report](benchmarks/neo4j-strengths/REPORT.md) includes p95 l
 | `trace({ id, scope, direction, maxDepth, types, algorithm })` | Returns unique reached nodes with `id`, `title`, `kind`, and minimum `depth`; `algorithm` is `sql` (default) or `bfs`. |
 | `traceStats(options)` | Returns `{ count, depthSum }` for the same traversal; supports both algorithms without returning full node records. |
 | `shortestDistance({ id, targetId, scope, direction, maxDepth, types, algorithm })` | Returns a bounded minimum hop count or `null`; defaults to bidirectional `bfs`, with an optional `sql` baseline. |
+| `project({ scope, types })` | Builds a fixed in-memory CSR snapshot with `trace`, `traceStats`, `shortestDistance`, `info`, and `close`; pays a one-time build/memory cost. |
 | `traceQuery(options)` | Returns the generated SQL and bound parameters without executing it. |
 | `neighbors(id, scope)` | Returns incident incoming/outgoing edges with parsed JSON properties. |
 | `orphans({ scope, kind, type, side })` | Finds nodes without a specified incoming or outgoing relationship. |
@@ -568,6 +631,8 @@ The [full benchmark report](benchmarks/neo4j-strengths/REPORT.md) includes p95 l
 `trace()` defaults to `direction: 'out'`, `maxDepth: 10`, and all relationship types. Directions are `out`, `in`, or `both`; depth must be an integer from 0 to 10. The start node is excluded. Results contain minimum hop counts, **not complete paths**. A missing or out-of-scope start returns no reached nodes.
 
 Choose `algorithm: 'bfs'` to avoid revisiting nodes at different depths. It fetches adjacency from SQLite in batches, without preloading the graph or caching answers. `shortestDistance()` expands from both endpoints and can stop when the searches meet; an existing source equal to its target has distance zero. Multi-statement BFS queries use a consistent read transaction and preserve transactions opened by the caller. See the [algorithm design](docs/design.md#optional-bfs-and-bidirectional-search).
+
+For repeated queries, create a projection with `project({ scope, types })`. Its methods accept IDs, direction, and depth; scope/types are fixed at creation. Projected `trace`/`traceStats` accept `algorithm: 'adaptive'` (default) or `'bfs'` for top-down CSR search. Projected shortest distance chooses which side to expand by its frontier edge count. The projection remains its original snapshot after database changes or closure; replace it explicitly to refresh, and call `projected.close()` to release it. See [projection semantics](docs/design.md#prepared-csr-projection).
 
 ## Storage and current boundaries
 
@@ -623,6 +688,7 @@ python3 -m venv /tmp/noderel-charts
 /tmp/noderel-charts/bin/python -m pip install -r scripts/requirements-charts.txt
 /tmp/noderel-charts/bin/python scripts/render-benchmarks.py
 /tmp/noderel-charts/bin/python scripts/render-paradise.py
+/tmp/noderel-charts/bin/python scripts/render-optimization.py
 /tmp/noderel-charts/bin/python scripts/render-diagrams.py
 ```
 
