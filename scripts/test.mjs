@@ -31,6 +31,10 @@ try {
  assert.ok(acted.observedProperties.some(p=>p.name==='roles'&&p.jsonType==='array'));
  assert.equal(schema.scopes.find(s=>s.scope==='northwind').observedRelationships.reduce((sum,r)=>sum+r.count,0),3139);
  assert.equal(schema.sourceSignature,index.db.prepare("SELECT value FROM sync_meta WHERE key='signature'").get().value);
+ assert.deepEqual(schema.existingOperations.trace.inputSchema.properties.algorithm.enum,['sql','bfs']);
+ assert.equal(schema.existingOperations.traceStats.inputSchema.properties.algorithm.default,'sql');
+ assert.ok(schema.existingOperations.shortestDistance.inputSchema.required.includes('targetId'));
+ assert.equal(schema.existingOperations.shortestDistance.inputSchema.properties.algorithm.default,'bfs');
  const example=JSON.parse(readFileSync(new URL('../examples/ai/example.json',import.meta.url),'utf8'));
  assert.deepEqual(index.trace(example.arguments).map(r=>({...r})),example.result);
  assert.equal(index.db.prepare('PRAGMA integrity_check').get().integrity_check,'ok');

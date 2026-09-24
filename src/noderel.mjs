@@ -1,5 +1,6 @@
 import { DatabaseSync } from 'node:sqlite';
 import { createHash } from 'node:crypto';
+import { traceBfs, traceStatsBfs, shortestDistanceBfs, traversalOptions, readSnapshot } from './traversal.mjs';
 
 export const SCHEMA = `
 PRAGMA journal_mode=WAL;
@@ -80,7 +81,30 @@ export class NodeRel {
   WHERE w.id<>:id GROUP BY i.id ORDER BY depth,i.id`;
   return {sql,parameters};
  }
- trace(options){const q=this.traceQuery(options);return this.db.prepare(q.sql).all(q.parameters);}
+ trace({algorithm='sql',...options}){
+  if(algorithm==='bfs')return traceBfs(this.db,options);
+  if(algorithm!=='sql')throw new Error('algorithm must be sql or bfs');
+  const q=this.traceQuery(options);return this.db.prepare(q.sql).all(q.parameters);
+ }
+ traceStats({algorithm='sql',...options}){
+  if(algorithm==='bfs')return traceStatsBfs(this.db,options);
+  if(algorithm!=='sql')throw new Error('algorithm must be sql or bfs');
+  const q=this.traceQuery(options);
+  return this.db.prepare(`SELECT count(*) AS count,coalesce(sum(depth),0) AS depthSum FROM (${q.sql})`).get(q.parameters);
+ }
+ shortestDistance({algorithm='bfs',...options}){
+  if(algorithm==='bfs')return shortestDistanceBfs(this.db,options);
+  if(algorithm!=='sql')throw new Error('algorithm must be sql or bfs');
+  traversalOptions(options);
+  if(typeof options.targetId!=='string')throw new TypeError('targetId must be a string');
+  return readSnapshot(this.db,()=>{
+   if(!this.db.prepare('SELECT 1 FROM items WHERE id=? AND scope=?').get(options.id,options.scope))return null;
+   if(options.id===options.targetId)return 0;
+   const q=this.traceQuery(options);
+   const row=this.db.prepare(`SELECT depth FROM (${q.sql}) WHERE id=:targetId`).get({...q.parameters,targetId:options.targetId});
+   return row?.depth??null;
+  });
+ }
  neighbors(id,scope) {
   return this.db.prepare(`SELECT l.from_id,l.to_id,l.type,l.attrs FROM links l
    JOIN items a ON a.id=l.from_id JOIN items b ON b.id=l.to_id

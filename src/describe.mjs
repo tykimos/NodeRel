@@ -2,6 +2,9 @@ import { DatabaseSync } from 'node:sqlite';
 import { writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
+const traversalProperties={id:{type:'string'},scope:{type:'string'},direction:{type:'string',enum:['out','in','both'],default:'out'},maxDepth:{type:'integer',minimum:0,maximum:10,default:10},types:{type:'array',items:{type:'string'},default:[]},algorithm:{type:'string',enum:['sql','bfs'],default:'sql'}};
+const traversalInput={type:'object',additionalProperties:false,required:['id','scope'],properties:traversalProperties};
+
 // Describes the actual index, not all properties in the original source snapshots.
 export function describeNodeRel(file) {
  const db=new DatabaseSync(file,{readOnly:true});
@@ -25,12 +28,14 @@ export function describeNodeRel(file) {
     'A final row limit is not a traversal cost limit. Broad/deep work needs a separate execution budget.',
    ],
    existingOperations:{
-    trace:{description:'Follow selected relationship types up to maxDepth; return reached nodes and minimum depth.',inputSchema:{type:'object',additionalProperties:false,required:['id','scope'],properties:{id:{type:'string'},scope:{type:'string'},direction:{type:'string',enum:['out','in','both'],default:'out'},maxDepth:{type:'integer',minimum:0,maximum:10,default:10},types:{type:'array',items:{type:'string'},default:[]}}}},
+    trace:{description:'Follow selected relationship types up to maxDepth; return reached nodes and minimum depth. algorithm sql is the default; bfs uses batched adjacency reads and visits each node once.',inputSchema:traversalInput},
+    traceStats:{description:'Return count and depthSum for the same reached nodes without materializing full node records.',inputSchema:traversalInput},
+    shortestDistance:{description:'Return the minimum hop count to targetId within maxDepth, or null if no bounded connection exists. Default bfs uses bidirectional search; sql derives distance from the bounded reachable set. Existing source equal to target returns zero. Does not return a path.',inputSchema:{...traversalInput,required:['id','targetId','scope'],properties:{...traversalProperties,targetId:{type:'string'},algorithm:{type:'string',enum:['sql','bfs'],default:'bfs'}}}},
     neighbors:{description:'Return incident incoming and outgoing relationships, including their JSON properties.',arguments:['id','scope']},
     orphans:{description:'Find nodes without the specified outgoing or incoming relationship.',arguments:['scope','kind','type','side: out|in']},
     stats:{description:'Return node-kind and relationship-type counts in a scope.',arguments:['scope']},
    },
-   proposedAdditionalOperations:['find_nodes (name/alias lookup with disambiguation)','shortest_path (integrate the separately benchmarked BFS)','match_pattern (typed multi-step joins and aggregates)','explain (show interpreted question, query plan, budgets and source version)'],
+   proposedAdditionalOperations:['find_nodes (name/alias lookup with disambiguation)','shortest_path (reconstruct and return complete paths; shortestDistance already returns hop count)','match_pattern (typed multi-step joins and aggregates)','explain (show interpreted question, query plan, budgets and source version)'],
    scopes:[]};
   for(const scope of scopes){
    const nodeKinds=db.prepare('SELECT kind,count(*) AS count FROM items WHERE scope=? GROUP BY kind ORDER BY kind').all(scope).map(r=>({

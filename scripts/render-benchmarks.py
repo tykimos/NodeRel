@@ -59,7 +59,7 @@ for side in ['top','right','left']:ax.spines[side].set_visible(False)
 handles=[Line2D([],[],color=colors[i],marker=m,linestyle='',markersize=7,label=labels[i])
  for i,m in [('sqlite-cte','s'),('sqlite-optimized','o'),('neo4j-bolt','D')]]
 fig.legend(handles=handles,loc='upper left',bbox_to_anchor=(.039,.846),frameon=False,ncol=1,fontsize=10.5,labelspacing=.55)
-fig.text(.045,.105,'* Custom BFS is benchmark-only; the public trace() API uses recursive SQL. Point lookup uses direct SQL.',fontsize=9.5,color='#53667b')
+fig.text(.045,.105,'* Historical custom BFS is benchmark-only; this run predates the optional NodeRel BFS API. Point lookup uses SQL.',fontsize=9.5,color='#53667b')
 fig.text(.045,.070,f'{hardware}. SQLite in process; Neo4j includes local Bolt transport. Samples: 120 / 12 / 12 / 24 / 24.',fontsize=9.5,color='#53667b')
 fig.text(.045,.036,f'Source: benchmarks/neo4j-strengths/results.json  •  Recorded {recorded_date}',fontsize=9,color='#697b8d')
 save(fig,'query-latency')

@@ -407,7 +407,7 @@ z
     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #53667b" x="207" y="645.719375" transform="rotate(-0 207 645.719375)">11  Present the answer</text>
    </g>
    <g id="text_22">
-    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #147d78" x="36" y="707.195312" transform="rotate(-0 36 707.195312)">Provided: describeNodeRel(), trace(), neighbors(), orphans(), stats().</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #147d78" x="36" y="707.195312" transform="rotate(-0 36 707.195312)">Provided: graph queries (SQL/BFS), bounded shortest distance, and an AI-readable schema.</text>
    </g>
    <g id="text_23">
     <text style="font-size: 10.4px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="36" y="737.26975" transform="rotate(-0 36 737.26975)">Application work: model integration, entity resolution, access policy, request validation, and execution budgets.</text>

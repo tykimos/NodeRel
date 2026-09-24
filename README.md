@@ -177,7 +177,7 @@ npm run schema
 
 | Command | What it does |
 |---|---|
-| `npm test` | Builds a temporary database and checks 15 sample queries, boundary behavior, the AI schema, and SQLite integrity. |
+| `npm test` | Checks 15 sample queries, SQL/BFS traversal parity, 4,500 shortest-distance combinations, the AI schema, and SQLite integrity. |
 | `npm run demo:build` | Rebuilds `examples/neo4j/noderel.sqlite` from the committed snapshots. |
 | `npm run demo -- show 1` | Shows the films featuring Keanu Reeves. |
 | `npm run demo -- test` | Compares current SQLite results with the stored Neo4j baseline. |
@@ -322,7 +322,7 @@ The exporter reads the actual database and describes:
 - Node kinds, counts, example IDs, and populated node columns.
 - Observed relationships such as `Person → ACTED_IN → Movie`.
 - Relationship property names and JSON types, such as the `roles` array.
-- Existing operations, including a JSON Schema input contract for `trace`.
+- Existing operations, including JSON Schema input contracts for `trace`, `traceStats`, and `shortestDistance`.
 - A source signature for identifying the imported snapshot.
 
 An application can provide the relevant description to an AI model, resolve the user's entity to a real ID, and have the model propose a request like this:
@@ -429,8 +429,8 @@ The vocabulary is **NodeRel-specific** and makes no OWL, SHACL, or JSON-LD confo
 | Deployment | SQLite inside a Node.js process; local file | A separate Community database server, queried over Bolt |
 | Query interface | Small JavaScript API and SQL | Cypher graph patterns, paths, and aggregations |
 | Data model | One `kind` per node; fixed node columns; JSON edge properties | Labeled nodes and typed relationships with properties |
-| Graph traversal | Public `trace()` uses recursive SQL | Graph operators chosen by the query planner |
-| Shortest distance | Can derive from bounded `trace()`; specialized BFS exists only in the benchmark | Expressed directly with `shortestPath` in the tested queries |
+| Graph traversal | `trace()` uses recursive SQL by default, with optional batched BFS | Graph operators chosen by the query planner |
+| Shortest distance | `shortestDistance()` uses bidirectional BFS; optional SQL baseline | Expressed directly with `shortestPath` in the tested queries |
 | AI integration | Actual schema and operation descriptions are exported | AI can generate Cypher using the application's schema/context |
 | Concurrency tested | Independent SQLite read connections in worker threads | Independent Bolt sessions |
 | Natural fit | Rebuildable local relationship views over existing data | Applications centered on varied graph queries and shared graph access |
@@ -441,13 +441,66 @@ SQLite supports concurrent readers; it is not limited to one reader. Its embedde
 
 ## Measured performance
 
-These charts use the **recorded September 23, 2026 experiment**, not new measurements made while writing this README. The graph has **50,000 nodes and 300,000 directed edges**. Three implementations are kept separate:
+### Official Paradise Papers dataset: SQL, optimized NodeRel, and Neo4j
+
+The **September 24, 2026 follow-up** uses the official [Neo4j ICIJ Paradise Papers example](https://github.com/neo4j-graph-examples/icij-paradise-papers). Both databases contain **163,414 nodes and 311,925 normalized relationships**. The source has 364,456 relationships; identical same-type parallel connections were collapsed in both engines to match NodeRel's storage model. The tested reachability and minimum distances are preserved by this projection.
+
+This experiment measures the **actual public NodeRel APIs** using either the existing recursive SQL or newly added algorithms:
+
+- **Batched BFS** visits each reached node once and reads SQLite adjacency in batches of 256 frontier IDs.
+- **Bidirectional BFS** searches from both endpoints for shortest distance, expanding the smaller frontier and stopping when the searches meet.
+- Both reuse prepared statements and read SQLite on demand, without a full graph preload or cached answers.
+
+![Paradise Papers median latency: SQL baseline, optimized NodeRel BFS, and Neo4j; nearby and farther shortest-distance pairs shown separately.](docs/assets/paradise-latency.png)
+
+[View SVG](docs/assets/paradise-latency.svg)
+
+Median milliseconds; lower is better. Reachability returns a count and sum of minimum depths. Shortest-distance groups use their independently verified connection lengths.
+
+| Workload | NodeRel SQL | Optimized NodeRel | Neo4j Bolt |
+|---|---:|---:|---:|
+| Reachability within 4 hops | 812.638 | 142.852 | **12.994** |
+| Reachability within 6 hops | 1,595.371 | 767.689 | **58.437** |
+| Reachability within 8 hops | 3,108.640 | 1,266.693 | **70.341** |
+| Shortest distance: nearby pairs, 1–2 hops | 4,419.958 | **0.131** | 2.003 |
+| Shortest distance: farther pairs, 5–8 hops | 4,114.821 | 21.095 | **3.580** |
+
+NodeRel's BFS reduced reachability latency by **2.1–5.7×** versus its SQL baseline. Even after that optimization, Neo4j was **11–18× faster** for these broad traversals. The graph's hubs lead to large neighborhoods within a few steps. Nearby shortest-distance queries favored embedded NodeRel, while the farther pairs favored Neo4j. A single mixed shortest-distance median would hide that distinction.
+
+![Concurrent six-hop traversal on Paradise Papers: equal finite request batches at 1, 8, and 16 clients.](docs/assets/paradise-concurrency.png)
+
+[View SVG](docs/assets/paradise-concurrency.svg)
+
+Each concurrent condition processes the **same 36 requests**, twice per sampled source. The two rounds reverse engine order. NodeRel uses one worker and SQLite reader per client; Neo4j uses independent Bolt sessions. These finite batches measure this workload, **not sustained service capacity**. The [report](benchmarks/paradise-papers/REPORT.md#concurrent-six-hop-traversal) includes rates and run-to-run ranges.
+
+For the single-request results, six sources from each of three degree groups were selected before timing; each reachability cell has 36 observations. The nearby/farther distance groups have 12/22 observations. One unreachable pair remains in the report and raw data. Three relationship types are followed in both directions. All normalized nodes and edges were checked for equality, every aggregate was checked against independent BFS, and full returned records were compared and timed separately.
+
+Both engines ran on an Apple M3 with 24 GiB RAM, using warm caches, Neo4j Community 2025.06.2, Node 25.6.0, and SQLite 3.53.4. Neo4j includes local Bolt overhead; memory budgets are not equalized. This is one read-only dataset and a stratified sample, not a general database ranking. The earlier experiment below used a different Node/SQLite version and dataset; compare implementations within each experiment.
+
+Use the optimized API after importing the dataset:
+
+```js
+graph.traceStats({
+  id: sourceId,
+  scope: 'paradise',
+  direction: 'both',
+  maxDepth: 6,
+  types: ['OFFICER_OF', 'INTERMEDIARY_OF', 'REGISTERED_ADDRESS'],
+  algorithm: 'bfs'
+});
+```
+
+[Full report and query plans](benchmarks/paradise-papers/REPORT.md) · [Reproduction](benchmarks/paradise-papers/README.md) · [Raw results](benchmarks/paradise-papers/results.json) · [Dataset provenance](benchmarks/paradise-papers/sources.json)
+
+### Earlier synthetic dataset
+
+The following charts preserve the **September 23, 2026 experiment**. Its graph has **50,000 nodes and 300,000 directed edges**. Three implementations are kept separate:
 
 1. **SQLite recursive SQL:** the bounded `(id, depth)` CTE approach adapted for benchmark outputs. This is related to the public `trace()` implementation, but the measurements are not direct timings of that API.
-2. **SQLite + custom BFS:** separate, benchmark-only JavaScript breadth-first search, including bidirectional search for shortest distance. It queries SQLite indexes as it explores; it is **not integrated into NodeRel's public API**. Single-node lookup uses direct SQL.
+2. **SQLite + custom BFS:** the earlier, separate benchmark implementation of breadth-first and bidirectional search. It queries SQLite indexes as it explores. These historical measurements predate the new optional BFS API and do not measure that API. Single-node lookup uses direct SQL.
 3. **Neo4j over Bolt:** Cypher executed through a reused local driver/session, including transport and result handling.
 
-### Query latency
+#### Query latency
 
 ![Median query latency on a logarithmic scale. Custom SQLite BFS is faster for small traversals; Neo4j is faster for broad six-hop reachability.](docs/assets/query-latency.png)
 
@@ -467,7 +520,7 @@ Median milliseconds; lower is better. A dash means that separate implementation 
 
 Neo4j was about **1.9× faster than custom SQLite BFS** on six-hop reachability, which reached roughly 32,000 nodes per source. SQLite had lower latency for small local reads. The large shortest-distance gap against the CTE reflects different algorithms: the CTE explores the bounded reachable graph, whereas bidirectional BFS can stop early. It is not evidence of a universal database-engine speed ratio.
 
-### Concurrent traversal
+#### Concurrent traversal
 
 ![Six-hop traversal throughput with 1, 4, and 8 concurrent clients, plus an eight-client repeat with reversed measurement order.](docs/assets/concurrent-throughput.png)
 
@@ -484,7 +537,7 @@ Completed requests per second; higher is better. Each client sends its next requ
 
 Neo4j delivered **3.1–3.3× the throughput** at eight concurrent clients in these short runs. Absolute rates changed in the repeat, so the results do not establish sustained production capacity.
 
-### How to read the numbers
+#### How to read the earlier numbers
 
 - **Hardware/software:** Apple M3, 24 GiB RAM, Node 24.13.1, SQLite 3.51.2, Neo4j Community 2025.06.2, driver 5.28.3.
 - **Warm cache, local machine:** SQLite runs in process; Neo4j includes a local Bolt round trip. These are client-observed timings, not isolated engine timings. Startup and import are excluded.
@@ -501,7 +554,9 @@ The [full benchmark report](benchmarks/neo4j-strengths/REPORT.md) includes p95 l
 |---|---|
 | `new NodeRel(file, { readOnly })` | Opens a file or `:memory:` database. Writable mode initializes the tables. |
 | `rebuild(snapshots)` | Replaces the index transactionally; returns node/edge counts and rejected edges. |
-| `trace({ id, scope, direction, maxDepth, types })` | Returns unique reached nodes with `id`, `title`, `kind`, and minimum `depth`. |
+| `trace({ id, scope, direction, maxDepth, types, algorithm })` | Returns unique reached nodes with `id`, `title`, `kind`, and minimum `depth`; `algorithm` is `sql` (default) or `bfs`. |
+| `traceStats(options)` | Returns `{ count, depthSum }` for the same traversal; supports both algorithms without returning full node records. |
+| `shortestDistance({ id, targetId, scope, direction, maxDepth, types, algorithm })` | Returns a bounded minimum hop count or `null`; defaults to bidirectional `bfs`, with an optional `sql` baseline. |
 | `traceQuery(options)` | Returns the generated SQL and bound parameters without executing it. |
 | `neighbors(id, scope)` | Returns incident incoming/outgoing edges with parsed JSON properties. |
 | `orphans({ scope, kind, type, side })` | Finds nodes without a specified incoming or outgoing relationship. |
@@ -511,6 +566,8 @@ The [full benchmark report](benchmarks/neo4j-strengths/REPORT.md) includes p95 l
 | `describeNodeRel(file)` | Exports schema observations and operation descriptions from a read-only connection. |
 
 `trace()` defaults to `direction: 'out'`, `maxDepth: 10`, and all relationship types. Directions are `out`, `in`, or `both`; depth must be an integer from 0 to 10. The start node is excluded. Results contain minimum hop counts, **not complete paths**. A missing or out-of-scope start returns no reached nodes.
+
+Choose `algorithm: 'bfs'` to avoid revisiting nodes at different depths. It fetches adjacency from SQLite in batches, without preloading the graph or caching answers. `shortestDistance()` expands from both endpoints and can stop when the searches meet; an existing source equal to its target has distance zero. Multi-statement BFS queries use a consistent read transaction and preserve transactions opened by the caller. See the [algorithm design](docs/design.md#optional-bfs-and-bidirectional-search).
 
 ## Storage and current boundaries
 
@@ -552,6 +609,7 @@ examples/neo4j/               Snapshots, runnable queries, stored reference resu
 examples/ai/                  AI-readable schema and verified request example
 ontologies/                   Custom ontology specification schema and examples
 benchmarks/neo4j-strengths/   Synthetic dataset benchmark and recorded measurements
+benchmarks/paradise-papers/   Official dataset, public API comparison, and reproduction
 docs/                        Query guide, design notes, charts, and diagrams
 scripts/                     Tests and reproducible visual renderers
 ```
@@ -564,6 +622,7 @@ To regenerate the charts from recorded measurements and rebuild the diagrams, in
 python3 -m venv /tmp/noderel-charts
 /tmp/noderel-charts/bin/python -m pip install -r scripts/requirements-charts.txt
 /tmp/noderel-charts/bin/python scripts/render-benchmarks.py
+/tmp/noderel-charts/bin/python scripts/render-paradise.py
 /tmp/noderel-charts/bin/python scripts/render-diagrams.py
 ```
 
@@ -571,4 +630,4 @@ These commands redraw the visuals; they do not rerun the database benchmarks. Py
 
 ## License and attribution
 
-This repository is a prototype with **no open-source license granted for its own code** (`UNLICENSED` in `package.json`). The official Movies and Northwind data retain their respective terms. See [third-party notices](THIRD_PARTY_NOTICES.md).
+This repository is a prototype with **no open-source license granted for its own code** (`UNLICENSED` in `package.json`). The official example datasets retain their respective terms. See [third-party notices](THIRD_PARTY_NOTICES.md).

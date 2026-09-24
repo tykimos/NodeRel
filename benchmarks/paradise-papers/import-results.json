@@ -1,0 +1,9 @@
+{
+  "nodeRelImportMs": 2673.637208,
+  "neo4jImportMs": 10252.911792,
+  "neo4jCounts": {
+    "nodes": 163414,
+    "edges": 311925
+  },
+  "mapping": "Both measured stores contain the identical normalized topology and id/kind/scope/title values. Neo4j uses a uniform Paradise label plus kind property; relationship properties are serialized JSON in both. Import times are setup observations, not an optimized bulk-import comparison."
+}

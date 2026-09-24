@@ -12,3 +12,7 @@ __pycache__/
 /benchmarks/neo4j-strengths/conf/
 /benchmarks/neo4j-strengths/server/
 /benchmarks/neo4j-strengths/dataset.json
+/benchmarks/paradise-papers/conf/
+/benchmarks/paradise-papers/server/
+/benchmarks/paradise-papers/dataset.json
+/benchmarks/paradise-papers/probe-results.json

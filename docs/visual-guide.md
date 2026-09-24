@@ -45,16 +45,20 @@ In the example graph diagram, Keanu Reeves and Laurence Fishburne point to *The 
 
 The storage diagram's connectors show how endpoint IDs refer to `items.id`. Import validation checks those references; the SQL schema does not declare foreign keys or triggers for them. The composite relationship key permits only one edge per `(from_id, to_id, type)` tuple.
 
-The execution diagram shows the local single-query call boundaries. Concurrent SQLite measurements use separate workers and read connections. Specialized SQLite BFS remains benchmark-only; the public `trace()` method uses recursive SQL.
+The execution diagram shows the local single-query call boundaries. Concurrent SQLite measurements use separate workers and read connections. The public `trace()` method defaults to recursive SQL and now also supports optional batched BFS; `shortestDistance()` defaults to bidirectional BFS. The historical synthetic benchmark's custom BFS remains a separate implementation.
 
 ## Performance charts
 
 | Chart | Reading the chart | PNG | SVG |
 |---|---|---|---|
+| Paradise Papers latency | Public NodeRel SQL/BFS versus Neo4j; separates nearby and farther shortest-distance cases | [Image](assets/paradise-latency.png) | [Vector](assets/paradise-latency.svg) |
+| Paradise Papers concurrency | Same finite batch at 1/8/16 clients; two runs in reversed engine order | [Image](assets/paradise-concurrency.png) | [Vector](assets/paradise-concurrency.svg) |
 | Query latency | Median milliseconds on a logarithmic scale; lower is better | [Image](assets/query-latency.png) | [Vector](assets/query-latency.svg) |
 | Concurrent traversal | Completed requests per second; higher is better | [Image](assets/concurrent-throughput.png) | [Vector](assets/concurrent-throughput.svg) |
 
-The charts use the committed [recorded measurements](../benchmarks/neo4j-strengths/results.json). Recursive SQL, custom SQLite BFS, and Neo4j over Bolt are labeled separately. The throughput chart includes the reversed-order repeat at eight clients. Consult the [report](../benchmarks/neo4j-strengths/REPORT.md) for numeric tables, p95 latency, environment, and interpretation.
+The Paradise Papers charts use the [September 24 measurements](../benchmarks/paradise-papers/results.json) and measure the public NodeRel algorithms. The [report](../benchmarks/paradise-papers/REPORT.md) explains graph normalization, case sampling, full-row timings, and the finite-batch concurrency design. Its shortest-distance chart groups pairs by independently verified distance; the overall mixed-target median and the unreachable pair remain in the report.
+
+The earlier synthetic charts use the [September 23 measurements](../benchmarks/neo4j-strengths/results.json). Recursive SQL, the historical custom SQLite BFS, and Neo4j over Bolt are labeled separately. That throughput chart includes the reversed-order repeat at eight clients. Its [report](../benchmarks/neo4j-strengths/REPORT.md) preserves the original experiment and limitations.
 
 The charts are measured evidence. The architecture and flow diagrams explain behavior and are not additional benchmark results.
 
@@ -66,10 +70,11 @@ Run from the repository root:
 python3 -m venv /tmp/noderel-charts
 /tmp/noderel-charts/bin/python -m pip install -r scripts/requirements-charts.txt
 /tmp/noderel-charts/bin/python scripts/render-benchmarks.py
+/tmp/noderel-charts/bin/python scripts/render-paradise.py
 /tmp/noderel-charts/bin/python scripts/render-diagrams.py
 ```
 
-Both renderers use Matplotlib and save under `docs/assets/`. No extra graph-layout tool, database server, or model call is required. NodeRel's runtime does not depend on these plotting tools.
+The renderers use Matplotlib and save under `docs/assets/`. `render-paradise.py` also rebuilds the corresponding report from recorded measurements. No extra graph-layout tool, database server, or model call is required. NodeRel's runtime does not depend on these plotting tools.
 
 [render-benchmarks.py](../scripts/render-benchmarks.py) reads the recorded JSON; [render-diagrams.py](../scripts/render-diagrams.py) contains the diagram labels, shapes, and layout. Edit the renderer and regenerate both formats together when the documentation changes. The diagram renderer checks for text extending outside the canvas; exported images should also be visually reviewed for readability and overlap.
 

@@ -223,7 +223,7 @@ z
     <text style="font-size: 10.6px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="36" y="441.404938" transform="rotate(-0 36 441.404938)">Timings include client-observed work. SQLite avoids a server round trip; Neo4j executes graph operators.</text>
    </g>
    <g id="text_18">
-    <text style="font-size: 10.6px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="36" y="465.884938" transform="rotate(-0 36 465.884938)">Public trace() uses recursive SQL. Specialized SQLite BFS appears only in the benchmark.</text>
+    <text style="font-size: 10.6px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="36" y="465.884938" transform="rotate(-0 36 465.884938)">NodeRel supports recursive SQL and optional batched BFS; shortestDistance() uses bidirectional BFS.</text>
    </g>
   </g>
  </g>

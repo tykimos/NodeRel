@@ -1,0 +1,22 @@
+{
+  "retrievedAt": "2026-09-24T08:51:43.999Z",
+  "repository": "https://github.com/neo4j-graph-examples/icij-paradise-papers",
+  "commit": "76438607087f42986c80b61b681a48c151f7f39e",
+  "url": "https://raw.githubusercontent.com/neo4j-graph-examples/icij-paradise-papers/76438607087f42986c80b61b681a48c151f7f39e/data/icij-paradise-papers-43.dump",
+  "dumpSha256": "eb9e80ab546783f538e544f5385bc04309d69a76bfae1fb3ce0e49d6e06b38f1",
+  "datasetSha256": "3f978e192fcf1230cf962ae28480d4d24af7806c6176596ad7ba9804eb91e716",
+  "extractionServer": {
+    "versions": [
+      "4.4.48"
+    ],
+    "edition": "community"
+  },
+  "sourceNodes": 163414,
+  "sourceRelationships": 364456,
+  "projectedNodes": 163414,
+  "projectedRelationships": 311925,
+  "removedSelfLoops": 0,
+  "collapsedDuplicateTuples": 52531,
+  "mapping": "Dump-internal node IDs prefixed pp:. Original labels retained as kind; original node attributes retained only in source snapshot. Equal (from,to,type) tuples collapsed in relationship-ID order and self-loops removed in BOTH measured databases. These changes preserve nonzero reachability/minimum distance between distinct nodes; multiplicity/property queries are outside this benchmark.",
+  "notice": "Public ICIJ data: inclusion of a person or entity does not imply wrongdoing. Benchmark identifiers are record IDs; no identity resolution is performed."
+}

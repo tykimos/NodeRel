@@ -400,7 +400,7 @@ z
    <text style="font-size: 11.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="38.88" y="55.7208" transform="rotate(-0 38.88 55.7208)">50,000 nodes / 300,000 directed edges  •  Warm cache  •  Lower is better</text>
   </g>
   <g id="text_29">
-   <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="38.88" y="457.524" transform="rotate(-0 38.88 457.524)">* Custom BFS is benchmark-only; the public trace() API uses recursive SQL. Point lookup uses direct SQL.</text>
+   <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="38.88" y="457.524" transform="rotate(-0 38.88 457.524)">* Historical custom BFS is benchmark-only; this run predates the optional NodeRel BFS API. Point lookup uses SQL.</text>
   </g>
   <g id="text_30">
    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #53667b" x="38.88" y="475.416" transform="rotate(-0 38.88 475.416)">Apple M3 / 24 GiB RAM. SQLite in process; Neo4j includes local Bolt transport. Samples: 120 / 12 / 12 / 24 / 24.</text>

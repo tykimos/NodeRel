@@ -2,6 +2,8 @@
 
 Recorded: `2026-09-23T04:31:28.406Z`. Apple M3, 24 GiB RAM, both systems on the same computer.
 
+This is a historical run. A later [Paradise Papers experiment](../paradise-papers/REPORT.md) measures the new public NodeRel BFS APIs. The custom SQLite code and numeric results below remain the original implementation and measurements.
+
 ## Findings
 
 Neo4j showed an advantage on broad multi-hop reachability and concurrent execution of that workload. Small local reads favored embedded SQLite. Specialized bidirectional BFS substantially changed the SQLite shortest-distance results.

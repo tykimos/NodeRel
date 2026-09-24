@@ -1,6 +1,6 @@
 {
   "schemaVersion": "noderel-ai-description/1",
-  "generatedAt": "2026-09-23T05:34:12.260Z",
+  "generatedAt": "2026-09-24T09:23:28.374Z",
   "sourceSignature": "7ebe39e5a77db85df399fcdc8ec08567721198682e3e447b30886a86f01d53de",
   "provenance": {
     "countsAndShapes": "Observed from SQLite, not enforced relationship constraints.",
@@ -64,7 +64,7 @@
   ],
   "existingOperations": {
     "trace": {
-      "description": "Follow selected relationship types up to maxDepth; return reached nodes and minimum depth.",
+      "description": "Follow selected relationship types up to maxDepth; return reached nodes and minimum depth. algorithm sql is the default; bfs uses batched adjacency reads and visits each node once.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
@@ -100,6 +100,116 @@
               "type": "string"
             },
             "default": []
+          },
+          "algorithm": {
+            "type": "string",
+            "enum": [
+              "sql",
+              "bfs"
+            ],
+            "default": "sql"
+          }
+        }
+      }
+    },
+    "traceStats": {
+      "description": "Return count and depthSum for the same reached nodes without materializing full node records.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "scope"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "out",
+              "in",
+              "both"
+            ],
+            "default": "out"
+          },
+          "maxDepth": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "default": 10
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "algorithm": {
+            "type": "string",
+            "enum": [
+              "sql",
+              "bfs"
+            ],
+            "default": "sql"
+          }
+        }
+      }
+    },
+    "shortestDistance": {
+      "description": "Return the minimum hop count to targetId within maxDepth, or null if no bounded connection exists. Default bfs uses bidirectional search; sql derives distance from the bounded reachable set. Existing source equal to target returns zero. Does not return a path.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "targetId",
+          "scope"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "out",
+              "in",
+              "both"
+            ],
+            "default": "out"
+          },
+          "maxDepth": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "default": 10
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "algorithm": {
+            "type": "string",
+            "enum": [
+              "sql",
+              "bfs"
+            ],
+            "default": "bfs"
+          },
+          "targetId": {
+            "type": "string"
           }
         }
       }
@@ -129,7 +239,7 @@
   },
   "proposedAdditionalOperations": [
     "find_nodes (name/alias lookup with disambiguation)",
-    "shortest_path (integrate the separately benchmarked BFS)",
+    "shortest_path (reconstruct and return complete paths; shortestDistance already returns hop count)",
     "match_pattern (typed multi-step joins and aggregates)",
     "explain (show interpreted question, query plan, budgets and source version)"
   ],

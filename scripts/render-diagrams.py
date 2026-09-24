@@ -198,7 +198,7 @@ def ai_sequence():
     message(2.91, 1, 2, '9  Supply results for an answer')
     message(2.28, 2, 1, '10  Answer grounded in results', True)
     message(1.65, 1, 0, '11  Present the answer', True)
-    text(ax, .5, .97, 'Provided: describeNodeRel(), trace(), neighbors(), orphans(), stats().', size=11, color=C['teal'])
+    text(ax, .5, .97, 'Provided: graph queries (SQL/BFS), bounded shortest distance, and an AI-readable schema.', size=11, color=C['teal'])
     text(ax, .5, .55, 'Application work: model integration, entity resolution, access policy, request validation, and execution budgets.', size=10.4, color=C['muted'])
     save(fig, 'ai-query-sequence')
 
@@ -222,7 +222,7 @@ def deployment():
     label(ax, 8.88, 3.3, 'Local Bolt transport', color='blue', size=10.5)
     text(ax, 8.88, 1.48, 'Separate server process', size=10.7, ha='center', color=C['muted'])
     text(ax, .5, .61, 'Timings include client-observed work. SQLite avoids a server round trip; Neo4j executes graph operators.', size=10.6, color=C['muted'])
-    text(ax, .5, .27, 'Public trace() uses recursive SQL. Specialized SQLite BFS appears only in the benchmark.', size=10.6, color=C['muted'])
+    text(ax, .5, .27, 'NodeRel supports recursive SQL and optional batched BFS; shortestDistance() uses bidirectional BFS.', size=10.6, color=C['muted'])
     save(fig, 'execution-models')
 
 

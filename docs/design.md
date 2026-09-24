@@ -45,7 +45,7 @@ The importer enforces endpoint and scope checks; the schema does not define SQL 
 
 `out` follows `from_id → to_id`; `in` reverses that direction; `both` permits either. Direction describes the stored arrow, not a universal business notion of cause or impact.
 
-The public `trace()` implementation uses a recursive CTE with `UNION` over `(id, depth)`. An identical node/depth state is explored once. A node reached at different depths produces different states, and final aggregation returns the minimum depth for each node. Consequently:
+The default `trace()` implementation (`algorithm: 'sql'`) uses a recursive CTE with `UNION` over `(id, depth)`. An identical node/depth state is explored once. A node reached at different depths produces different states, and final aggregation returns the minimum depth for each node. The optional `algorithm: 'bfs'` visits each node once using batched SQLite adjacency reads. Both implementations follow the same result contract:
 
 - Cycles terminate within the requested depth limit.
 - The start node is excluded from the returned rows, including after a cycle.
@@ -58,11 +58,21 @@ The depth must be an integer from 0 to 10. This bounds recursion depth, not tota
 
 `neighbors()` returns all incoming and outgoing incident relationships, including parsed JSON properties. `orphans()` checks the absence of a specified relationship in one direction; it does not require the node to be completely disconnected. `graph()` exports stored rows in a scope, keeping edge `attrs` as JSON text.
 
-## Why the benchmark has another traversal implementation
+## Optional BFS and bidirectional search
 
-The benchmark's `SqlReader` implements BFS using a global visited set, and bidirectional BFS for shortest distance. It reads adjacency lists from SQLite in batches, reuses statements, and has an additional reverse-lookup index. It does not preload the full graph for measured queries.
+`trace({ ...options, algorithm: 'bfs' })` uses a breadth-first search with a visited map for the current request. It reads adjacency in batches of up to 256 frontier IDs through SQLite's existing endpoint indexes and reuses prepared statements. It checks scope on both relationships and destination nodes. The final node records are sorted by SQLite so ordering matches the SQL implementation, including Unicode IDs.
 
-That code is separate from the public API. The benchmark's recursive SQL is also adapted to return counts/depth sums or one target distance, so its timing is not a direct measurement of `NodeRel.trace()` returning complete node records. The README and charts distinguish these implementations.
+`traceStats(options)` returns `{ count, depthSum }` instead of full records, with the same direction, type, depth, and algorithm options. `shortestDistance({ id, targetId, scope, ...options })` defaults to bidirectional BFS: expand the smaller frontier, finish the layer, and stop when the two searches meet. It returns a hop count or `null`; it does not reconstruct a path. An existing source equal to its target returns zero. Its optional `algorithm: 'sql'` computes the distance from the bounded reachable set.
+
+These algorithms do not preload the graph, cache answers, or add persistent adjacency tables. Their maps and frontiers exist only for one request; prepared statements can be reused after a rebuild. Multi-statement traversals use one SQLite read transaction for a consistent snapshot. An explicit transaction already opened by the caller remains owned by that caller. Work remains synchronous and can still be large on a broad graph.
+
+The [Paradise Papers experiment](../benchmarks/paradise-papers/REPORT.md) measures these public APIs directly. It also checks full returned node records separately from scalar result timing. Graph-wide preloading, CSR projections, weighted paths, and complete path reconstruction are outside this implementation.
+
+## The earlier synthetic benchmark
+
+The September 23 synthetic benchmark's `SqlReader` implements BFS using a global visited set, and bidirectional BFS for shortest distance. It reads adjacency lists from SQLite in batches, reuses statements, and has an additional reverse-lookup index. It does not preload the full graph for measured queries.
+
+That older code remains separate from the new public BFS implementation. Its recursive SQL is adapted to return counts/depth sums or one target distance, so its timing is not a direct measurement of `NodeRel.trace()` returning complete node records. Its measurements have not been replaced by the follow-up results.
 
 This separation matters: using a different search algorithm can change performance much more than changing the database. A shortest-distance query that explores an entire bounded neighborhood should not be treated as algorithmically equivalent to bidirectional search that stops early.
 
@@ -79,9 +89,9 @@ The intended integration is:
 
 Implemented here: database description export, query functions, and one verified request/result example. A model adapter, generic entity resolver, complete operation dispatcher/validator, and resource-budget runner remain application work. No model is called by `npm run schema`.
 
-Table fields, counts, observed relationship shapes, and JSON property types can be inferred from the database. Business meanings, policy, and metric definitions need explicit domain context. The sample exporter supplies curated descriptions for Movies and Northwind; its observed shapes are not enforced relationship constraints.
+Table fields, counts, observed relationship shapes, and JSON property types can be inferred from the database. Business meanings, policy, and metric definitions need explicit domain context. The sample exporter supplies curated descriptions for Movies and Northwind; its observed shapes are not enforced relationship constraints. The `trace`, `traceStats`, and `shortestDistance` operations have JSON Schema argument contracts, including their supported algorithm choices.
 
-The schema lists proposed operations separately from existing ones. In particular, `find_nodes`, `shortest_path`, `match_pattern`, and `explain` are proposals, not callable methods. Describing an operation is not the same as implementing it.
+The schema lists proposed operations separately from existing ones. In particular, `find_nodes`, `shortest_path`, `match_pattern`, and `explain` are proposals, not callable methods. The implemented `shortestDistance` returns a hop count, while the proposed `shortest_path` would return complete paths. Describing an operation is not the same as implementing it.
 
 ## Authored ontology definitions
 

@@ -1,0 +1,487 @@
+{
+  "seed": 20260924,
+  "sampling": "Six sources per positive-degree stratum (1; 2–4; >=5 distinct neighbors), seeded Fisher-Yates shuffle. No timing-based selection. Targets alternate distance 1–2, distance 5–10, and random graph-wide node; missing distance bands fall back to the farthest reachable node within ten hops.",
+  "strata": {
+    "low": 59102,
+    "medium": 77042,
+    "high": 24859
+  },
+  "isolatedNodes": 2411,
+  "selectedRelationshipTypes": [
+    "OFFICER_OF",
+    "INTERMEDIARY_OF",
+    "REGISTERED_ADDRESS"
+  ],
+  "selectedRelationships": 300963,
+  "maxDegree": 9268,
+  "cases": [
+    {
+      "id": "pp:42810",
+      "kind": "Address",
+      "degree": 1,
+      "stratum": "low",
+      "targetId": "pp:121917",
+      "targetMode": "near",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 1
+        },
+        "reach4": {
+          "count": 10474,
+          "depthSum": 41882
+        },
+        "reach6": {
+          "count": 105504,
+          "depthSum": 566786
+        },
+        "reach8": {
+          "count": 154335,
+          "depthSum": 928296
+        }
+      }
+    },
+    {
+      "id": "pp:17926",
+      "kind": "Address",
+      "degree": 1,
+      "stratum": "low",
+      "targetId": "pp:136668",
+      "targetMode": "far",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 5
+        },
+        "reach4": {
+          "count": 10553,
+          "depthSum": 42151
+        },
+        "reach6": {
+          "count": 98855,
+          "depthSum": 526755
+        },
+        "reach8": {
+          "count": 149138,
+          "depthSum": 901305
+        }
+      }
+    },
+    {
+      "id": "pp:60506",
+      "kind": "Entity",
+      "degree": 1,
+      "stratum": "low",
+      "targetId": "pp:55138",
+      "targetMode": "random",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": null
+        },
+        "reach4": {
+          "count": 1,
+          "depthSum": 1
+        },
+        "reach6": {
+          "count": 1,
+          "depthSum": 1
+        },
+        "reach8": {
+          "count": 1,
+          "depthSum": 1
+        }
+      }
+    },
+    {
+      "id": "pp:7320",
+      "kind": "Address",
+      "degree": 1,
+      "stratum": "low",
+      "targetId": "pp:75999",
+      "targetMode": "near",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 2
+        },
+        "reach4": {
+          "count": 9483,
+          "depthSum": 37919
+        },
+        "reach6": {
+          "count": 56817,
+          "depthSum": 303630
+        },
+        "reach8": {
+          "count": 155069,
+          "depthSum": 1033515
+        }
+      }
+    },
+    {
+      "id": "pp:3484",
+      "kind": "Address",
+      "degree": 1,
+      "stratum": "low",
+      "targetId": "pp:42572",
+      "targetMode": "far",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 7
+        },
+        "reach4": {
+          "count": 27770,
+          "depthSum": 101599
+        },
+        "reach6": {
+          "count": 112948,
+          "depthSum": 583612
+        },
+        "reach8": {
+          "count": 157053,
+          "depthSum": 894331
+        }
+      }
+    },
+    {
+      "id": "pp:604",
+      "kind": "Address",
+      "degree": 1,
+      "stratum": "low",
+      "targetId": "pp:21771",
+      "targetMode": "random",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 8
+        },
+        "reach4": {
+          "count": 742,
+          "depthSum": 2956
+        },
+        "reach6": {
+          "count": 45108,
+          "depthSum": 257769
+        },
+        "reach8": {
+          "count": 153278,
+          "depthSum": 1057647
+        }
+      }
+    },
+    {
+      "id": "pp:159586",
+      "kind": "Officer",
+      "degree": 2,
+      "stratum": "medium",
+      "targetId": "pp:96706",
+      "targetMode": "near",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 2
+        },
+        "reach4": {
+          "count": 27805,
+          "depthSum": 101591
+        },
+        "reach6": {
+          "count": 110344,
+          "depthSum": 569009
+        },
+        "reach8": {
+          "count": 156868,
+          "depthSum": 898489
+        }
+      }
+    },
+    {
+      "id": "pp:105376",
+      "kind": "Officer",
+      "degree": 4,
+      "stratum": "medium",
+      "targetId": "pp:36100",
+      "targetMode": "far",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 5
+        },
+        "reach4": {
+          "count": 58090,
+          "depthSum": 221406
+        },
+        "reach6": {
+          "count": 128916,
+          "depthSum": 602848
+        },
+        "reach8": {
+          "count": 156756,
+          "depthSum": 804764
+        }
+      }
+    },
+    {
+      "id": "pp:157521",
+      "kind": "Officer",
+      "degree": 3,
+      "stratum": "medium",
+      "targetId": "pp:15648",
+      "targetMode": "random",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 6
+        },
+        "reach4": {
+          "count": 48647,
+          "depthSum": 156561
+        },
+        "reach6": {
+          "count": 135139,
+          "depthSum": 638751
+        },
+        "reach8": {
+          "count": 157423,
+          "depthSum": 795601
+        }
+      }
+    },
+    {
+      "id": "pp:138989",
+      "kind": "Officer",
+      "degree": 2,
+      "stratum": "medium",
+      "targetId": "pp:105162",
+      "targetMode": "near",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 2
+        },
+        "reach4": {
+          "count": 55730,
+          "depthSum": 212401
+        },
+        "reach6": {
+          "count": 126577,
+          "depthSum": 594345
+        },
+        "reach8": {
+          "count": 156710,
+          "depthSum": 812847
+        }
+      }
+    },
+    {
+      "id": "pp:100153",
+      "kind": "Officer",
+      "degree": 4,
+      "stratum": "medium",
+      "targetId": "pp:146317",
+      "targetMode": "far",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 6
+        },
+        "reach4": {
+          "count": 3681,
+          "depthSum": 13508
+        },
+        "reach6": {
+          "count": 101953,
+          "depthSum": 575817
+        },
+        "reach8": {
+          "count": 156858,
+          "depthSum": 962680
+        }
+      }
+    },
+    {
+      "id": "pp:149046",
+      "kind": "Officer",
+      "degree": 4,
+      "stratum": "medium",
+      "targetId": "pp:34271",
+      "targetMode": "random",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 7
+        },
+        "reach4": {
+          "count": 28032,
+          "depthSum": 101765
+        },
+        "reach6": {
+          "count": 110481,
+          "depthSum": 568747
+        },
+        "reach8": {
+          "count": 156878,
+          "depthSum": 897291
+        }
+      }
+    },
+    {
+      "id": "pp:123359",
+      "kind": "Officer",
+      "degree": 11,
+      "stratum": "high",
+      "targetId": "pp:63725",
+      "targetMode": "near",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 2
+        },
+        "reach4": {
+          "count": 88674,
+          "depthSum": 305065
+        },
+        "reach6": {
+          "count": 148383,
+          "depthSum": 626997
+        },
+        "reach8": {
+          "count": 157496,
+          "depthSum": 691662
+        }
+      }
+    },
+    {
+      "id": "pp:62177",
+      "kind": "Entity",
+      "degree": 9,
+      "stratum": "high",
+      "targetId": "pp:126263",
+      "targetMode": "far",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 5
+        },
+        "reach4": {
+          "count": 103240,
+          "depthSum": 352072
+        },
+        "reach6": {
+          "count": 154302,
+          "depthSum": 627149
+        },
+        "reach8": {
+          "count": 157547,
+          "depthSum": 650502
+        }
+      }
+    },
+    {
+      "id": "pp:66042",
+      "kind": "Entity",
+      "degree": 13,
+      "stratum": "high",
+      "targetId": "pp:125349",
+      "targetMode": "random",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 5
+        },
+        "reach4": {
+          "count": 105719,
+          "depthSum": 356481
+        },
+        "reach6": {
+          "count": 154797,
+          "depthSum": 621490
+        },
+        "reach8": {
+          "count": 157558,
+          "depthSum": 641428
+        }
+      }
+    },
+    {
+      "id": "pp:64325",
+      "kind": "Entity",
+      "degree": 14,
+      "stratum": "high",
+      "targetId": "pp:68916",
+      "targetMode": "near",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 2
+        },
+        "reach4": {
+          "count": 105839,
+          "depthSum": 356622
+        },
+        "reach6": {
+          "count": 154706,
+          "depthSum": 620523
+        },
+        "reach8": {
+          "count": 157556,
+          "depthSum": 641097
+        }
+      }
+    },
+    {
+      "id": "pp:92186",
+      "kind": "Officer",
+      "degree": 11,
+      "stratum": "high",
+      "targetId": "pp:34840",
+      "targetMode": "far",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 5
+        },
+        "reach4": {
+          "count": 56322,
+          "depthSum": 214201
+        },
+        "reach6": {
+          "count": 135872,
+          "depthSum": 641308
+        },
+        "reach8": {
+          "count": 156952,
+          "depthSum": 790530
+        }
+      }
+    },
+    {
+      "id": "pp:21438",
+      "kind": "Address",
+      "degree": 5,
+      "stratum": "high",
+      "targetId": "pp:51538",
+      "targetMode": "random",
+      "targetFallback": false,
+      "expected": {
+        "shortest": {
+          "distance": 6
+        },
+        "reach4": {
+          "count": 11058,
+          "depthSum": 44094
+        },
+        "reach6": {
+          "count": 111482,
+          "depthSum": 598087
+        },
+        "reach8": {
+          "count": 155565,
+          "depthSum": 922653
+        }
+      }
+    }
+  ]
+}

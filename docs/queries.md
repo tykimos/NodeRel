@@ -185,17 +185,17 @@ ORDER BY depth, title
 
 The projections and sort order differ: NodeRel includes IDs and kinds and sorts by depth, then ID. The comparison cases normalize results to IDs and minimum depths before comparing them.
 
-## 6. Derive a bounded shortest distance
+## 6. Find a bounded shortest distance
 
 Question: how many undirected `ACTED_IN` hops separate Keanu Reeves and Tom Hanks?
 
 ```js
-const reached = graph.trace({
+const distance = graph.shortestDistance({
   id: 'movies:Person:Keanu%20Reeves',
+  targetId: 'movies:Person:Tom%20Hanks',
   scope: 'movies', direction: 'both', maxDepth: 10, types: ['ACTED_IN']
 });
-const target = reached.find(node => node.id === 'movies:Person:Tom%20Hanks');
-console.log(target?.depth ?? null); // 4
+console.log(distance); // 4
 ```
 
 Equivalent Cypher, with `$from = Keanu Reeves` and `$to = Tom Hanks`:
@@ -206,7 +206,20 @@ MATCH path=shortestPath((start)-[:ACTED_IN*1..10]-(target))
 RETURN length(path) AS depth
 ```
 
-The NodeRel example computes the bounded reachable set first and then finds the target. It does not stop at that target or return a path. A missing result means no connection was found within the requested depth; it does not prove disconnection at all depths. The separate benchmark implements bidirectional BFS, but `shortest_path` is **not** a public NodeRel operation.
+The default algorithm is bidirectional BFS: it expands the smaller of two frontiers and stops after finding a shortest connection. Use `algorithm: 'sql'` for the baseline that explores the bounded reachable set and selects the target's minimum depth. `null` means no connection was found within the requested depth, or an endpoint is missing/out of scope; it does not prove disconnection at all depths. An existing source equal to its target returns zero. This API returns a distance, not a path; `shortest_path` remains a proposal for complete path results.
+
+The same BFS strategy is available for neighborhood queries:
+
+```js
+const options = {
+  id: 'movies:Person:Keanu%20Reeves', scope: 'movies',
+  direction: 'both', maxDepth: 4, types: ['ACTED_IN'], algorithm: 'bfs'
+};
+const nodes = graph.trace(options);       // Same rows and ordering as algorithm: 'sql'.
+const summary = graph.traceStats(options); // { count, depthSum }, without full node records.
+```
+
+Both methods query SQLite adjacency on demand. No complete graph preload or response cache is used. The [Paradise Papers benchmark](../benchmarks/paradise-papers/REPORT.md) compares these public APIs with equivalent Cypher queries.
 
 ## 7. Read quantities from order relationships
 

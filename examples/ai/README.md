@@ -64,9 +64,9 @@ An integrating application can validate this request and call `graph.trace(reque
 
 ## Operation status
 
-`existingOperations` describes `trace`, `neighbors`, `orphans`, and `stats`. The `trace` entry includes a JSON Schema for its arguments. Other operations currently have argument descriptions, not complete JSON Schemas. This file is not an automatically registered tool server.
+`existingOperations` describes `trace`, `traceStats`, `shortestDistance`, `neighbors`, `orphans`, and `stats`. The three traversal/distance entries include JSON Schemas for their arguments. The remaining operations currently have argument descriptions, not complete JSON Schemas. This file is not an automatically registered tool server.
 
-`proposedAdditionalOperations` is a separate list: entity lookup, shortest paths, general pattern matching, and explanations. Those names are not callable NodeRel methods. The benchmark's specialized BFS has not been integrated into the public API.
+`proposedAdditionalOperations` is a separate list: entity lookup, complete shortest paths, general pattern matching, and explanations. Those names are not callable NodeRel methods. The public API now includes `traceStats` and `shortestDistance`, and `trace` accepts `algorithm: 'bfs'` as an optional traversal strategy. Their input contracts are exported alongside the original operations. `shortestDistance` returns a hop count, not a reconstructed path.
 
 ## Integration responsibilities
 
